@@ -24,11 +24,17 @@ from datetime import datetime, timedelta, timezone
 
 TOPIC_ORDER = [
     "EU CBAM — Policy & Implementation 歐盟CBAM政策",
-    "UK CBAM 英國CBAM",
-    "Taiwan & Export Exposure 台灣與出口影響",
+    "EU ETS 歐盟碳交易",
+    "UK Carbon Market 英國碳市場",
+    "Taiwan Carbon Market 台灣碳市場",
+    "Japan Carbon Market 日本碳市場",
+    "Korea Carbon Market 韓國碳市場",
+    "Voluntary Carbon Market (VCM) 自願性碳市場",
+    "Article 6 & Paris Agreement 第六條",
+    "CORSIA & Aviation 航空碳抵換",
+    "Carbon Removal & CDR 碳移除",
+    "Nature-based Solutions 自然碳匯",
     "Industry & Trade Response 產業與貿易回應",
-    "WTO & Trade Law 世貿與貿易法",
-    "Other Jurisdictions 其他國家",
     "Analysis & Research 分析與研究",
     "Other 其他",
 ]
@@ -142,9 +148,10 @@ def format_html(articles: list, run_time: str) -> str:
 
   <div style="text-align:center;padding:18px 0;border-top:1px solid #ddd;
        color:#aaa;font-size:11px;line-height:1.7;">
-    CBAM Global Monitor &middot; Weekly Edition<br/>
-    Sources: Euractiv · Carbon Brief · Carbon Pulse · E3G · Sandbag ·
-    Ember Climate · CNA · Economic Daily · FT · Nikkei Asia · Reuters
+    Carbon Markets Global Monitor &middot; Weekly Edition<br/>
+    Sources: Euractiv · Carbon Brief · Carbon Pulse · Carbon Market Watch ·
+    Climate Home News · E3G · Sandbag · Ember Energy · Clear Blue Markets ·
+    Sylvera · BeZero Carbon · CNA · Economic Daily · FT · Nikkei Asia
   </div>
 
 </body>

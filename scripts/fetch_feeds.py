@@ -109,8 +109,34 @@ RSS_FEEDS: dict[str, dict] = {
         "type": "free",
         "method": "rss",
         "feeds": [
-            "https://carbon-pulse.com/category/international/cbam-tariffs/feed/",  # CBAM-specific category
+            # Topic-specific category feeds (confirmed May 2026)
+            "https://carbon-pulse.com/category/international/cbam-tariffs/feed/",
+            "https://carbon-pulse.com/category/emea/emea-compliance-markets-taxes/feed/",
+            "https://carbon-pulse.com/category/international/paris-article-6/feed/",
+            "https://carbon-pulse.com/category/international/aviation/feed/",
+            "https://carbon-pulse.com/category/voluntary/vcm-developments/feed/",
+            "https://carbon-pulse.com/category/voluntary/vcm-governance/feed/",
+            "https://carbon-pulse.com/category/asia-pacific/apac-compliance-markets-taxes/feed/",
+            "https://carbon-pulse.com/category/asia-pacific/asia/feed/",
+            "https://carbon-pulse.com/category/nature-based-carbon/feed/",
+            "https://carbon-pulse.com/category/co2-management/engineered-removals/feed/",
             "https://carbon-pulse.com/feed/",  # general feed as fallback
+        ],
+    },
+
+    "Carbon Market Watch": {
+        "type": "free",
+        "method": "rss",
+        "feeds": [
+            "https://carbonmarketwatch.org/feed/",
+        ],
+    },
+
+    "Climate Home News": {
+        "type": "free",
+        "method": "rss",
+        "feeds": [
+            "https://www.climatechangenews.com/feed/",
         ],
     },
 
@@ -127,28 +153,26 @@ RSS_FEEDS: dict[str, dict] = {
         "method": "rss",
         # sandbag.org.uk empty — EU entity at sandbag.be is active (confirmed May 2026)
         "feeds": [
-            "https://sandbag.be/category/cbam/feed/",  # CBAM-specific category
-            "https://sandbag.be/feed/",                 # general feed as fallback
+            "https://sandbag.be/category/cbam/feed/",
+            "https://sandbag.be/feed/",
         ],
     },
 
     "Ember Energy": {
         "type": "free",
         "method": "rss",
-        # Rebranded ember-climate.org → ember-energy.org (May 2026); feed valid but currently sparse
+        # Rebranded ember-climate.org → ember-energy.org (May 2026)
         "feeds": [
             "https://ember-energy.org/feed/",
         ],
     },
 
-    # Confirmed via Chrome (May 2026): domain is clearbluemarkets.com (not clearblue.markets)
-    # RSS feed /knowledge-base/rss.xml returns full articles with <category>CBAM</category>
     "Clear Blue Markets": {
         "type": "free",
         "method": "rss",
         "feeds": [
-            "https://www.clearbluemarkets.com/knowledge-base/rss.xml",   # editorial/analysis
-            "https://www.clearbluemarkets.com/news/rss.xml",             # company news (lower priority)
+            "https://www.clearbluemarkets.com/knowledge-base/rss.xml",
+            "https://www.clearbluemarkets.com/news/rss.xml",
         ],
     },
 
@@ -242,14 +266,12 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
 
 # English — matched case-insensitively against title + description + content + tags
 KEYWORDS_EN = [
-    # Core mechanism names
+    # ── CBAM ─────────────────────────────────────────────────────────────
     "CBAM",
     "carbon border adjustment",
     "carbon border mechanism",
     "border carbon adjustment",
     "carbon border tax",
-
-    # Compliance & technical terms
     "embedded emissions",
     "CBAM certificate",
     "CBAM declarant",
@@ -263,36 +285,153 @@ KEYWORDS_EN = [
     "CBAM expansion",
     "CBAM compliance",
     "CBAM importer",
-
-    # UK-specific naming
     "UK carbon border",
     "UK CBAM",
-
-    # Trade & legal framing
     "CBAM WTO",
     "carbon pricing equivalence",
-    "CBAM third country",
-    "CBAM retaliation",
-    "CBAM challenge",
-    "CBAM India",
-    "CBAM China",
-
-    # Carbon leakage — core policy rationale, closely linked
     "carbon leakage",
+
+    # ── EU ETS ───────────────────────────────────────────────────────────
+    "EU ETS",
+    "European Emissions Trading",
+    "ETS reform",
+    "carbon allowance",
+    "carbon permit",
+    "EUA price",
+    "EU carbon market",
+    "emissions trading scheme",
+    "cap and trade",
+
+    # ── UK carbon market ─────────────────────────────────────────────────
+    "UK ETS",
+    "UK emissions trading",
+    "UK carbon market",
+    "UK carbon price",
+
+    # ── Taiwan carbon market ──────────────────────────────────────────────
+    "Taiwan carbon",
+    "Taiwan ETS",
+    "Taiwan carbon fee",
+    "TCX carbon",
+    "Taiwan carbon market",
+
+    # ── Japan carbon market ───────────────────────────────────────────────
+    "Japan ETS",
+    "Japan carbon market",
+    "Japan carbon pricing",
+    "GX-ETS",
+    "GX League",
+    "Japan emissions trading",
+
+    # ── Korea carbon market ───────────────────────────────────────────────
+    "Korea ETS",
+    "K-ETS",
+    "South Korea carbon",
+    "Korea carbon market",
+    "Korea emissions trading",
+
+    # ── Voluntary Carbon Market ───────────────────────────────────────────
+    "voluntary carbon market",
+    "carbon credit",
+    "carbon offset",
+    "carbon registry",
+    "ICVCM",
+    "CCP label",
+    "Core Carbon Principles",
+    "Verra",
+    "Gold Standard",
+    "carbon standard",
+    "VCM",
+
+    # ── Article 6 & Paris Agreement ───────────────────────────────────────
+    "Article 6",
+    "Paris Agreement carbon",
+    "ITMOs",
+    "corresponding adjustment",
+    "Article 6.2",
+    "Article 6.4",
+    "carbon crediting mechanism",
+
+    # ── CORSIA & aviation ─────────────────────────────────────────────────
+    "CORSIA",
+    "aviation carbon",
+    "aviation offset",
+    "sustainable aviation fuel",
+    "SAF carbon",
+    "ICAO carbon",
+
+    # ── Carbon removal & CDR ──────────────────────────────────────────────
+    "carbon removal",
+    "CDR",
+    "direct air capture",
+    "DAC carbon",
+    "biochar carbon",
+    "enhanced weathering",
+    "carbon dioxide removal",
+
+    # ── Nature-based solutions ────────────────────────────────────────────
+    "nature-based carbon",
+    "forest carbon",
+    "REDD+",
+    "blue carbon",
+    "soil carbon credit",
+    "nature-based solution",
 ]
 
 # Chinese — matched as-is (no lowercasing) against same combined text
 KEYWORDS_ZH = [
+    # CBAM
     "碳邊境調整機制",
     "碳邊境調整",
     "碳關稅",
     "歐盟碳邊境",
-    "碳洩漏",          # carbon leakage
+    "碳洩漏",
     "英國碳邊境",
     "碳邊境 出口",
     "碳邊境 鋼鐵",
     "碳邊境 鋁業",
-    "CBAM",            # also catch Latin-script CBAM in Chinese text
+    "CBAM",
+
+    # EU/UK ETS
+    "歐盟碳排放交易",
+    "碳排放配額",
+    "英國碳市場",
+    "碳交易體系",
+
+    # Taiwan
+    "台灣碳費",
+    "台灣碳市場",
+    "碳費",
+    "台灣碳權交易所",
+    "碳排放交易所",
+
+    # Japan & Korea
+    "日本碳市場",
+    "GX聯盟",
+    "韓國碳排放交易",
+    "K-ETS",
+    "南韓碳市場",
+
+    # VCM
+    "自願性碳市場",
+    "碳信用",
+    "碳抵換",
+    "碳權",
+    "自願減量",
+
+    # Article 6
+    "巴黎協定碳交易",
+    "第六條",
+
+    # CDR / nature
+    "碳移除",
+    "直接空氣捕捉",
+    "自然碳匯",
+    "森林碳匯",
+
+    # CORSIA
+    "航空碳抵換",
+    "永續航空燃料",
 ]
 
 # ── Topic Classification ──────────────────────────────────────────────────────
@@ -304,50 +443,92 @@ TOPIC_PATTERNS: dict[str, list[str]] = {
         "cbam transitional", "cbam definitive", "cbam registry",
         "cbam reporting", "cbam scope", "cbam expansion",
         "embedded emissions", "cbam compliance", "cbam importer",
+        "cbam equivalence", "cbam exemption",
         "碳邊境調整機制", "歐盟碳邊境", "碳關稅", "碳邊境調整",
     ],
-    "UK CBAM 英國CBAM": [
-        "uk carbon border", "uk cbam", "英國碳邊境",
-        "hmrc carbon", "uk industrial decarbonisation levy",
-        "uk carbon border adjustment",
+    "EU ETS 歐盟碳交易": [
+        "eu ets", "european emissions trading", "ets reform",
+        "carbon allowance", "carbon permit", "eua price",
+        "eu carbon market", "emissions trading scheme", "cap and trade",
+        "歐盟碳排放交易", "碳排放配額", "碳交易體系",
     ],
-    "Taiwan & Export Exposure 台灣與出口影響": [
-        "taiwan cbam", "taiwan carbon border",
+    "UK Carbon Market 英國碳市場": [
+        "uk ets", "uk emissions trading", "uk carbon market",
+        "uk carbon price", "uk carbon border", "uk cbam",
+        "英國碳邊境", "英國碳市場", "hmrc carbon",
+    ],
+    "Taiwan Carbon Market 台灣碳市場": [
+        "taiwan carbon", "taiwan ets", "taiwan carbon fee",
+        "tcx carbon", "taiwan carbon market",
         "碳邊境 出口", "碳邊境 鋼鐵", "碳邊境 鋁業",
-        "taiwan steel cbam", "taiwan aluminium cbam",
+        "台灣碳費", "台灣碳市場", "碳費", "台灣碳權交易所", "碳排放交易所",
+    ],
+    "Japan Carbon Market 日本碳市場": [
+        "japan ets", "japan carbon market", "japan carbon pricing",
+        "gx-ets", "gx league", "japan emissions trading",
+        "日本碳市場", "GX聯盟",
+    ],
+    "Korea Carbon Market 韓國碳市場": [
+        "korea ets", "k-ets", "south korea carbon",
+        "korea carbon market", "korea emissions trading",
+        "韓國碳排放交易", "K-ETS", "南韓碳市場",
+    ],
+    "Voluntary Carbon Market (VCM) 自願性碳市場": [
+        "voluntary carbon market", "carbon credit", "carbon offset",
+        "carbon registry", "icvcm", "ccp label", "core carbon principles",
+        "verra", "gold standard", "carbon standard", "vcm",
+        "自願性碳市場", "碳信用", "碳抵換", "碳權", "自願減量",
+    ],
+    "Article 6 & Paris Agreement 第六條": [
+        "article 6", "paris agreement carbon", "itmos",
+        "corresponding adjustment", "article 6.2", "article 6.4",
+        "carbon crediting mechanism",
+        "巴黎協定碳交易", "第六條",
+    ],
+    "CORSIA & Aviation 航空碳抵換": [
+        "corsia", "aviation carbon", "aviation offset",
+        "sustainable aviation fuel", "saf carbon", "icao carbon",
+        "航空碳抵換", "永續航空燃料",
+    ],
+    "Carbon Removal & CDR 碳移除": [
+        "carbon removal", "cdr", "direct air capture",
+        "dac carbon", "biochar carbon", "enhanced weathering",
+        "carbon dioxide removal",
+        "碳移除", "直接空氣捕捉",
+    ],
+    "Nature-based Solutions 自然碳匯": [
+        "nature-based carbon", "forest carbon", "redd+",
+        "blue carbon", "soil carbon credit", "nature-based solution",
+        "自然碳匯", "森林碳匯",
     ],
     "Industry & Trade Response 產業與貿易回應": [
         "cbam steel", "cbam aluminium", "cbam cement",
         "cbam fertiliser", "cbam fertilizer", "cbam hydrogen",
-        "cbam electricity", "cbam industry", "cbam equivalence",
-        "cbam exemption", "eurofer", "carbon leakage",
+        "cbam industry", "eurofer", "carbon leakage",
+        "cbam wto", "cbam challenge", "cbam retaliation",
+        "carbon pricing equivalence", "cbam india", "cbam china",
         "碳洩漏",
     ],
-    "WTO & Trade Law 世貿與貿易法": [
-        "cbam wto", "cbam challenge", "cbam retaliation",
-        "carbon pricing equivalence", "cbam third country",
-        "border carbon adjustment wto", "cbam india", "cbam china",
-        "trade law carbon", "carbon border wto",
-    ],
-    "Other Jurisdictions 其他國家": [
-        "australia carbon border", "canada carbon border",
-        "japan cbam", "korea cbam", "us cbam", "us carbon border",
-        "cbam equivalent", "border carbon",
-    ],
     "Analysis & Research 分析與研究": [
-        "cbam report", "cbam analysis", "cbam assessment",
-        "carbon border study", "ercst", "bruegel cbam",
-        "cbam review", "cbam paper",
+        "carbon market report", "carbon market analysis",
+        "cbam analysis", "carbon border study", "ercst",
+        "carbon market review", "carbon pricing report",
     ],
 }
 
 TOPIC_ORDER = [
     "EU CBAM — Policy & Implementation 歐盟CBAM政策",
-    "UK CBAM 英國CBAM",
-    "Taiwan & Export Exposure 台灣與出口影響",
+    "EU ETS 歐盟碳交易",
+    "UK Carbon Market 英國碳市場",
+    "Taiwan Carbon Market 台灣碳市場",
+    "Japan Carbon Market 日本碳市場",
+    "Korea Carbon Market 韓國碳市場",
+    "Voluntary Carbon Market (VCM) 自願性碳市場",
+    "Article 6 & Paris Agreement 第六條",
+    "CORSIA & Aviation 航空碳抵換",
+    "Carbon Removal & CDR 碳移除",
+    "Nature-based Solutions 自然碳匯",
     "Industry & Trade Response 產業與貿易回應",
-    "WTO & Trade Law 世貿與貿易法",
-    "Other Jurisdictions 其他國家",
     "Analysis & Research 分析與研究",
     "Other 其他",
 ]
