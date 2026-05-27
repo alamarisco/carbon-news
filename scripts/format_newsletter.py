@@ -70,56 +70,6 @@ def format_html(articles: list, run_time: str) -> str:
     for a in articles:
         by_topic[a.get("topic", "Other 其他")].append(a)
 
-    # ── Executive Summary ────────────────────────────────────────────────────
-    key_items: list[tuple[str, dict]] = []
-    for topic in TOPIC_ORDER:
-        items = by_topic.get(topic, [])
-        if items:
-            key_items.append((topic, items[0]))
-        if len(key_items) >= 6:
-            break
-
-    summary_rows = ""
-    for topic, a in key_items:
-        # Short label: text before "—" or first Chinese character block
-        short = topic.split("—")[0].strip()
-        # Trim at first Chinese char group for a compact tag
-        en_only = re.split(r"[一-鿿]", short)[0].strip().rstrip("& ")
-        tag = en_only if en_only else short[:18]
-
-        excerpt = ""
-        if a.get("type") == "free" and a.get("summary"):
-            s = first_sentence(a["summary"])
-            if s:
-                excerpt = f'<span style="color:#555;font-weight:normal;"> — {s}</span>'
-
-        pub = format_pub_date(a.get("published", ""))
-
-        summary_rows += f"""
-        <div style="padding:8px 0;border-bottom:1px solid {GREEN_LIGHT};">
-          <span style="display:inline-block;background:{GREEN_LIGHT};color:{GREEN};
-            font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;
-            margin-right:8px;white-space:nowrap;">{tag}</span>
-          <a href="{a.get('link','#')}" style="color:#1a0dab;font-size:14px;
-             text-decoration:none;font-weight:600;">{a.get('title','')}</a>
-          {excerpt}
-          <br/>
-          <span style="color:#1565c0;font-size:11px;font-weight:600;padding-left:4px;">
-            {a.get('source','')}
-          </span>
-          <span style="color:#999;font-size:11px;"> &middot; {pub}</span>
-        </div>"""
-
-    exec_section = f"""
-    <div style="margin:20px 0 32px 0;background:#f9fbe7;border-left:4px solid {GREEN};
-         border-radius:4px;padding:14px 18px;">
-      <h2 style="margin:0 0 12px 0;font-size:15px;color:{GREEN_DARK};
-          letter-spacing:.3px;text-transform:uppercase;">
-        ⚡ Key Developments This Week
-      </h2>
-      {summary_rows}
-    </div>"""
-
     # ── Full topic sections ──────────────────────────────────────────────────
     sections = ""
     for topic in TOPIC_ORDER:
@@ -187,8 +137,6 @@ def format_html(articles: list, run_time: str) -> str:
       {run_time} &middot; {total} articles
     </p>
   </div>
-
-  {exec_section}
 
   {sections}
 
