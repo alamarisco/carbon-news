@@ -42,18 +42,16 @@ CANDIDATES = {
 
     # ── EU policy / analysis ──────────────────────────────────────────────
     "Euractiv — Climate & Environment": [
-        ("https://www.euractiv.com/sections/climate-environment/feed/", "free"),
-        ("https://euractiv.com/sections/climate-environment/feed/", "free"),
+        ("https://www.euractiv.com/section/climate-environment/feed/", "free"),  # /section/ not /sections/
     ],
     "Euractiv — Trade": [
-        ("https://www.euractiv.com/sections/trade/feed/", "free"),
+        ("https://www.euractiv.com/section/trade/feed/", "free"),
     ],
-    "Euractiv — Energy": [
-        ("https://www.euractiv.com/sections/energy/feed/", "free"),
+    "Euractiv — Main": [
+        ("https://www.euractiv.com/feed/", "free"),
     ],
     "Carbon Brief": [
-        ("https://feeds.feedburner.com/carbonbrief", "free"),  # confirmed canonical (Feedspot, May 2026)
-        ("https://www.carbonbrief.org/feed/", "free"),          # fallback if FeedBurner redirects
+        ("https://www.carbonbrief.org/feed/", "free"),  # FeedBurner hijacked May 2026 — use direct
     ],
     "Carbon Pulse": [
         ("https://carbon-pulse.com/feed/", "free"),
@@ -64,13 +62,11 @@ CANDIDATES = {
         ("https://e3g.org/feed/", "free"),
     ],
     "Sandbag": [
-        ("https://sandbag.org.uk/feed/", "free"),
-        ("https://www.sandbag.org.uk/feed/", "free"),
-        ("https://sandbag.be/feed/", "free"),          # EU entity
+        ("https://sandbag.be/feed/", "free"),          # .org.uk empty; EU entity is active
     ],
     "Ember Climate": [
-        ("https://ember-climate.org/feed/", "free"),
-        ("https://www.ember-climate.org/feed/", "free"),
+        ("https://ember-climate.org/latest/feed/", "free"),   # /feed/ empty; /latest/ works
+        ("https://ember-climate.org/insights/feed/", "free"),
     ],
     "ERCST": [
         ("https://ercst.org/feed/", "free"),
@@ -118,16 +114,7 @@ CANDIDATES = {
     "Nikkei Asia (confirmed)": [
         ("https://asia.nikkei.com/rss/feed/nar", "paid"),
     ],
-    "Reuters — Environment": [
-        ("https://feeds.reuters.com/reuters/environment", "paid"),
-        ("https://www.reuters.com/rss/environment", "paid"),
-        ("https://feeds.reuters.com/reuters/environmentNews", "paid"),  # old variant
-    ],
-    "Reuters — Business": [
-        ("https://feeds.reuters.com/reuters/businessnews", "paid"),
-        ("https://feeds.reuters.com/reuters/businessNews", "paid"),
-        ("https://www.reuters.com/rss/businessnews", "paid"),
-    ],
+    # Reuters RSS shut down — all feeds return connection error or 401 (confirmed May 2026)
 }
 
 

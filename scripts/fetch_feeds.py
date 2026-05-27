@@ -8,11 +8,12 @@ for CBAM relevance, classifies by jurisdiction/topic, and outputs HTML, JSON,
 or Markdown.
 
 Data sources:
-  Free (RSS)     — Euractiv (climate, trade, energy), Carbon Brief, Carbon Pulse,
+  Free (RSS)     — Euractiv (climate, trade), Carbon Brief, Carbon Pulse,
                    E3G, Sandbag, Ember Climate, Clear Blue Markets, 中央社 CNA, 經濟日報 Economic Daily
   Free (scraped) — Sylvera (sylvera.com/blog), BeZero Carbon (bezerocarbon.com/insights)
                    Both confirmed SSR (May 2026); link-pattern scraper, no JS needed.
-  Paid (RSS)     — Financial Times, Nikkei Asia, Reuters
+  Paid (RSS)     — Financial Times, Nikkei Asia
+  Dead (removed) — Reuters (all RSS feeds shut down May 2026)
 
 Clear Blue Markets notes (confirmed via Chrome, May 2026):
   - Correct domain: clearbluemarkets.com (NOT clearblue.markets)
@@ -89,20 +90,20 @@ RSS_FEEDS: dict[str, dict] = {
     "Euractiv": {
         "type": "free",
         "method": "rss",
+        # URL structure changed from /sections/ to /section/ (confirmed May 2026)
         "feeds": [
-            "https://www.euractiv.com/sections/climate-environment/feed/",
-            "https://www.euractiv.com/sections/trade/feed/",
-            "https://www.euractiv.com/sections/energy/feed/",
+            "https://www.euractiv.com/section/climate-environment/feed/",
+            "https://www.euractiv.com/section/trade/feed/",
+            "https://www.euractiv.com/feed/",
         ],
     },
 
     "Carbon Brief": {
         "type": "free",
         "method": "rss",
-        # Canonical feed is FeedBurner (confirmed via Feedspot index, May 2026)
-        # carbonbrief.org/feed/ may redirect but feedburner URL is authoritative
+        # FeedBurner URL hijacked (May 2026) — direct feed is authoritative
         "feeds": [
-            "https://feeds.feedburner.com/carbonbrief",
+            "https://www.carbonbrief.org/feed/",
         ],
     },
 
@@ -125,16 +126,19 @@ RSS_FEEDS: dict[str, dict] = {
     "Sandbag": {
         "type": "free",
         "method": "rss",
+        # sandbag.org.uk empty — EU entity at sandbag.be is active (confirmed May 2026)
         "feeds": [
-            "https://sandbag.org.uk/feed/",
+            "https://sandbag.be/feed/",
         ],
     },
 
     "Ember Climate": {
         "type": "free",
         "method": "rss",
+        # ember-climate.org/feed/ returns empty — /latest/ covers all content (confirmed May 2026)
         "feeds": [
-            "https://ember-climate.org/feed/",
+            "https://ember-climate.org/latest/feed/",
+            "https://ember-climate.org/insights/feed/",
         ],
     },
 
@@ -203,16 +207,7 @@ RSS_FEEDS: dict[str, dict] = {
         ],
     },
 
-    "Reuters": {
-        "type": "paid",
-        "method": "rss",
-        # URL format verified against check_feeds.py: /environment not /environmentNews
-        # /businessnews (lowercase) is the Reuters convention; verify with check_feeds.py
-        "feeds": [
-            "https://feeds.reuters.com/reuters/environment",
-            "https://feeds.reuters.com/reuters/businessnews",
-        ],
-    },
+    # Reuters RSS feeds shut down — all URLs return connection error or 401 (confirmed May 2026)
 }
 
 # ── Link Pattern Sources (scraped — no RSS available) ────────────────────────
@@ -932,7 +927,7 @@ def format_html(articles: list[dict], run_time: str) -> str:
        color:#999;font-size:11px;">
     CBAM Global Monitor &middot; Weekly Edition<br/>
     Sources: Euractiv, Carbon Brief, Carbon Pulse, E3G, Sandbag, Ember Climate,
-    Clear Blue Markets, Sylvera, BeZero Carbon, CNA, Economic Daily, FT, Nikkei Asia, Reuters
+    Clear Blue Markets, Sylvera, BeZero Carbon, CNA, Economic Daily, FT, Nikkei Asia
   </div>
 </body></html>"""
 
