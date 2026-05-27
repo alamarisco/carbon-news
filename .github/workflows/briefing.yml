@@ -30,7 +30,7 @@ jobs:
 
       # 3. Install dependencies
       - name: Install dependencies
-        run: pip install -r cbam-monitor/requirements.txt
+        run: pip install -r requirements.txt
 
       # 4. Determine hours lookback
       - name: Set lookback window
@@ -50,7 +50,7 @@ jobs:
       # 6. Fetch articles → JSON
       - name: Fetch news articles
         run: |
-          python cbam-monitor/scripts/fetch_feeds.py \
+          python scripts/fetch_feeds.py \
             --hours ${{ steps.window.outputs.HOURS }} \
             --format json \
             --output /tmp/cbam_articles.json
@@ -58,7 +58,7 @@ jobs:
       # 7. Format JSON → HTML newsletter
       - name: Format HTML newsletter
         run: |
-          python cbam-monitor/scripts/format_newsletter.py \
+          python scripts/format_newsletter.py \
             --input /tmp/cbam_articles.json \
             --output /tmp/cbam_newsletter.html
 
