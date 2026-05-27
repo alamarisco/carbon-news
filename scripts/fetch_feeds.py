@@ -506,20 +506,23 @@ def _extract_article_date(soup) -> datetime | None:
         except ValueError:
             pass
 
-    # 5. Regex on visible text — patterns like "18 May 2026" or "May 18, 2026"
-    page_text = soup.get_text(" ")
-    for pat, fmt in [
-        (r"\b(\d{1,2}\s+\w+\s+\d{4})\b", "%d %B %Y"),
-        (r"\b(\w+\s+\d{1,2},?\s+\d{4})\b", "%B %d %Y"),
-    ]:
-        m = re.search(pat, page_text)
+    # 5. Short standalone date elements — e.g. Sylvera's
+    #    <div class="text-size-regular_16px">May 22, 2026</div>
+    #    Match elements whose entire text content is a date, not buried in prose.
+    date_only_pat = re.compile(
+        r"^\s*(\d{1,2}\s+\w+\s+\d{4}|\w+\s+\d{1,2},?\s+\d{4})\s*$"
+    )
+    for tag in soup.find_all(["div", "span", "p"]):
+        text = tag.get_text(" ", strip=True)
+        m = date_only_pat.match(text)
         if m:
             raw = m.group(1).replace(",", "").strip()
-            try:
-                dt = datetime.strptime(raw, fmt)
-                return dt.replace(tzinfo=timezone.utc)
-            except ValueError:
-                pass
+            for fmt in ("%d %B %Y", "%B %d %Y"):
+                try:
+                    dt = datetime.strptime(raw, fmt)
+                    return dt.replace(tzinfo=timezone.utc)
+                except ValueError:
+                    pass
 
     return None
 

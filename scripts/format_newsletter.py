@@ -104,9 +104,10 @@ def format_html(articles: list, run_time: str) -> str:
              text-decoration:none;font-weight:600;">{a.get('title','')}</a>
           {excerpt}
           <br/>
-          <span style="color:#999;font-size:11px;padding-left:4px;">
-            {a.get('source','')} &middot; {pub}
+          <span style="color:#1565c0;font-size:11px;font-weight:600;padding-left:4px;">
+            {a.get('source','')}
           </span>
+          <span style="color:#999;font-size:11px;"> &middot; {pub}</span>
         </div>"""
 
     exec_section = f"""
@@ -128,9 +129,6 @@ def format_html(articles: list, run_time: str) -> str:
 
         rows = ""
         for a in items:
-            kws = " ".join(
-                kw_pill(k) for k in a.get("matched_keywords", [])[:5]
-            )
             pub = format_pub_date(a.get("published", ""))
 
             if a.get("type") == "free" and a.get("summary"):
@@ -148,11 +146,11 @@ def format_html(articles: list, run_time: str) -> str:
             <div style="padding:11px 0 7px 0;">
               <a href="{a.get('link','#')}" style="color:#1a0dab;font-size:15px;
                  text-decoration:none;font-weight:600;">{a.get('title','')}</a><br/>
-              <span style="color:#888;font-size:12px;">
-                {a.get('source','')} &middot; {pub}
+              <span style="color:#1565c0;font-size:12px;font-weight:600;">
+                {a.get('source','')}
               </span>
+              <span style="color:#888;font-size:12px;"> &middot; {pub}</span>
               {body}
-              <div style="margin-top:5px;">{kws}</div>
             </div>
             <div style="border-bottom:1px solid #eee;"></div>"""
 
