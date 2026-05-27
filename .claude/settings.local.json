@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh auth *)",
+      "Bash(brew list *)",
+      "Bash(ls /Applications/ | grep -i github; ls ~/Applications/ 2>/dev/null | grep -i github; which git)",
+      "Bash(git config *)"
+    ]
+  }
+}
