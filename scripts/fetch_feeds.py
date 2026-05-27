@@ -90,10 +90,8 @@ RSS_FEEDS: dict[str, dict] = {
     "Euractiv": {
         "type": "free",
         "method": "rss",
-        # URL structure changed from /sections/ to /section/ (confirmed May 2026)
+        # Section feeds blocked by Cloudflare (return HTML) — main feed only (confirmed May 2026)
         "feeds": [
-            "https://www.euractiv.com/section/climate-environment/feed/",
-            "https://www.euractiv.com/section/trade/feed/",
             "https://www.euractiv.com/feed/",
         ],
     },
@@ -111,7 +109,8 @@ RSS_FEEDS: dict[str, dict] = {
         "type": "free",
         "method": "rss",
         "feeds": [
-            "https://carbon-pulse.com/feed/",
+            "https://carbon-pulse.com/category/international/cbam-tariffs/feed/",  # CBAM-specific category
+            "https://carbon-pulse.com/feed/",  # general feed as fallback
         ],
     },
 
@@ -128,17 +127,17 @@ RSS_FEEDS: dict[str, dict] = {
         "method": "rss",
         # sandbag.org.uk empty — EU entity at sandbag.be is active (confirmed May 2026)
         "feeds": [
-            "https://sandbag.be/feed/",
+            "https://sandbag.be/category/cbam/feed/",  # CBAM-specific category
+            "https://sandbag.be/feed/",                 # general feed as fallback
         ],
     },
 
-    "Ember Climate": {
+    "Ember Energy": {
         "type": "free",
         "method": "rss",
-        # ember-climate.org/feed/ returns empty — /latest/ covers all content (confirmed May 2026)
+        # Rebranded ember-climate.org → ember-energy.org (May 2026); feed valid but currently sparse
         "feeds": [
-            "https://ember-climate.org/latest/feed/",
-            "https://ember-climate.org/insights/feed/",
+            "https://ember-energy.org/feed/",
         ],
     },
 
@@ -226,6 +225,8 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
         "base_url": "https://www.sylvera.com",
         # Match /blog/slug — exclude /blog-category/… and bare /blog
         "link_pattern": re.compile(r"^/blog/[a-z0-9][^/]*$"),
+        # No reliable date metadata — regex picks up policy dates not publish dates
+        "skip_date_filter": True,
     },
     "BeZero Carbon": {
         "type": "free",
@@ -233,6 +234,7 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
         "base_url": "https://bezerocarbon.com",
         # Match /insights/slug
         "link_pattern": re.compile(r"^/insights/[a-z0-9][^/]*$"),
+        "skip_date_filter": True,
     },
 }
 
@@ -567,10 +569,11 @@ def fetch_link_pattern_source(
         print(f"  [WARN] requests/BeautifulSoup not installed — skipping {source_name}", file=sys.stderr)
         return []
 
-    source_type = config["type"]
-    listing_url = config["listing_url"]
-    base_url    = config["base_url"]
-    link_pat    = config["link_pattern"]
+    source_type      = config["type"]
+    listing_url      = config["listing_url"]
+    base_url         = config["base_url"]
+    link_pat         = config["link_pattern"]
+    skip_date_filter = config.get("skip_date_filter", False)
     articles: list[dict] = []
 
     # ── Step 1: fetch listing page ────────────────────────────────────────
@@ -636,12 +639,11 @@ def fetch_link_pattern_source(
         fetched += 1
         asoup = BeautifulSoup(ar.text, "html.parser")
 
-        # Date check — skip articles outside lookback window
+        # Date check — skip articles outside lookback window (unless skip_date_filter set)
         pub_date = _extract_article_date(asoup)
         if pub_date is None:
-            # If we genuinely can't find a date, include with now() so it isn't dropped
             pub_date = datetime.now(tz=timezone.utc)
-        if pub_date < cutoff:
+        if not skip_date_filter and pub_date < cutoff:
             if debug:
                 print(f"      [DEBUG] too old: {article_url} ({pub_date.date()})", file=sys.stderr)
             continue
