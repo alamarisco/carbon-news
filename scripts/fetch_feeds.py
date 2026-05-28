@@ -11,7 +11,7 @@ Data sources:
   Free (RSS)     — Euractiv (climate, trade), Carbon Brief, Carbon Pulse,
                    Carbon Market Watch, Climate Home News, E3G, Sandbag, Ember Climate,
                    Clear Blue Markets, Politico Europe (energy section),
-                   中央社 CNA, 經濟日報 Economic Daily
+                   中央社 CNA, 經濟日報 Economic Daily, 環境資訊中心 e-info
   Free (scraped) — Sylvera (sylvera.com/blog), BeZero Carbon (bezerocarbon.com/insights)
                    Both confirmed SSR (May 2026); link-pattern scraper, no JS needed.
   Paid (RSS)     — Financial Times, Nikkei Asia, Bloomberg Green
@@ -208,6 +208,16 @@ RSS_FEEDS: dict[str, dict] = {
             "https://money.udn.com/rssfeed/news/1001/5588?ch=money",   # 產業
             "https://money.udn.com/rssfeed/news/1001/5589?ch=money",   # 國際財經
             "https://money.udn.com/rssfeed/news/1001/5591?ch=money",   # 金融
+        ],
+    },
+
+    "環境資訊中心 e-info": {
+        "type": "free",
+        "method": "rss",
+        # 25 entries per fetch, proper dates; summaries empty in feed (title-only keyword match)
+        # Confirmed working May 2026: https://e-info.org.tw/rss/eic.xml
+        "feeds": [
+            "https://e-info.org.tw/rss/eic.xml",
         ],
     },
 
@@ -426,6 +436,10 @@ KEYWORDS_ZH = [
     "碳費",
     "台灣碳權交易所",
     "碳排放交易所",
+    "碳盤查",
+    "碳中和",
+    "淨零碳排",
+    "排碳",
 
     # Japan & Korea
     "日本碳市場",
@@ -484,6 +498,7 @@ TOPIC_PATTERNS: dict[str, list[str]] = {
         "tcx carbon", "taiwan carbon market",
         "碳邊境 出口", "碳邊境 鋼鐵", "碳邊境 鋁業",
         "台灣碳費", "台灣碳市場", "碳費", "台灣碳權交易所", "碳排放交易所",
+        "碳盤查", "碳中和", "淨零碳排", "排碳",
     ],
     "Japan Carbon Market 日本碳市場": [
         "japan ets", "japan carbon market", "japan carbon pricing",
@@ -1218,7 +1233,7 @@ def format_html(articles: list[dict], run_time: str) -> str:
     Sources: Euractiv · Carbon Brief · Carbon Pulse · Carbon Market Watch ·
     Climate Home News · Politico Europe · E3G · Sandbag · Ember Energy ·
     Clear Blue Markets · Sylvera · BeZero Carbon · CNA · Economic Daily ·
-    FT · Nikkei Asia · Bloomberg Green
+    環境資訊中心 · FT · Nikkei Asia · Bloomberg Green
   </div>
 </body></html>"""
 

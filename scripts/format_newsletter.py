@@ -152,7 +152,7 @@ def format_html(articles: list, run_time: str) -> str:
     Sources: Euractiv · Carbon Brief · Carbon Pulse · Carbon Market Watch ·
     Climate Home News · Politico Europe · E3G · Sandbag · Ember Energy ·
     Clear Blue Markets · Sylvera · BeZero Carbon · CNA · Economic Daily ·
-    FT · Nikkei Asia · Bloomberg Green
+    環境資訊中心 · FT · Nikkei Asia · Bloomberg Green
   </div>
 
 </body>
