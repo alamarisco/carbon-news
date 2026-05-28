@@ -9,10 +9,12 @@ or Markdown.
 
 Data sources:
   Free (RSS)     — Euractiv (climate, trade), Carbon Brief, Carbon Pulse,
-                   E3G, Sandbag, Ember Climate, Clear Blue Markets, 中央社 CNA, 經濟日報 Economic Daily
+                   Carbon Market Watch, Climate Home News, E3G, Sandbag, Ember Climate,
+                   Clear Blue Markets, Politico Europe (energy section),
+                   中央社 CNA, 經濟日報 Economic Daily
   Free (scraped) — Sylvera (sylvera.com/blog), BeZero Carbon (bezerocarbon.com/insights)
                    Both confirmed SSR (May 2026); link-pattern scraper, no JS needed.
-  Paid (RSS)     — Financial Times, Nikkei Asia
+  Paid (RSS)     — Financial Times, Nikkei Asia, Bloomberg Green
   Dead (removed) — Reuters (all RSS feeds shut down May 2026)
 
 Clear Blue Markets notes (confirmed via Chrome, May 2026):
@@ -140,6 +142,17 @@ RSS_FEEDS: dict[str, dict] = {
         ],
     },
 
+    "Politico Europe": {
+        "type": "free",
+        "method": "rss",
+        # Energy section feed confirmed working (31 entries, May 2026)
+        # Main feed also works (10 entries) but energy section is more targeted
+        "feeds": [
+            "https://www.politico.eu/section/energy/feed/",
+            "https://www.politico.eu/feed/",
+        ],
+    },
+
     "E3G": {
         "type": "free",
         "method": "rss",
@@ -227,6 +240,16 @@ RSS_FEEDS: dict[str, dict] = {
         "method": "rss",
         "feeds": [
             "https://asia.nikkei.com/rss/feed/nar",
+        ],
+    },
+
+    "Bloomberg Green": {
+        "type": "paid",
+        "method": "rss",
+        # Paywalled — headline + link only (same treatment as FT)
+        # Feed confirmed working (May 2026): ~20 entries, ~157 char summaries
+        "feeds": [
+            "https://feeds.bloomberg.com/green/news.rss",
         ],
     },
 
@@ -1191,9 +1214,11 @@ def format_html(articles: list[dict], run_time: str) -> str:
 
   <div style="text-align:center;padding:16px 0;border-top:1px solid #ddd;
        color:#999;font-size:11px;">
-    CBAM Global Monitor &middot; Weekly Edition<br/>
-    Sources: Euractiv, Carbon Brief, Carbon Pulse, E3G, Sandbag, Ember Climate,
-    Clear Blue Markets, Sylvera, BeZero Carbon, CNA, Economic Daily, FT, Nikkei Asia
+    Carbon Markets Global Monitor &middot; Weekly Edition<br/>
+    Sources: Euractiv · Carbon Brief · Carbon Pulse · Carbon Market Watch ·
+    Climate Home News · Politico Europe · E3G · Sandbag · Ember Energy ·
+    Clear Blue Markets · Sylvera · BeZero Carbon · CNA · Economic Daily ·
+    FT · Nikkei Asia · Bloomberg Green
   </div>
 </body></html>"""
 
