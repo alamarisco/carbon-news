@@ -34,6 +34,7 @@ TOPIC_ORDER = [
     "CORSIA & Aviation 航空碳抵換",
     "Carbon Removal & CDR 碳移除",
     "Nature-based Solutions 自然碳匯",
+    "Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業",
     "Industry & Trade Response 產業與貿易回應",
     "Analysis & Research 分析與研究",
     "Other 其他",

@@ -418,6 +418,19 @@ KEYWORDS_EN = [
     "blue carbon",
     "soil carbon credit",
     "nature-based solution",
+
+    # ── Cement, steel & hard-to-abate ────────────────────────────────────
+    "green steel",
+    "steel decarbonisation",
+    "steel decarbonization",
+    "cement decarbonisation",
+    "cement decarbonization",
+    "hard-to-abate",
+    "blast furnace",
+    "electric arc furnace",
+    "direct reduced iron",
+    "low-carbon steel",
+    "low-carbon cement",
 ]
 
 # Chinese — matched as-is (no lowercasing) against same combined text
@@ -468,6 +481,15 @@ KEYWORDS_ZH = [
     # Article 6
     "巴黎協定碳交易",
     "第六條",
+
+    # Cement, steel & hard-to-abate
+    "鋼鐵減碳",
+    "水泥減碳",
+    "高碳排產業",
+    "鋼鐵碳排",
+    "綠色鋼鐵",
+    "碳邊境 鋼鐵",
+    "碳邊境 水泥",
 
     # CDR / nature
     "碳移除",
@@ -548,12 +570,22 @@ TOPIC_PATTERNS: dict[str, list[str]] = {
         "blue carbon", "soil carbon credit", "nature-based solution",
         "自然碳匯", "森林碳匯",
     ],
+    "Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業": [
+        "cbam steel", "cbam aluminium", "cbam aluminum", "cbam cement",
+        "cbam iron", "cbam fertiliser", "cbam fertilizer",
+        "steel carbon", "cement carbon",
+        "steel decarbonisation", "steel decarbonization",
+        "cement decarbonisation", "cement decarbonization",
+        "green steel", "hard-to-abate", "blast furnace",
+        "electric arc furnace", "direct reduced iron", "dri steel",
+        "eurofer", "carbon steel", "low-carbon steel", "low-carbon cement",
+        "鋼鐵減碳", "水泥減碳", "高碳排產業", "鋼鐵碳排",
+    ],
     "Industry & Trade Response 產業與貿易回應": [
-        "cbam steel", "cbam aluminium", "cbam cement",
-        "cbam fertiliser", "cbam fertilizer", "cbam hydrogen",
-        "cbam industry", "eurofer", "carbon leakage",
+        "cbam industry", "carbon leakage",
         "cbam wto", "cbam challenge", "cbam retaliation",
         "carbon pricing equivalence", "cbam india", "cbam china",
+        "cbam hydrogen", "trade carbon",
         "碳洩漏",
     ],
     "Analysis & Research 分析與研究": [
@@ -575,6 +607,7 @@ TOPIC_ORDER = [
     "CORSIA & Aviation 航空碳抵換",
     "Carbon Removal & CDR 碳移除",
     "Nature-based Solutions 自然碳匯",
+    "Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業",
     "Industry & Trade Response 產業與貿易回應",
     "Analysis & Research 分析與研究",
     "Other 其他",
