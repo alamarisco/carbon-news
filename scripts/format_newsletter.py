@@ -151,7 +151,7 @@ def format_html(articles: list, run_time: str) -> str:
     Carbon Markets Global Monitor &middot; Weekly Edition<br/>
     Sources: Euractiv · Carbon Brief · Carbon Pulse · Carbon Market Watch ·
     Climate Home News · Politico Europe · E3G · Sandbag · Ember Energy ·
-    Clear Blue Markets · Sylvera · BeZero Carbon · CNA · Economic Daily ·
+    Clear Blue Markets · Sylvera · BeZero Carbon · CNA · UDN · Economic Daily ·
     環境資訊中心 · FT · Nikkei Asia · Bloomberg Green
   </div>
 

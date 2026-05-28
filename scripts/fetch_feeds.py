@@ -11,7 +11,7 @@ Data sources:
   Free (RSS)     — Euractiv (climate, trade), Carbon Brief, Carbon Pulse,
                    Carbon Market Watch, Climate Home News, E3G, Sandbag, Ember Climate,
                    Clear Blue Markets, Politico Europe (energy section),
-                   中央社 CNA, 經濟日報 Economic Daily, 環境資訊中心 e-info
+                   中央社 CNA, 聯合新聞網 UDN, 經濟日報 Economic Daily, 環境資訊中心 e-info
   Free (scraped) — Sylvera (sylvera.com/blog), BeZero Carbon (bezerocarbon.com/insights)
                    Both confirmed SSR (May 2026); link-pattern scraper, no JS needed.
   Paid (RSS)     — Financial Times, Nikkei Asia, Bloomberg Green
@@ -208,6 +208,16 @@ RSS_FEEDS: dict[str, dict] = {
             "https://money.udn.com/rssfeed/news/1001/5588?ch=money",   # 產業
             "https://money.udn.com/rssfeed/news/1001/5589?ch=money",   # 國際財經
             "https://money.udn.com/rssfeed/news/1001/5591?ch=money",   # 金融
+        ],
+    },
+
+    "聯合新聞網 UDN": {
+        "type": "free",
+        "method": "rss",
+        # 要聞 feed — 298 entries, full titles + summaries confirmed working
+        # Note: earlier-tested udn.com category feeds returned empty titles; 6638 is the correct feed
+        "feeds": [
+            "https://udn.com/news/rssfeed/6638",    # 要聞 (major news)
         ],
     },
 
@@ -1232,7 +1242,7 @@ def format_html(articles: list[dict], run_time: str) -> str:
     Carbon Markets Global Monitor &middot; Weekly Edition<br/>
     Sources: Euractiv · Carbon Brief · Carbon Pulse · Carbon Market Watch ·
     Climate Home News · Politico Europe · E3G · Sandbag · Ember Energy ·
-    Clear Blue Markets · Sylvera · BeZero Carbon · CNA · Economic Daily ·
+    Clear Blue Markets · Sylvera · BeZero Carbon · CNA · UDN · Economic Daily ·
     環境資訊中心 · FT · Nikkei Asia · Bloomberg Green
   </div>
 </body></html>"""
