@@ -191,6 +191,100 @@ RSS_FEEDS: dict[str, dict] = {
         ],
     },
 
+    # ── EU INDUSTRY & POLICY ──────────────────────────────────────────────
+
+    "EUROMETAL": {
+        "type": "free",
+        "method": "rss",
+        # European steel distributors' association — high signal for CBAM steel sector
+        # ⚠️  Unverified (sandbox cannot reach outbound) — run check_feeds.py to confirm
+        "feeds": [
+            "https://www.eurometal.net/feed/",
+        ],
+    },
+
+    "EU Council": {
+        "type": "free",
+        "method": "rss",
+        # Official EU Council press releases — primary source for CBAM legislative milestones
+        # ⚠️  Unverified (sandbox cannot reach outbound) — run check_feeds.py to confirm
+        "feeds": [
+            "https://www.consilium.europa.eu/en/press/press-releases/feed/",
+        ],
+    },
+
+    "SteelOrbis": {
+        "type": "free",
+        "method": "rss",
+        # Steel trade news with strong CBAM/trade policy coverage
+        # ⚠️  Unverified (sandbox cannot reach outbound) — run check_feeds.py to confirm
+        "feeds": [
+            "https://www.steelorbis.com/steel-news/rss.xml",
+        ],
+    },
+
+    "GMK Center": {
+        "type": "free",
+        "method": "rss",
+        # Ukrainian metallurgy analytics; covers steel trade flows/overcapacity affected by CBAM
+        # ⚠️  Unverified (sandbox cannot reach outbound) — run check_feeds.py to confirm
+        "feeds": [
+            "https://gmk.center/en/feed/",
+        ],
+    },
+
+    "Carbon Credits": {
+        "type": "free",
+        "method": "rss",
+        # Carbon market news aggregator — good for VCM/Article 6 coverage
+        # ⚠️  Unverified (sandbox cannot reach outbound) — run check_feeds.py to confirm
+        "feeds": [
+            "https://carboncredits.com/feed/",
+        ],
+    },
+
+    "PIK Potsdam": {
+        "type": "free",
+        "method": "rss",
+        # Potsdam Institute for Climate Impact Research — research-grade policy analysis
+        # ⚠️  Unverified (sandbox cannot reach outbound) — run check_feeds.py to confirm
+        "feeds": [
+            "https://www.pik-potsdam.de/en/news/rss",
+        ],
+    },
+
+    "The Parliament Magazine": {
+        "type": "free",
+        "method": "rss",
+        # EU legislative process coverage
+        # ⚠️  Unverified (sandbox cannot reach outbound) — run check_feeds.py to confirm
+        "feeds": [
+            "https://www.theparliamentmagazine.eu/feed/",
+        ],
+    },
+
+    # ── INDIA ─────────────────────────────────────────────────────────────
+    # India is the largest CBAM-affected exporter of steel and aluminium
+
+    "CNBC TV18 India": {
+        "type": "free",
+        "method": "rss",
+        # ⚠️  Unverified (sandbox cannot reach outbound) — run check_feeds.py to confirm
+        # Try also /commonfeeds/v1/eng/rss/markets.xml if economy feed is empty
+        "feeds": [
+            "https://www.cnbctv18.com/commonfeeds/v1/eng/rss/economy.xml",
+        ],
+    },
+
+    "NDTV Profit India": {
+        "type": "free",
+        "method": "rss",
+        # ⚠️  Unverified (sandbox cannot reach outbound) — run check_feeds.py to confirm
+        "feeds": [
+            "https://feeds.feedburner.com/ndtvprofit-latest",
+        ],
+    },
+
     "中央社 CNA": {
         "type": "free",
         "method": "rss",
@@ -230,6 +324,47 @@ RSS_FEEDS: dict[str, dict] = {
         # Confirmed working May 2026: https://e-info.org.tw/rss/eic.xml
         "feeds": [
             "https://e-info.org.tw/rss/eic.xml",
+        ],
+    },
+
+    "工商時報 CTEE": {
+        "type": "free",
+        "method": "rss",
+        # Major Taiwan business daily — 4× confirmed hit rate
+        # ⚠️  Unverified (sandbox cannot reach outbound) — run check_feeds.py to confirm
+        "feeds": [
+            "https://www.ctee.com.tw/rss.xml",
+        ],
+    },
+
+    "Reccessary 能源碳市場": {
+        "type": "free",
+        "method": "rss",
+        # Taiwan energy/carbon market news outlet
+        # ⚠️  Unverified (sandbox cannot reach outbound) — run check_feeds.py to confirm
+        "feeds": [
+            "https://reccessary.com/feed/",
+        ],
+    },
+
+    "鉅亨網 Cnyes": {
+        "type": "free",
+        "method": "rss",
+        # Taiwan financial/commodity news; try category feeds if general feed is too noisy
+        # ⚠️  Unverified (sandbox cannot reach outbound) — run check_feeds.py to confirm
+        # Also try: https://news.cnyes.com/rss/cat/esg
+        "feeds": [
+            "https://news.cnyes.com/rss/cat/carbon",
+        ],
+    },
+
+    "CSRone 企業永續": {
+        "type": "free",
+        "method": "rss",
+        # Taiwan ESG/sustainability reporting platform — corporate carbon disclosure angle
+        # ⚠️  Unverified (sandbox cannot reach outbound) — run check_feeds.py to confirm
+        "feeds": [
+            "https://csrone.com/feed/",
         ],
     },
 
@@ -275,7 +410,21 @@ RSS_FEEDS: dict[str, dict] = {
         ],
     },
 
+    "S&P Global Commodity Insights": {
+        "type": "paid",
+        "method": "rss",
+        # Paywalled — headline + link only; subscription required for full content
+        # ⚠️  Unverified (sandbox cannot reach outbound) — run check_feeds.py to confirm
+        # May require auth headers; if feed returns 401, remove this entry
+        "feeds": [
+            "https://www.spglobal.com/commodityinsights/en/rss-feeds/latest-news",
+        ],
+    },
+
     # Reuters RSS feeds shut down — all URLs return connection error or 401 (confirmed May 2026)
+    # 🚫 No RSS: taxation-customs.ec.europa.eu (DG TAXUD) — configured in LINK_PATTERN_SOURCES below
+    # 🚫 No RSS: trademag.org.tw (經貿透視) — configured in LINK_PATTERN_SOURCES below
+    # 🚫 No RSS: netzero.cna.com.tw (中央社 Net Zero) — configured in LINK_PATTERN_SOURCES below
 }
 
 # ── Link Pattern Sources (scraped — no RSS available) ────────────────────────
@@ -320,6 +469,44 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
         "base_url": "https://www.cw.com.tw",
         # Absolute URLs; date from JSON-LD datePublished on article pages
         "link_pattern": re.compile(r"https://www\.cw\.com\.tw/article/\d+$"),
+    },
+
+    # 🚫 NO RSS — scraped sources added June 2026
+
+    "DG TAXUD CBAM": {
+        "type": "free",
+        "listing_url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+        "base_url": "https://taxation-customs.ec.europa.eu",
+        # Official EU CBAM authority page — primary source for regulatory updates
+        # ⚠️  Link pattern and listing structure need verification from Codespace
+        # Article URLs likely follow /news/... or /system/files/... — update pattern after inspection
+        "link_pattern": re.compile(
+            r"https://taxation-customs\.ec\.europa\.eu/news/[a-z0-9]"
+        ),
+    },
+
+    "經貿透視 Trademag": {
+        "type": "free",
+        "listing_url": "https://www.trademag.org.tw",
+        "base_url": "https://www.trademag.org.tw",
+        # TAITRA trade magazine — Taiwan exporter perspective on CBAM; 2× confirmed hit rate
+        # ⚠️  Link pattern and listing URL need verification from Codespace
+        # Article URLs likely follow /page/single/?id=NNNNNN — update after inspection
+        "link_pattern": re.compile(
+            r"https://www\.trademag\.org\.tw/page/single/\?id=\d+"
+        ),
+    },
+
+    "中央社 Net Zero": {
+        "type": "free",
+        "listing_url": "https://netzero.cna.com.tw",
+        "base_url": "https://netzero.cna.com.tw",
+        # CNA's dedicated net zero section — more targeted than general CNA FeedBurner feeds
+        # ⚠️  Link pattern and listing URL need verification from Codespace
+        # Article URL structure may differ from main CNA site — update after inspection
+        "link_pattern": re.compile(
+            r"https://netzero\.cna\.com\.tw/news/[a-zA-Z0-9]"
+        ),
     },
 }
 
@@ -450,6 +637,30 @@ KEYWORDS_EN = [
     "direct reduced iron",
     "low-carbon steel",
     "low-carbon cement",
+
+    # ── CBAM technical & procedural ───────────────────────────────────────
+    "free allocation",
+    "MRV",
+    "suspension clause",
+    "downstream extension",
+    "plastic CBAM",
+    "CBAM benchmark",
+    "default values",
+
+    # ── Sector goods (CBAM-paired to avoid noise) ─────────────────────────
+    "aluminium CBAM",
+    "aluminum CBAM",
+    "fertiliser CBAM",
+    "urea CBAM",
+    "hydrogen CBAM",
+
+    # ── Third-country trade angle ─────────────────────────────────────────
+    "India CBAM",
+    "Turkey ETS",
+    "Australia carbon leakage",
+
+    # ── Companies (CBAM-exposed) ──────────────────────────────────────────
+    "Norsk Hydro",
 ]
 
 # Chinese — matched as-is (no lowercasing) against same combined text
@@ -519,6 +730,32 @@ KEYWORDS_ZH = [
     # CORSIA
     "航空碳抵換",
     "永續航空燃料",
+
+    # CBAM variants & technical terms
+    "碳邊境調節機制",
+    "碳邊境稅",
+    "免費配額",
+    "CBAM憑證",
+    "暫停條款",
+    "下游擴展",
+    "排放交易體系",
+
+    # New sector coverage
+    "塑膠版CBAM",
+    "塑膠碳關稅",
+    "鋁業碳關稅",
+    "化肥碳費",
+
+    # Taiwan regulatory angle
+    "環境部",
+    "彭啟明",
+    "電力排碳係數",
+    "內部碳定價",
+
+    # Companies (Taiwan cement — directly CBAM-affected)
+    "台泥",
+    "亞泥",
+    "國產建材",
 ]
 
 # ── Topic Classification ──────────────────────────────────────────────────────
@@ -531,13 +768,17 @@ TOPIC_PATTERNS: dict[str, list[str]] = {
         "cbam reporting", "cbam scope", "cbam expansion",
         "embedded emissions", "cbam compliance", "cbam importer",
         "cbam equivalence", "cbam exemption",
-        "碳邊境調整機制", "歐盟碳邊境", "碳關稅", "碳邊境調整",
+        "suspension clause", "downstream extension", "plastic cbam",
+        "cbam benchmark", "default values", "free allocation", "mrv",
+        "碳邊境調整機制", "碳邊境調節機制", "歐盟碳邊境", "碳關稅", "碳邊境調整",
+        "碳邊境稅", "CBAM憑證", "暫停條款", "下游擴展", "免費配額",
+        "塑膠版CBAM", "塑膠碳關稅",
     ],
     "EU ETS 歐盟碳交易": [
         "eu ets", "european emissions trading", "ets reform",
         "carbon allowance", "carbon permit", "eua price",
         "eu carbon market", "emissions trading scheme", "cap and trade",
-        "歐盟碳排放交易", "碳排放配額", "碳交易體系",
+        "歐盟碳排放交易", "碳排放配額", "碳交易體系", "排放交易體系",
     ],
     "UK Carbon Market 英國碳市場": [
         "uk ets", "uk emissions trading", "uk carbon market",
@@ -550,6 +791,7 @@ TOPIC_PATTERNS: dict[str, list[str]] = {
         "碳邊境 出口", "碳邊境 鋼鐵", "碳邊境 鋁業",
         "台灣碳費", "台灣碳市場", "碳費", "台灣碳權交易所", "碳排放交易所",
         "碳盤查", "碳中和", "淨零碳排", "排碳",
+        "環境部", "彭啟明", "電力排碳係數", "內部碳定價",
     ],
     "Japan Carbon Market 日本碳市場": [
         "japan ets", "japan carbon market", "japan carbon pricing",
@@ -592,19 +834,24 @@ TOPIC_PATTERNS: dict[str, list[str]] = {
     "Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業": [
         "cbam steel", "cbam aluminium", "cbam aluminum", "cbam cement",
         "cbam iron", "cbam fertiliser", "cbam fertilizer",
+        "aluminium cbam", "aluminum cbam", "fertiliser cbam", "urea cbam",
+        "hydrogen cbam",
         "steel carbon", "cement carbon",
         "steel decarbonisation", "steel decarbonization",
         "cement decarbonisation", "cement decarbonization",
         "green steel", "hard-to-abate", "blast furnace",
         "electric arc furnace", "direct reduced iron", "dri steel",
         "eurofer", "carbon steel", "low-carbon steel", "low-carbon cement",
+        "norsk hydro",
         "鋼鐵減碳", "水泥減碳", "高碳排產業", "鋼鐵碳排",
+        "鋁業碳關稅", "化肥碳費", "台泥", "亞泥", "國產建材",
     ],
     "Industry & Trade Response 產業與貿易回應": [
         "cbam industry", "carbon leakage",
         "cbam wto", "cbam challenge", "cbam retaliation",
         "carbon pricing equivalence", "cbam india", "cbam china",
         "cbam hydrogen", "trade carbon",
+        "india cbam", "turkey ets", "australia carbon leakage",
         "碳洩漏",
     ],
     "Analysis & Research 分析與研究": [
