@@ -8,15 +8,19 @@ for CBAM relevance, classifies by jurisdiction/topic, and outputs HTML, JSON,
 or Markdown.
 
 Data sources:
-  Free (RSS)     — Euractiv (climate, trade), Carbon Brief, Carbon Pulse,
-                   Carbon Market Watch, Climate Home News, E3G, Sandbag, Ember Climate,
-                   Clear Blue Markets, Politico Europe (energy section),
-                   中央社 CNA, 聯合新聞網 UDN, 經濟日報 Economic Daily, 環境資訊中心 e-info
+  Free (RSS)     — Euractiv, Carbon Brief, Carbon Pulse, Carbon Market Watch,
+                   Climate Home News, E3G, Sandbag, Ember Energy, Clear Blue Markets,
+                   Politico Europe, EUROMETAL, EU Council, SteelOrbis, GMK Center,
+                   Carbon Credits, PIK Potsdam, The Parliament Magazine,
+                   CNBC TV18 India, NDTV Profit India,
+                   中央社 CNA, 聯合新聞網 UDN, 經濟日報 Economic Daily, 環境資訊中心 e-info,
+                   工商時報 CTEE, Reccessary, 鉅亨網 Cnyes, CSRone
   Free (scraped) — Sylvera (sylvera.com/blog), BeZero Carbon (bezerocarbon.com/insights),
-                   今週刊 ESG (esg.businesstoday.com.tw)
+                   今週刊 ESG (esg.businesstoday.com.tw),
+                   DG TAXUD CBAM (ec.europa.eu), 經貿透視 Trademag, 中央社 Net Zero
   Paid (scraped) — 天下雜誌 CommonWealth (cw.com.tw — 永續發展 section; preview only)
                    All confirmed SSR; link-pattern scraper, no JS needed.
-  Paid (RSS)     — Financial Times, Nikkei Asia, Bloomberg Green
+  Paid (RSS)     — Financial Times, Nikkei Asia, Bloomberg Green, S&P Global Commodity Insights
   Dead (removed) — Reuters (all RSS feeds shut down May 2026)
 
 Clear Blue Markets notes (confirmed via Chrome, May 2026):
@@ -275,6 +279,139 @@ RSS_FEEDS: dict[str, dict] = {
         ],
     },
 
+    # ── STEEL & METALS TRADE ─────────────────────────────────────────────
+
+    "EUROMETAL": {
+        "type": "free",
+        "method": "rss",
+        # European metals association news (CBAM steel/aluminium coverage)
+        "feeds": [
+            "https://www.eurometal.net/feed/",
+        ],
+    },
+
+    "SteelOrbis": {
+        "type": "free",
+        "method": "rss",
+        "feeds": [
+            "https://www.steelorbis.com/steel-news/rss/",
+        ],
+    },
+
+    "GMK Center": {
+        "type": "free",
+        "method": "rss",
+        # Ukrainian steel industry analytics — strong CBAM coverage
+        "feeds": [
+            "https://gmk.center/en/feed/",
+        ],
+    },
+
+    # ── EU POLICY ────────────────────────────────────────────────────────
+
+    "EU Council": {
+        "type": "free",
+        "method": "rss",
+        # Council press releases — picks up CBAM regulation milestones
+        "feeds": [
+            "https://www.consilium.europa.eu/en/press/press-releases/rss/",
+        ],
+    },
+
+    "The Parliament Magazine": {
+        "type": "free",
+        "method": "rss",
+        "feeds": [
+            "https://www.theparliamentmagazine.eu/feed/",
+        ],
+    },
+
+    # ── CARBON MARKETS ───────────────────────────────────────────────────
+
+    "Carbon Credits": {
+        "type": "free",
+        "method": "rss",
+        "feeds": [
+            "https://carboncredits.com/feed/",
+        ],
+    },
+
+    "PIK Potsdam": {
+        "type": "free",
+        "method": "rss",
+        # Potsdam Institute for Climate Impact Research — CBAM modelling papers
+        "feeds": [
+            "https://www.pik-potsdam.de/en/news/rss",
+        ],
+    },
+
+    # ── INDIA ────────────────────────────────────────────────────────────
+
+    "CNBC TV18 India": {
+        "type": "free",
+        "method": "rss",
+        "feeds": [
+            "https://www.cnbctv18.com/commonfeeds/v1/eng/rss/economy.xml",
+            "https://www.cnbctv18.com/commonfeeds/v1/eng/rss/market.xml",
+        ],
+    },
+
+    "NDTV Profit India": {
+        "type": "free",
+        "method": "rss",
+        "feeds": [
+            "https://feeds.feedburner.com/ndtvprofit-latest",
+        ],
+    },
+
+    # ── TAIWAN (additional) ──────────────────────────────────────────────
+
+    "工商時報 CTEE": {
+        "type": "free",
+        "method": "rss",
+        "feeds": [
+            "https://www.ctee.com.tw/rss/all.xml",
+        ],
+    },
+
+    "Reccessary": {
+        "type": "free",
+        "method": "rss",
+        # Taiwan circular-economy / ESG news
+        "feeds": [
+            "https://reccessary.com/feed/",
+        ],
+    },
+
+    "鉅亨網 Cnyes": {
+        "type": "free",
+        "method": "rss",
+        "feeds": [
+            "https://news.cnyes.com/api/v3/news/category/carbon/rss",
+            "https://news.cnyes.com/api/v3/news/category/esg/rss",
+        ],
+    },
+
+    "CSRone": {
+        "type": "free",
+        "method": "rss",
+        # Taiwan CSR/ESG platform
+        "feeds": [
+            "https://csrone.com/feed/",
+        ],
+    },
+
+    # ── PAID (COMMODITY INTELLIGENCE) ───────────────────────────────────
+
+    "S&P Global Commodity Insights": {
+        "type": "paid",
+        "method": "rss",
+        "feeds": [
+            "https://www.spglobal.com/commodityinsights/en/rss-feed/energy",
+            "https://www.spglobal.com/commodityinsights/en/rss-feed/metals",
+        ],
+    },
+
     # Reuters RSS feeds shut down — all URLs return connection error or 401 (confirmed May 2026)
 }
 
@@ -321,6 +458,34 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
         # Absolute URLs; date from JSON-LD datePublished on article pages
         "link_pattern": re.compile(r"https://www\.cw\.com\.tw/article/\d+$"),
     },
+    "DG TAXUD CBAM": {
+        "type": "free",
+        "listing_url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+        "base_url": "https://taxation-customs.ec.europa.eu",
+        # EC CBAM info/news pages — date from article:published_time meta
+        "link_pattern": re.compile(
+            r"https://taxation-customs\.ec\.europa\.eu/[a-z0-9_-]+_en$"
+        ),
+        "skip_date_filter": True,
+    },
+    "經貿透視 Trademag": {
+        "type": "free",
+        "listing_url": "https://www.trademag.org.tw/",
+        "base_url": "https://www.trademag.org.tw",
+        # Taiwan trade magazine — article URLs contain numeric post IDs
+        "link_pattern": re.compile(
+            r"https://www\.trademag\.org\.tw/page/[a-z0-9]+"
+        ),
+    },
+    "中央社 Net Zero": {
+        "type": "free",
+        "listing_url": "https://www.cna.com.tw/topic/newsworld/130-3.aspx",
+        "base_url": "https://www.cna.com.tw",
+        # CNA net-zero topic hub — article URLs: /news/<category>/<ID>.aspx
+        "link_pattern": re.compile(
+            r"https://www\.cna\.com\.tw/news/[a-z]+/\d{15}\.aspx"
+        ),
+    },
 }
 
 # ── Keyword Configuration ─────────────────────────────────────────────────────
@@ -351,6 +516,18 @@ KEYWORDS_EN = [
     "CBAM WTO",
     "carbon pricing equivalence",
     "carbon leakage",
+    # Core-mechanism mechanics (2026 live debates)
+    "free allocation",
+    "MRV",
+    "suspension clause",
+    "downstream extension",
+    "plastic CBAM",
+    "aluminium CBAM",
+    "aluminum CBAM",
+    "fertiliser CBAM",
+    "fertilizer CBAM",
+    "urea CBAM",
+    "hydrogen CBAM",
 
     # ── EU ETS ───────────────────────────────────────────────────────────
     "EU ETS",
@@ -450,14 +627,39 @@ KEYWORDS_EN = [
     "direct reduced iron",
     "low-carbon steel",
     "low-carbon cement",
+    "EUROFER",
+    "steel tariff",
+    "aluminium tariff",
+    "aluminum tariff",
+    "HBI carbon",
+
+    # ── India & emerging markets ──────────────────────────────────────────
+    "India CBAM",
+    "India carbon border",
+    "India carbon tax",
+    "India carbon market",
+    "India ETS",
+    "India carbon credit",
+    "BIS carbon",
+    "CBAM India",
+    "India steel CBAM",
+    "India aluminium CBAM",
+    "Turkey ETS",
+    "Australia carbon leakage",
+
+    # ── Company watch (CBAM-exposed producers) ────────────────────────────
+    "Norsk Hydro",
+    "TCC cement",
 ]
 
 # Chinese — matched as-is (no lowercasing) against same combined text
 KEYWORDS_ZH = [
     # CBAM
     "碳邊境調整機制",
+    "碳邊境調節機制",
     "碳邊境調整",
     "碳關稅",
+    "碳邊境稅",
     "歐盟碳邊境",
     "碳洩漏",
     "英國碳邊境",
@@ -465,6 +667,16 @@ KEYWORDS_ZH = [
     "碳邊境 鋼鐵",
     "碳邊境 鋁業",
     "CBAM",
+    "CBAM憑證",
+    "免費配額",
+    "暫停條款",
+    "下游擴展",
+    "塑膠版CBAM",
+    "塑膠碳關稅",
+    "鋁業碳關稅",
+    "鋁CBAM",
+    "化肥碳費",
+    "尿素碳稅",
 
     # EU/UK ETS
     "歐盟碳排放交易",
@@ -482,6 +694,14 @@ KEYWORDS_ZH = [
     "碳中和",
     "淨零碳排",
     "排碳",
+    "環境部",
+    "彭啟明",
+    "電力排碳係數",
+    "內部碳定價",
+    # Taiwan CBAM-exposed producers
+    "台泥",
+    "亞泥",
+    "國產建材",
 
     # Japan & Korea
     "日本碳市場",
@@ -519,6 +739,17 @@ KEYWORDS_ZH = [
     # CORSIA
     "航空碳抵換",
     "永續航空燃料",
+
+    # India / emerging markets
+    "印度碳市場",
+    "印度碳邊境",
+    "印度碳關稅",
+
+    # Steel/metals (additional)
+    "歐洲鋼鐵",
+    "鋼鐵關稅",
+    "低碳氫",
+    "綠氫",
 ]
 
 # ── Topic Classification ──────────────────────────────────────────────────────
@@ -531,7 +762,11 @@ TOPIC_PATTERNS: dict[str, list[str]] = {
         "cbam reporting", "cbam scope", "cbam expansion",
         "embedded emissions", "cbam compliance", "cbam importer",
         "cbam equivalence", "cbam exemption",
-        "碳邊境調整機制", "歐盟碳邊境", "碳關稅", "碳邊境調整",
+        "free allocation", "mrv", "suspension clause",
+        "downstream extension", "plastic cbam",
+        "碳邊境調整機制", "碳邊境調節機制", "歐盟碳邊境", "碳關稅",
+        "碳邊境調整", "碳邊境稅", "cbam憑證", "免費配額",
+        "暫停條款", "下游擴展", "塑膠版cbam", "塑膠碳關稅",
     ],
     "EU ETS 歐盟碳交易": [
         "eu ets", "european emissions trading", "ets reform",
@@ -598,13 +833,20 @@ TOPIC_PATTERNS: dict[str, list[str]] = {
         "green steel", "hard-to-abate", "blast furnace",
         "electric arc furnace", "direct reduced iron", "dri steel",
         "eurofer", "carbon steel", "low-carbon steel", "low-carbon cement",
+        "aluminium cbam", "aluminum cbam", "fertiliser cbam",
+        "fertilizer cbam", "urea cbam", "hbi carbon", "norsk hydro",
+        "tcc cement", "steel tariff", "aluminium tariff", "aluminum tariff",
         "鋼鐵減碳", "水泥減碳", "高碳排產業", "鋼鐵碳排",
+        "鋁業碳關稅", "鋁cbam", "化肥碳費", "尿素碳稅",
+        "台泥", "亞泥", "國產建材", "歐洲鋼鐵", "鋼鐵關稅",
     ],
     "Industry & Trade Response 產業與貿易回應": [
         "cbam industry", "carbon leakage",
         "cbam wto", "cbam challenge", "cbam retaliation",
         "carbon pricing equivalence", "cbam india", "cbam china",
-        "cbam hydrogen", "trade carbon",
+        "cbam hydrogen", "hydrogen cbam", "trade carbon",
+        "india cbam", "turkey ets", "australia carbon leakage",
+        "印度碳市場", "印度碳邊境", "印度碳關稅",
         "碳洩漏",
     ],
     "Analysis & Research 分析與研究": [
@@ -1310,8 +1552,13 @@ def format_html(articles: list[dict], run_time: str) -> str:
     Carbon Markets Global Monitor &middot; Weekly Edition<br/>
     Sources: Euractiv · Carbon Brief · Carbon Pulse · Carbon Market Watch ·
     Climate Home News · Politico Europe · E3G · Sandbag · Ember Energy ·
-    Clear Blue Markets · Sylvera · BeZero Carbon · 今週刊 ESG · CNA · UDN ·
-    Economic Daily · 環境資訊中心 · 天下雜誌 · FT · Nikkei Asia · Bloomberg Green
+    Clear Blue Markets · EUROMETAL · SteelOrbis · GMK Center · EU Council ·
+    The Parliament Magazine · Carbon Credits · PIK Potsdam ·
+    CNBC TV18 India · NDTV Profit India ·
+    Sylvera · BeZero Carbon · DG TAXUD CBAM · 今週刊 ESG · 天下雜誌 ·
+    經貿透視 Trademag · 中央社 Net Zero · CNA · UDN · Economic Daily ·
+    環境資訊中心 · 工商時報 CTEE · Reccessary · 鉅亨網 Cnyes · CSRone ·
+    FT · Nikkei Asia · Bloomberg Green · S&P Commodity Insights
   </div>
 </body></html>"""
 
