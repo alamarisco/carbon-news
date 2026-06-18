@@ -1,0 +1,67 @@
+# cbam-monitor — daily JSON data feed for the Cowork RADAR
+# Place at: .github/workflows/daily-data.yml  (NEW file — leaves your weekly briefing.yml untouched)
+# Commits data/latest.json each run; Cowork reads the raw URL.
+#
+# Schedule (Taipei = UTC+8):
+#   • Weekdays 16:00 Taipei  = 08:00 UTC, Mon–Fri   → 25h lookback (since previous weekday run)
+#   • Monday   09:00 Taipei  = 01:00 UTC, Mon       → 66h lookback (weekend catch-up to Fri 16:00)
+
+name: CBAM Monitor — Daily Data Feed
+
+on:
+  schedule:
+    - cron: "0 8 * * 1-5"   # weekdays 16:00 Taipei — daily run
+    - cron: "0 1 * * 1"     # Monday 09:00 Taipei — weekend catch-up
+  workflow_dispatch:
+    inputs:
+      hours:
+        description: "Hours lookback (blank = auto: 66 on the Monday catch-up, else 25)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write          # allow the job to commit data/ back to the repo
+
+jobs:
+  fetch-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Determine lookback window
+        id: lb
+        run: |
+          if [ -n "${{ github.event.inputs.hours }}" ]; then
+            echo "HOURS=${{ github.event.inputs.hours }}" >> "$GITHUB_OUTPUT"
+          elif [ "$(date -u +%u)" = "1" ] && [ "$(date -u +%H)" = "01" ]; then
+            echo "HOURS=66" >> "$GITHUB_OUTPUT"   # Monday catch-up
+          else
+            echo "HOURS=25" >> "$GITHUB_OUTPUT"   # weekday daily
+          fi
+
+      - name: Fetch articles → JSON
+        run: |
+          mkdir -p data
+          python scripts/fetch_feeds.py \
+            --hours ${{ steps.lb.outputs.HOURS }} \
+            --format json \
+            --output data/latest.json
+          cp data/latest.json "data/$(TZ='Asia/Taipei' date +%Y-%m-%d_%H%M).json"
+
+      - name: Commit & push data
+        run: |
+          git config user.name  "cbam-monitor-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/*.json
+          # commit only if something changed; never fail the run on "nothing to commit"
+          git commit -m "data: $(TZ='Asia/Taipei' date +%Y-%m-%d_%H%M) (lookback ${{ steps.lb.outputs.HOURS }}h)" || exit 0
+          git push
