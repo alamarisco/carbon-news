@@ -9,19 +9,21 @@ or Markdown.
 
 Data sources:
   Free (RSS)     — Euractiv, Carbon Brief, Carbon Pulse, Carbon Market Watch,
-                   Climate Home News, E3G, Sandbag, Ember Energy, Clear Blue Markets,
-                   Politico Europe, EUROMETAL, EU Council, SteelOrbis, GMK Center,
-                   Carbon Credits, PIK Potsdam, The Parliament Magazine,
-                   CNBC TV18 India, NDTV Profit India,
-                   中央社 CNA, 聯合新聞網 UDN, 經濟日報 Economic Daily, 環境資訊中心 e-info,
-                   Reccessary, 鉅亨網 Cnyes, CSRone
+                   Climate Home News, E3G, Sandbag (CBAM category), Clear Blue Markets,
+                   Politico Europe, EUROMETAL, SteelOrbis, GMK Center, Carbon Credits,
+                   EU Council, Business Standard India, NDTV Profit India,
+                   中央社 CNA, 聯合新聞網 UDN, 經濟日報 Economic Daily (incl. 商情/ESG), 環境資訊中心 e-info
   Free (scraped) — Sylvera (sylvera.com/blog), BeZero Carbon (bezerocarbon.com/insights),
-                   今週刊 ESG (esg.businesstoday.com.tw), 工商時報 CTEE (ctee.com.tw),
-                   DG TAXUD CBAM (ec.europa.eu), 經貿透視 Trademag, 中央社 Net Zero
+                   今週刊 ESG (esg.businesstoday.com.tw), Ember Energy (ember-energy.org),
+                   DG TAXUD CBAM (ec.europa.eu), 經貿透視 Trademag
   Paid (scraped) — 天下雜誌 CommonWealth (cw.com.tw — 永續發展 section; preview only)
                    All confirmed SSR; link-pattern scraper, no JS needed.
   Paid (RSS)     — Financial Times, Nikkei Asia, Bloomberg Green, S&P Global Commodity Insights
   Dead (removed) — Reuters (all RSS feeds shut down May 2026)
+  Removed feeds  — Parliament Magazine, PIK Potsdam (no native RSS),
+                   CNBC TV18 India (geo-blocked; replaced by Business Standard),
+                   Reccessary, Cnyes, CSRone (no valid RSS),
+                   CTEE, CNA Net Zero (403/JS-rendered)
 
 Clear Blue Markets notes (confirmed via Chrome, May 2026):
   - Correct domain: clearbluemarkets.com (NOT clearblue.markets)
@@ -171,30 +173,14 @@ RSS_FEEDS: dict[str, dict] = {
         "type": "free",
         "method": "rss",
         # sandbag.org.uk empty — EU entity at sandbag.be is active (confirmed May 2026)
+        # sandbag.be/feed/ removed: returns IncompleteRead (516 KB) on GitHub Actions
         "feeds": [
             "https://sandbag.be/category/cbam/feed/",
-            "https://sandbag.be/feed/",
         ],
     },
 
-    "Ember Energy": {
-        "type": "free",
-        "method": "rss",
-        # Rebranded ember-climate.org → ember-energy.org (May 2026)
-        # Feed returning malformed — add browser UA to bypass bot detection
-        "feedparser_headers": {
-            "User-Agent": (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/121.0.0.0 Safari/537.36"
-            ),
-            "Accept": "application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.8",
-        },
-        "feeds": [
-            "https://ember-energy.org/feed/",
-            "https://ember-energy.org/latest-insights/feed/",
-        ],
-    },
+    # Ember Energy RSS (ember-energy.org/feed/) returns malformed — Cloudflare blocks feedparser.
+    # Moved to LINK_PATTERN_SOURCES scraper below.
 
     "Clear Blue Markets": {
         "type": "free",
@@ -224,6 +210,7 @@ RSS_FEEDS: dict[str, dict] = {
             "https://money.udn.com/rssfeed/news/1001/5588?ch=money",   # 產業
             "https://money.udn.com/rssfeed/news/1001/5589?ch=money",   # 國際財經
             "https://money.udn.com/rssfeed/news/1001/5591?ch=money",   # 金融
+            "https://money.udn.com/rssfeed/news/1001/5597?ch=news",    # 商情 (ESG/綠色產業) — verified June 2026
         ],
     },
 
@@ -303,17 +290,17 @@ RSS_FEEDS: dict[str, dict] = {
     "SteelOrbis": {
         "type": "free",
         "method": "rss",
-        # Trade site blocks default feedparser UA — browser headers required
         "feedparser_headers": {
             "User-Agent": (
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
                 "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/121.0.0.0 Safari/537.36"
+                "Chrome/124.0.0.0 Safari/537.36"
             ),
             "Accept": "application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.8",
         },
         "feeds": [
             "https://www.steelorbis.com/steel-news/rss/",
+            "https://www.steelorbis.com/rss.xml",
         ],
     },
 
@@ -331,39 +318,16 @@ RSS_FEEDS: dict[str, dict] = {
     "EU Council": {
         "type": "free",
         "method": "rss",
-        # Council press releases — picks up CBAM regulation milestones
-        # Feed index: consilium.europa.eu/en/about-site/rss/
-        "feedparser_headers": {
-            "User-Agent": (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/121.0.0.0 Safari/537.36"
-            ),
-            "Accept": "application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.8",
-        },
+        # Correct URL confirmed June 2026 — /en/press/press-releases/rss/ was wrong path.
+        # pressreleases.ashx carries CBAM milestones (e.g. June 12 "Council moves to strengthen CBAM").
+        # Optional: THMENV.xml for environment subject-matter filter (lower volume).
         "feeds": [
-            "https://www.consilium.europa.eu/en/press/press-releases/rss/",
+            "https://www.consilium.europa.eu/en/rss/pressreleases.ashx",
+            "https://www.consilium.europa.eu/en/register/rss/THMENV.xml",
         ],
     },
 
-    "The Parliament Magazine": {
-        "type": "free",
-        "method": "rss",
-        # Drupal CMS (not WordPress) — /feed/ is a WordPress path; try both
-        # Feed index confirmed at: theparliamentmagazine.eu/rss-feeds
-        "feedparser_headers": {
-            "User-Agent": (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/121.0.0.0 Safari/537.36"
-            ),
-            "Accept": "application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.8",
-        },
-        "feeds": [
-            "https://www.theparliamentmagazine.eu/rss.xml",
-            "https://www.theparliamentmagazine.eu/feed/",
-        ],
-    },
+    # The Parliament Magazine: no native RSS (custom CMS, no feed link) — removed.
 
     # ── CARBON MARKETS ───────────────────────────────────────────────────
 
@@ -375,34 +339,19 @@ RSS_FEEDS: dict[str, dict] = {
         ],
     },
 
-    "PIK Potsdam": {
-        "type": "free",
-        "method": "rss",
-        # Potsdam Institute for Climate Impact Research — CBAM modelling papers
-        # Runs Plone CMS; standard Plone feed suffix is @@rss (not /rss)
-        "feeds": [
-            "https://www.pik-potsdam.de/en/news/latest-news/@@rss",
-        ],
-    },
+    # PIK Potsdam: both /en/news/rss and /en/news/latest-news/@@rss return malformed — removed.
 
     # ── INDIA ────────────────────────────────────────────────────────────
 
-    "CNBC TV18 India": {
+    # CNBC TV18 India: both RSS feeds geo-blocked from GitHub Actions — replaced by Business Standard.
+
+    "Business Standard India": {
         "type": "free",
         "method": "rss",
-        # Feed URLs confirmed in aggregator databases; may be geo-blocked outside India
-        # Add browser headers to reduce bot-detection rejections
-        "feedparser_headers": {
-            "User-Agent": (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/121.0.0.0 Safari/537.36"
-            ),
-            "Accept": "application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.8",
-        },
+        # Replacement for CNBC TV18 — verified valid June 2026, carries steel/tariff/carbon items.
+        # Note: re-check entry dates from Actions runner; cowork saw some early-May dates in fetch.
         "feeds": [
-            "https://www.cnbctv18.com/commonfeeds/v1/eng/rss/economy.xml",
-            "https://www.cnbctv18.com/commonfeeds/v1/eng/rss/market.xml",
+            "https://www.business-standard.com/rss/economy-102.rss",
         ],
     },
 
@@ -416,50 +365,22 @@ RSS_FEEDS: dict[str, dict] = {
 
     # ── TAIWAN (additional) ──────────────────────────────────────────────
 
-    # 工商時報 CTEE RSS (/rss/all.xml) returns 403 — publisher blocks RSS access.
-    # Configured as link-pattern scraper in LINK_PATTERN_SOURCES below instead.
-
-    "Reccessary": {
-        "type": "free",
-        "method": "rss",
-        # Taiwan circular-economy / ESG news; publishes under /en/ — try English feed first
-        "feeds": [
-            "https://www.reccessary.com/en/feed/",
-            "https://reccessary.com/feed/",
-        ],
-    },
-
-    "鉅亨網 Cnyes": {
-        "type": "free",
-        "method": "rss",
-        "feeds": [
-            "https://news.cnyes.com/api/v3/news/category/carbon/rss",
-            "https://news.cnyes.com/api/v3/news/category/esg/rss",
-        ],
-    },
-
-    "CSRone": {
-        "type": "free",
-        "method": "rss",
-        # Taiwan CSR/ESG platform
-        "feeds": [
-            "https://csrone.com/feed/",
-        ],
-    },
+    # 工商時報 CTEE: RSS returns 403, search page also returns 403 — removed entirely.
+    # Reccessary /feed/ returns malformed — removed.
+    # 鉅亨網 Cnyes API /news/category/*/rss returns malformed (non-standard format) — removed.
+    # CSRone /feed/ returns malformed — removed.
 
     # ── PAID (COMMODITY INTELLIGENCE) ───────────────────────────────────
 
-    # S&P Global Commodity Insights — paywalled; feed index at:
-    # spglobal.com/commodity-insights/en/news-research/rss-feed
-    # Specific category feed URLs unverified; disabled until confirmed.
-    # "S&P Global Commodity Insights": {
-    #     "type": "paid",
-    #     "method": "rss",
-    #     "feeds": [
-    #         "https://www.spglobal.com/commodity-insights/en/rss-feed/energy",
-    #         "https://www.spglobal.com/commodity-insights/en/rss-feed/metals",
-    #     ],
-    # },
+    "S&P Global Commodity Insights": {
+        "type": "paid",
+        "method": "rss",
+        # Old /commodityinsights/ path redirects — updated to current /commodity-insights/ domain (June 2026)
+        "feeds": [
+            "https://www.spglobal.com/commodity-insights/en/rss-feed/energy",
+            "https://www.spglobal.com/commodity-insights/en/rss-feed/metals",
+        ],
+    },
 
     # Reuters RSS feeds shut down — all URLs return connection error or 401 (confirmed May 2026)
 }
@@ -494,11 +415,12 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
         "type": "free",
         "listing_url": "https://esg.businesstoday.com.tw",
         "base_url": "https://esg.businesstoday.com.tw",
-        # Absolute URLs in static HTML; date embedded as YYYYMMDD in post ID
+        # Post IDs are 12-digit sequences like 202406190001 — the first 8 digits look like
+        # YYYYMMDD but they encode year 2024 for content still on the homepage, causing
+        # false "too old" rejections. Removed date_from_url_regex; rely on page-level date.
         "link_pattern": re.compile(
             r"https://esg\.businesstoday\.com\.tw/article/category/\d+/post/\d{12}"
         ),
-        "date_from_url_regex": r"/post/(?P<date>\d{8})",
     },
     "天下雜誌 CommonWealth": {
         "type": "paid",
@@ -507,13 +429,7 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
         # Absolute URLs; date from JSON-LD datePublished on article pages
         "link_pattern": re.compile(r"https://www\.cw\.com\.tw/article/\d+$"),
     },
-    "工商時報 CTEE": {
-        "type": "free",
-        # RSS feed (/rss/all.xml) returns 403 — scrape search results page instead
-        "listing_url": "https://ctee.com.tw/?s=碳邊境",
-        "base_url": "https://ctee.com.tw",
-        "link_pattern": re.compile(r"https://ctee\.com\.tw/[a-z0-9-]+/\d+"),
-    },
+    # 工商時報 CTEE: RSS /rss/all.xml returns 403; search page also returns 403 — removed.
     "DG TAXUD CBAM": {
         "type": "free",
         "listing_url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
@@ -526,24 +442,26 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
     },
     "經貿透視 Trademag": {
         "type": "free",
-        # News listing page is JS-rendered on homepage; use sitemap instead
-        "sitemap_url": "https://www.trademag.org.tw/sitemap.xml",
+        "listing_url": "https://www.trademag.org.tw/",
         "base_url": "https://www.trademag.org.tw",
-        # Article URLs: /page/newsid1/?id=XXXXXX — match after base_url prefix
+        # Article URLs: /page/newsidNNN/?id=XXXX (relative in HTML).
+        # Pattern matches both relative (/page/newsidNNN) and absolute forms.
+        # keep_query_string=True preserves ?id=XXXX so the fetch URL is valid.
         "link_pattern": re.compile(
-            r"https://www\.trademag\.org\.tw/page/newsid\d+/\?id=\d+"
+            r"(?:https://www\.trademag\.org\.tw)?/page/newsid\d+"
         ),
-        # Must preserve ?id=XXXXX — stripping query string breaks the URL
         "keep_query_string": True,
     },
-    "中央社 Net Zero": {
+    # 中央社 Net Zero topic page is JS-rendered (0 static <a href> links) — removed.
+    # CNA coverage continues via 中央社 CNA FeedBurner RSS feeds above.
+    "Ember Energy": {
         "type": "free",
-        "listing_url": "https://www.cna.com.tw/topic/newsworld/130-3.aspx",
-        "base_url": "https://www.cna.com.tw",
-        # CNA net-zero topic hub — article URLs: /news/<category>/<12-digit-ID>.aspx
-        # IDs are YYYYMMDDXXXX (12 digits), not 15 — previous pattern was wrong
+        "listing_url": "https://ember-energy.org/latest-insights/",
+        "base_url": "https://ember-energy.org",
+        # RSS feed blocked by Cloudflare — scrape listing page instead.
+        # URL pattern: /latest-insights/<slug>/ (relative paths in listing HTML)
         "link_pattern": re.compile(
-            r"https://www\.cna\.com\.tw/news/[a-z]+/\d{12}\.aspx"
+            r"(?:https://ember-energy\.org)?/latest-insights/[a-z0-9][^?#]*"
         ),
     },
 }
@@ -1157,10 +1075,10 @@ def fetch_link_pattern_source(
         print(f"  [WARN] requests/BeautifulSoup not installed — skipping {source_name}", file=sys.stderr)
         return []
 
-    source_type       = config["type"]
-    base_url          = config.get("base_url", "")
-    link_pat          = config["link_pattern"]
-    skip_date_filter  = config.get("skip_date_filter", False)
+    source_type      = config["type"]
+    base_url         = config.get("base_url", "")
+    link_pat         = config["link_pattern"]
+    skip_date_filter = config.get("skip_date_filter", False)
     keep_query_string = config.get("keep_query_string", False)
     articles: list[dict] = []
 
@@ -1261,7 +1179,7 @@ def fetch_link_pattern_source(
     for a_tag in soup.find_all("a", href=True):
         href: str = a_tag["href"].strip()
         if keep_query_string:
-            href = href.split("#")[0].rstrip("/")
+            href = href.split("#")[0]  # keep ?query, strip #fragment only
         else:
             href = href.split("?")[0].split("#")[0].rstrip("/")
         if not href or href in seen_hrefs:
@@ -1615,13 +1533,11 @@ def format_html(articles: list[dict], run_time: str) -> str:
        color:#999;font-size:11px;">
     Carbon Markets Global Monitor &middot; Weekly Edition<br/>
     Sources: Euractiv · Carbon Brief · Carbon Pulse · Carbon Market Watch ·
-    Climate Home News · Politico Europe · E3G · Sandbag · Ember Energy ·
-    Clear Blue Markets · EUROMETAL · SteelOrbis · GMK Center · EU Council ·
-    The Parliament Magazine · Carbon Credits · PIK Potsdam ·
-    CNBC TV18 India · NDTV Profit India ·
-    Sylvera · BeZero Carbon · DG TAXUD CBAM · 今週刊 ESG · 天下雜誌 ·
-    經貿透視 Trademag · 中央社 Net Zero · CNA · UDN · Economic Daily ·
-    環境資訊中心 · 工商時報 CTEE · Reccessary · 鉅亨網 Cnyes · CSRone ·
+    Climate Home News · Politico Europe · E3G · Sandbag · Clear Blue Markets ·
+    EU Council · EUROMETAL · SteelOrbis · GMK Center · Carbon Credits ·
+    Business Standard India · NDTV Profit India ·
+    Ember Energy · Sylvera · BeZero Carbon · DG TAXUD CBAM · 今週刊 ESG · 天下雜誌 ·
+    經貿透視 Trademag · CNA · UDN · Economic Daily · 環境資訊中心 ·
     FT · Nikkei Asia · Bloomberg Green · S&P Commodity Insights
   </div>
 </body></html>"""
