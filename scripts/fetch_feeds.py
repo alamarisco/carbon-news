@@ -181,8 +181,18 @@ RSS_FEEDS: dict[str, dict] = {
         "type": "free",
         "method": "rss",
         # Rebranded ember-climate.org → ember-energy.org (May 2026)
+        # Feed returning malformed — add browser UA to bypass bot detection
+        "feedparser_headers": {
+            "User-Agent": (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/121.0.0.0 Safari/537.36"
+            ),
+            "Accept": "application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.8",
+        },
         "feeds": [
             "https://ember-energy.org/feed/",
+            "https://ember-energy.org/latest-insights/feed/",
         ],
     },
 
@@ -293,6 +303,15 @@ RSS_FEEDS: dict[str, dict] = {
     "SteelOrbis": {
         "type": "free",
         "method": "rss",
+        # Trade site blocks default feedparser UA — browser headers required
+        "feedparser_headers": {
+            "User-Agent": (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/121.0.0.0 Safari/537.36"
+            ),
+            "Accept": "application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.8",
+        },
         "feeds": [
             "https://www.steelorbis.com/steel-news/rss/",
         ],
@@ -313,6 +332,15 @@ RSS_FEEDS: dict[str, dict] = {
         "type": "free",
         "method": "rss",
         # Council press releases — picks up CBAM regulation milestones
+        # Feed index: consilium.europa.eu/en/about-site/rss/
+        "feedparser_headers": {
+            "User-Agent": (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/121.0.0.0 Safari/537.36"
+            ),
+            "Accept": "application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.8",
+        },
         "feeds": [
             "https://www.consilium.europa.eu/en/press/press-releases/rss/",
         ],
@@ -321,7 +349,18 @@ RSS_FEEDS: dict[str, dict] = {
     "The Parliament Magazine": {
         "type": "free",
         "method": "rss",
+        # Drupal CMS (not WordPress) — /feed/ is a WordPress path; try both
+        # Feed index confirmed at: theparliamentmagazine.eu/rss-feeds
+        "feedparser_headers": {
+            "User-Agent": (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/121.0.0.0 Safari/537.36"
+            ),
+            "Accept": "application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.8",
+        },
         "feeds": [
+            "https://www.theparliamentmagazine.eu/rss.xml",
             "https://www.theparliamentmagazine.eu/feed/",
         ],
     },
@@ -340,8 +379,9 @@ RSS_FEEDS: dict[str, dict] = {
         "type": "free",
         "method": "rss",
         # Potsdam Institute for Climate Impact Research — CBAM modelling papers
+        # Runs Plone CMS; standard Plone feed suffix is @@rss (not /rss)
         "feeds": [
-            "https://www.pik-potsdam.de/en/news/rss",
+            "https://www.pik-potsdam.de/en/news/latest-news/@@rss",
         ],
     },
 
@@ -350,6 +390,16 @@ RSS_FEEDS: dict[str, dict] = {
     "CNBC TV18 India": {
         "type": "free",
         "method": "rss",
+        # Feed URLs confirmed in aggregator databases; may be geo-blocked outside India
+        # Add browser headers to reduce bot-detection rejections
+        "feedparser_headers": {
+            "User-Agent": (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/121.0.0.0 Safari/537.36"
+            ),
+            "Accept": "application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.8",
+        },
         "feeds": [
             "https://www.cnbctv18.com/commonfeeds/v1/eng/rss/economy.xml",
             "https://www.cnbctv18.com/commonfeeds/v1/eng/rss/market.xml",
@@ -372,8 +422,9 @@ RSS_FEEDS: dict[str, dict] = {
     "Reccessary": {
         "type": "free",
         "method": "rss",
-        # Taiwan circular-economy / ESG news
+        # Taiwan circular-economy / ESG news; publishes under /en/ — try English feed first
         "feeds": [
+            "https://www.reccessary.com/en/feed/",
             "https://reccessary.com/feed/",
         ],
     },
@@ -398,15 +449,17 @@ RSS_FEEDS: dict[str, dict] = {
 
     # ── PAID (COMMODITY INTELLIGENCE) ───────────────────────────────────
 
-    "S&P Global Commodity Insights": {
-        "type": "paid",
-        "method": "rss",
-        # Old /commodityinsights/ path redirects — updated to current /commodity-insights/ domain (June 2026)
-        "feeds": [
-            "https://www.spglobal.com/commodity-insights/en/rss-feed/energy",
-            "https://www.spglobal.com/commodity-insights/en/rss-feed/metals",
-        ],
-    },
+    # S&P Global Commodity Insights — paywalled; feed index at:
+    # spglobal.com/commodity-insights/en/news-research/rss-feed
+    # Specific category feed URLs unverified; disabled until confirmed.
+    # "S&P Global Commodity Insights": {
+    #     "type": "paid",
+    #     "method": "rss",
+    #     "feeds": [
+    #         "https://www.spglobal.com/commodity-insights/en/rss-feed/energy",
+    #         "https://www.spglobal.com/commodity-insights/en/rss-feed/metals",
+    #     ],
+    # },
 
     # Reuters RSS feeds shut down — all URLs return connection error or 401 (confirmed May 2026)
 }
@@ -473,20 +526,24 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
     },
     "經貿透視 Trademag": {
         "type": "free",
-        "listing_url": "https://www.trademag.org.tw/",
+        # News listing page is JS-rendered on homepage; use sitemap instead
+        "sitemap_url": "https://www.trademag.org.tw/sitemap.xml",
         "base_url": "https://www.trademag.org.tw",
-        # Taiwan trade magazine — article URLs contain numeric post IDs
+        # Article URLs: /page/newsid1/?id=XXXXXX — match after base_url prefix
         "link_pattern": re.compile(
-            r"https://www\.trademag\.org\.tw/page/[a-z0-9]+"
+            r"https://www\.trademag\.org\.tw/page/newsid\d+/\?id=\d+"
         ),
+        # Must preserve ?id=XXXXX — stripping query string breaks the URL
+        "keep_query_string": True,
     },
     "中央社 Net Zero": {
         "type": "free",
         "listing_url": "https://www.cna.com.tw/topic/newsworld/130-3.aspx",
         "base_url": "https://www.cna.com.tw",
-        # CNA net-zero topic hub — article URLs: /news/<category>/<ID>.aspx
+        # CNA net-zero topic hub — article URLs: /news/<category>/<12-digit-ID>.aspx
+        # IDs are YYYYMMDDXXXX (12 digits), not 15 — previous pattern was wrong
         "link_pattern": re.compile(
-            r"https://www\.cna\.com\.tw/news/[a-z]+/\d{15}\.aspx"
+            r"https://www\.cna\.com\.tw/news/[a-z]+/\d{12}\.aspx"
         ),
     },
 }
@@ -1100,10 +1157,11 @@ def fetch_link_pattern_source(
         print(f"  [WARN] requests/BeautifulSoup not installed — skipping {source_name}", file=sys.stderr)
         return []
 
-    source_type      = config["type"]
-    base_url         = config.get("base_url", "")
-    link_pat         = config["link_pattern"]
-    skip_date_filter = config.get("skip_date_filter", False)
+    source_type       = config["type"]
+    base_url          = config.get("base_url", "")
+    link_pat          = config["link_pattern"]
+    skip_date_filter  = config.get("skip_date_filter", False)
+    keep_query_string = config.get("keep_query_string", False)
     articles: list[dict] = []
 
     # ── Mode A: sitemap-based URL discovery ──────────────────────────────
@@ -1202,7 +1260,10 @@ def fetch_link_pattern_source(
     seen_hrefs: set = set()
     for a_tag in soup.find_all("a", href=True):
         href: str = a_tag["href"].strip()
-        href = href.split("?")[0].split("#")[0].rstrip("/")
+        if keep_query_string:
+            href = href.split("#")[0].rstrip("/")
+        else:
+            href = href.split("?")[0].split("#")[0].rstrip("/")
         if not href or href in seen_hrefs:
             continue
         if link_pat.match(href):
