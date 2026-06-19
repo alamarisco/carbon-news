@@ -14,9 +14,9 @@ Data sources:
                    Carbon Credits, PIK Potsdam, The Parliament Magazine,
                    CNBC TV18 India, NDTV Profit India,
                    中央社 CNA, 聯合新聞網 UDN, 經濟日報 Economic Daily, 環境資訊中心 e-info,
-                   工商時報 CTEE, Reccessary, 鉅亨網 Cnyes, CSRone
+                   Reccessary, 鉅亨網 Cnyes, CSRone
   Free (scraped) — Sylvera (sylvera.com/blog), BeZero Carbon (bezerocarbon.com/insights),
-                   今週刊 ESG (esg.businesstoday.com.tw),
+                   今週刊 ESG (esg.businesstoday.com.tw), 工商時報 CTEE (ctee.com.tw),
                    DG TAXUD CBAM (ec.europa.eu), 經貿透視 Trademag, 中央社 Net Zero
   Paid (scraped) — 天下雜誌 CommonWealth (cw.com.tw — 永續發展 section; preview only)
                    All confirmed SSR; link-pattern scraper, no JS needed.
@@ -366,13 +366,8 @@ RSS_FEEDS: dict[str, dict] = {
 
     # ── TAIWAN (additional) ──────────────────────────────────────────────
 
-    "工商時報 CTEE": {
-        "type": "free",
-        "method": "rss",
-        "feeds": [
-            "https://www.ctee.com.tw/rss/all.xml",
-        ],
-    },
+    # 工商時報 CTEE RSS (/rss/all.xml) returns 403 — publisher blocks RSS access.
+    # Configured as link-pattern scraper in LINK_PATTERN_SOURCES below instead.
 
     "Reccessary": {
         "type": "free",
@@ -406,9 +401,10 @@ RSS_FEEDS: dict[str, dict] = {
     "S&P Global Commodity Insights": {
         "type": "paid",
         "method": "rss",
+        # Old /commodityinsights/ path redirects — updated to current /commodity-insights/ domain (June 2026)
         "feeds": [
-            "https://www.spglobal.com/commodityinsights/en/rss-feed/energy",
-            "https://www.spglobal.com/commodityinsights/en/rss-feed/metals",
+            "https://www.spglobal.com/commodity-insights/en/rss-feed/energy",
+            "https://www.spglobal.com/commodity-insights/en/rss-feed/metals",
         ],
     },
 
@@ -457,6 +453,13 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
         "base_url": "https://www.cw.com.tw",
         # Absolute URLs; date from JSON-LD datePublished on article pages
         "link_pattern": re.compile(r"https://www\.cw\.com\.tw/article/\d+$"),
+    },
+    "工商時報 CTEE": {
+        "type": "free",
+        # RSS feed (/rss/all.xml) returns 403 — scrape search results page instead
+        "listing_url": "https://ctee.com.tw/?s=碳邊境",
+        "base_url": "https://ctee.com.tw",
+        "link_pattern": re.compile(r"https://ctee\.com\.tw/[a-z0-9-]+/\d+"),
     },
     "DG TAXUD CBAM": {
         "type": "free",
