@@ -181,8 +181,8 @@ def main():
         if src == "DG TAXUD CBAM" and "/news/" not in url:
             dropped_evergreen += 1
             continue
-        # 2) drop stale items (older than the lookback window)
-        if pub10 and pub10 < cutoff:
+        # 2) drop stale items — portal sources exempt (official docs don't expire)
+        if pub10 and pub10 < cutoff and src not in PORTAL_SOURCES:
             dropped_old += 1
             continue
         # 3) drop evergreen "what is X / your guide" explainer pages
