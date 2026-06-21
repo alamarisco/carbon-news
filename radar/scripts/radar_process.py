@@ -261,6 +261,15 @@ def main():
     write_vcm(os.path.join(a.outdir, f"vcm_reference_{run_date}.md"), run_date, stream_b)
     write_triage(os.path.join(a.outdir, f"triage_{run_date}.html"), run_date, stream_a, stream_b, dropped_dupe)
 
+    # index.json: tiny pointer to today's dated file; less CDN-sticky than triage_latest.html
+    json.dump(
+        {"date": run_date,
+         "triage_dated": f"triage_{run_date}.html",
+         "built_at": datetime.datetime.now(datetime.timezone.utc).isoformat()},
+        open(os.path.join(a.outdir, "index.json"), "w", encoding="utf-8"),
+        indent=2
+    )
+
     nt = sum(1 for i in stream_a if i["tier"] == "TOP")
     nh = sum(1 for i in stream_a if i["tier"] == "HIGH")
     nm = sum(1 for i in stream_a if i["tier"] == "MED")

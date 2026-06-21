@@ -345,13 +345,13 @@ RSS_FEEDS: dict[str, dict] = {
 
     # CNBC TV18 India: both RSS feeds geo-blocked from GitHub Actions — replaced by Business Standard.
 
-    "Business Standard India": {
+    "The Hindu Business": {
         "type": "free",
         "method": "rss",
-        # Replacement for CNBC TV18 — verified valid June 2026, carries steel/tariff/carbon items.
-        # Note: re-check entry dates from Actions runner; cowork saw some early-May dates in fetch.
+        # Replaced Business Standard India (Akamai WAF blocks datacenter IPs — 403 from Actions).
+        # The Hindu Economy feed: 60 items, confirmed fresh June 2026, covers India trade/carbon.
         "feeds": [
-            "https://www.business-standard.com/rss/economy-102.rss",
+            "https://www.thehindu.com/business/Economy/feeder/default.rss",
         ],
     },
 
