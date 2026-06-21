@@ -1,54 +1,62 @@
 # 國際新聞蒐集 — 每日雷達 (Stream A · CBAM core) — 2026-06-21
 
-_9 candidates after dedup · 0 duplicates collapsed_
-
-## 🔴 TOP — 官方門戶更新 (5)
-
-- **Carbon Border Adjustment Mechanism (CBAM) — communications resources**
-  UK CBAM Portal · 2026-04-09 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
-  These resources are designed to enable you to cascade accurate, timely information about the upcoming Carbon Border Adjustment Mechanism (CBAM) to your members, customers and supply chains importing g
-  https://www.gov.uk/government/publications/carbon-border-adjustment-mechanism-cbam-communications-resources
-
-- **Draft regulations: Carbon Border Adjustment Mechanism (CBAM)**
-  UK CBAM Portal · 2026-02-10 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
-  This technical consultation seeks comments on the draft secondary legislation for carbon border adjustment mechanism (CBAM)
-  https://www.gov.uk/government/consultations/draft-regulations-carbon-border-adjustment-mechanism-cbam
-
-- **Carbon border adjustment mechanism (CBAM): Policy summary**
-  UK CBAM Portal · 2026-02-10 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
-  This is a policy summary for the carbon border adjustment mechanism.
-  https://www.gov.uk/government/publications/carbon-border-adjustment-mechanism-cbam-policy-summary
-
-- **Factsheet: Carbon border adjustment mechanism**
-  UK CBAM Portal · 2025-04-24 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
-  This publication is licensed under the terms of the Open Government Licence v3.0 except where otherwise stated. To view this licence, visit nationalarchives.gov.uk/doc/open-government-licence/version/
-  https://www.gov.uk/government/publications/factsheet-carbon-border-adjustment-mechanism-cbam/factsheet-carbon-border-adjustment-mechanism
-
-- **Consultation on the introduction of a UK carbon border adjustment mechanism**
-  UK CBAM Portal · 2024-03-21 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
-  This consultation seeks views on proposals for the design and administration of the UK carbon border adjustment mechanism (CBAM) from 1 January 2027.
-  https://www.gov.uk/government/consultations/consultation-on-the-introduction-of-a-uk-carbon-border-adjustment-mechanism
+_11 candidates after dedup · 0 duplicates collapsed_
 
 ## 🟠 HIGH (4)
 
-- **台灣碳費可抵減CBAM碳稅，那企業買碳權可以抵扣嗎？歐盟代表這麼說－ESG永續台灣**
-  今週刊 ESG · 2026-06-21 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
-  為化解歐盟CBAM帶來的碳焦慮，「歐盟碳邊境調整機制（CBAM）台灣丹麥雙向論壇」，邀請丹麥能源署暨歐盟執委CBAM委員會代表何耶柏（Morten Højberg）訪台，說明CBAM進程和出口商因應新制的教戰守則，這也是歐盟推出CBAM以來，首位歐盟相關代表訪台與台灣企業面對面溝通。
-  https://esg.businesstoday.com.tw/article/category/190807/post/202406060033
+- **Bonn climate talks: Key outcomes from the June 2026 UN climate conference**
+  Carbon Brief · 2026-06-19 · _Carbon Removal & CDR 碳移除_
+  Two weeks of tense UN climate talks in Bonn, Germany, have produced few tangible outcomes... The post Bonn climate talks: Key outcomes from the June 2026 UN climate conference appeared first on Carbon
+  https://www.carbonbrief.org/bonn-climate-talks-key-outcomes-from-the-june-2026-un-climate-conference/
 
-- **歐盟碳邊境調整機制10月上路！為什麼自願減量碳權無法對應CBAM，但碳費可以？－ESG永續台灣**
-  今週刊 ESG · 2026-06-21 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
-  歐盟10月將實施碳邊境調整機制（CBAM），企業須於明年1月底前提交第4季出口產品碳含量報告，違者將受罰。台灣碳權交易所採用「碳費先行」和自願減量，與CBAM不同，工商團體呼籲交易所與國際接軌，避免面臨全球淨零碳排挑戰。
+- **The steel industry is concerned about the slow progress of green steel projects**
+  GMK Center · 2026-06-19 · _Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業_
+  The steel industry is concerned about the slow progress being made in the field of ‘green’ steel. This was discussed at the annual meeting of steel associations in Singapore, according to Reuters. Acc
+  https://gmk.center/en/news/the-steel-industry-is-concerned-about-the-slow-progress-of-green-steel-projects/
 
-對此，環保署表示，即將實施的碳費是CBAM定義的有效碳價之一，並正在制定碳費徵收及自願減量相關子法，台灣碳權交易所則將提供減量額度交易，引導產業邁向淨零排放目標。CBAM的
-  https://esg.businesstoday.com.tw/article/category/190807/post/202308150015
+- **BRIEFING: Draft EU CBAM rules “onerous” in practice for foreign carbon credits, experts say**
+  Carbon Pulse · 2026-06-19 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
+  Importers face steep challenges to take advantage of proposed EU rules allowing the application of carbon credits against Carbon Border Adjustment Mechanism (CBAM) fees, due to the “onerous” condition
+  https://carbon-pulse.com/523547/
 
-- **碳關稅大哉問》CBAM即將實施，台灣企業該做哪些準備？專家：先從這四大步驟開始－ESG永續台灣**
-  今週刊 ESG · 2026-06-21 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
-  2023年4月18日歐洲議會一讀程序通過CBAM規章，應對高碳排產業（水泥、鐵及鋼、鋁、肥料、電力與氫產品）的產品進口到歐盟關稅領域應適用CBAM機制。CBAM規章詳細規定各項CBAM申報程序，自2023年10月1日將開始適用CBAM申報程序，由於CBAM規章以階段式施行，對於台灣產品要進口到歐盟有相當程度的衝擊。
-  https://esg.businesstoday.com.tw/article/category/180687/post/202305020015
+- **DRI Expansion vs Pellet Gap: Production Surge & Feedstock Crunch**
+  GMK Center · 2026-06-18 · _Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業_
+  Steel decarbonization is a complex challenge, but securing suitable feedstocks is emerging as a central concern. Direct reduced iron (DRI) remains the primary route for lower-carbon steelmaking, and g
+  https://gmk.center/en/infographic/dri-expansion-vs-pellet-gap-production-surge-feedstock-crunch/
 
-- **【圖解】節能不只省電費，也減少碳費支出！智慧能源管理系統原理、實例一次看－ESG永續台灣**
-  今週刊 ESG · 2026-06-21 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
-  為解決氣候變遷與全球暖化，歐盟在 2021 年正式通過碳邊境調整機制 （CBAM）法案，要求進口到歐盟的產品，若生產地的碳成本低於歐盟境內同款產品的碳成本，須購買 CBAM 憑證，費用根據產品生產過程的碳排放量多寡而定。製造業是臺灣立足國際的命脈、卻也是碳排放的主要來源。
-  https://esg.businesstoday.com.tw/article/category/180693/post/202502190025/%E3%80%90%E5%9C%96%E8%A7%A3%E3%80%91%E7%AF%80%E8%83%BD%E4%B8%8D%E5%8F%AA%E7%9C%81%E9%9B%BB%E8%B2%BB%EF%BC%8C%E4%B9%9F%E6%B8%9B%E5%B0%91%E7%A2%B3%E8%B2%BB%E6%94%AF%E5%87%BA%EF%BC%81%E6%99%BA%E6%85%A7%E8%83%BD%E6%BA%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E5%8E%9F%E7%90%86%E3%80%81%E5%AF%A6%E4%BE%8B%E4%B8%80%E6%AC%A1%E7%9C%8B
+## 🟡 MED (7)
+
+- **Midrex is to build a DRI production plant for US Steel**
+  GMK Center · 2026-06-21 · _Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業_
+  Midrex has signed a contract with US Steel to supply a Midrex process complex with a capacity of 2.5 million tonnes per year. The new direct reduced iron (DRI) production facility will be built at the
+  https://gmk.center/en/news/midrex-is-to-build-a-dri-production-plant-for-us-steel/
+
+- **Gradual phase-in of ETS auctions offers best route to decarbonise China’s power sector -study**
+  Carbon Pulse · 2026-06-19 · _EU ETS 歐盟碳交易_
+  China should gradually expand carbon allowance auctions and tighten emissions caps in its national ETS rather than pursue an aggressive reform pathway, according to a modelling study published this we
+  https://carbon-pulse.com/524203/
+
+- **EU leaders back ETS review plan, discuss carbon market’s role in next budget**
+  Carbon Pulse · 2026-06-19 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
+  EU leaders on Friday endorsed the European Commission's plan to review the EU Emissions Trading System (ETS) next month, with proposals on free allowances and industrial emissions benchmarks due in Ju
+  https://carbon-pulse.com/524008/
+
+- **POSCO is launching South Korea’s largest electric arc furnace**
+  GMK Center · 2026-06-19 · _Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業_
+  POSCO has completed construction of South Korea’s largest electric arc furnace (EAF) at its steelworks in Gwangyang (South Jeolla Province). The new facility has an annual production capacity of 2.5 m
+  https://gmk.center/en/news/posco-is-launching-south-korea-s-largest-electric-arc-furnace/
+
+- **Top EU Parliament group seeks “breathing space” for industry in upcoming EU carbon market reform -media**
+  Carbon Pulse · 2026-06-18 · _EU ETS 歐盟碳交易_
+  The European Parliament’s largest political group is weighing changes to the EU carbon market aimed at shielding industry and limiting price volatility, according to a draft internal document seen by 
+  https://carbon-pulse.com/523678/
+
+- **Behind the rhetoric and public criticism, China is adapting to CBAM -report**
+  Carbon Pulse · 2026-06-18 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
+  China repeatedly criticises the European Union's carbon border tariff as a unilateral trade measure, but a more pragmatic response is forming behind the scenes, according to a new report that said Bei
+  https://carbon-pulse.com/523648/
+
+- **FEATURE: Brussels “seriously considering” free EU ETS permits for shipping firms using clean fuels**
+  Carbon Pulse · 2026-06-18 · _EU ETS 歐盟碳交易_
+  The European Commission is “seriously considering” granting free CO2 permits to shipping companies that use clean fuels as part of the upcoming reform of the EU Emissions Trading System (EU ETS) due t
+  https://carbon-pulse.com/523611/
