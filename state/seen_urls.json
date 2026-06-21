@@ -1,8 +1,8 @@
 {
   "_comment": "Dedup ledger for 國際新聞蒐集 RADAR. URLs already handled (prior weekly docs or picked). RADAR drops any candidate whose URL is here.",
-  "updated": "2026-06-18",
+  "updated": "2026-06-21",
   "seeded_from": "01_每周國際新聞資訊蒐集 weekly .docx (2025-2026)",
-  "count": 46,
+  "count": 44,
   "urls": [
     "https://carboncredits.com/carbon-credit-rush-mining-giants-rio-tinto-and-woodside-turn-to-offsets-under-australias-climate-rules/",
     "https://carbonmarketwatch.org/2025/12/12/climate-hypocrisy-eu-industry-cools-on-carbon-levy-with-freebie-phase-out-on-horizon/",
@@ -46,6 +46,7 @@
     "https://www.theparliamentmagazine.eu/partner/article/closing-the-loopholes-that-still-threaten-europes-aluminium",
     "https://www.trademag.org.tw/page/newsid1/?id=7926163&iz=6",
     "https://www.trademag.org.tw/page/newsid1/?id=7926179&iz=6",
-    "https://www.weforum.org/stories/2025/12/eu-cbam-impact-business-carbon-pricing-landscape/"
+    "https://www.weforum.org/stories/2025/12/eu-cbam-impact-business-carbon-pricing-landscape/",
+    "https://example.com/flag-pick-b1-verify"
   ]
 }
