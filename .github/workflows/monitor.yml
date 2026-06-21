@@ -1,0 +1,34 @@
+name: CBAM Monitor — Staleness Alarm
+
+on:
+  schedule:
+    - cron: "23 12 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-freshness:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Alarm if heartbeat is stale
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ ! -f data/last_run.txt ]; then echo "No heartbeat yet"; exit 0; fi
+          LAST=$(git log -1 --format=%ct -- data/last_run.txt)
+          AGE_H=$(( ( $(date +%s) - LAST ) / 3600 ))
+          echo "Heartbeat age: ${AGE_H}h"
+          if [ "$AGE_H" -gt 26 ]; then
+            TITLE="⚠️ CBAM daily-data appears stale (${AGE_H}h)"
+            EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq 'length')
+            if [ "$EXISTING" = "0" ]; then
+              gh issue create --title "$TITLE" --body "data/last_run.txt hasn't updated in ${AGE_H}h — the daily-data schedule was likely skipped. Re-run: gh workflow run daily-data.yml"
+            fi
+          fi
