@@ -1,6 +1,33 @@
 # 國際新聞蒐集 — 每日雷達 (Stream A · CBAM core) — 2026-06-21
 
-_4 candidates after dedup · 0 duplicates collapsed_
+_9 candidates after dedup · 0 duplicates collapsed_
+
+## 🔴 TOP — 官方門戶更新 (5)
+
+- **Carbon Border Adjustment Mechanism (CBAM) — communications resources**
+  UK CBAM Portal · 2026-04-09 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
+  These resources are designed to enable you to cascade accurate, timely information about the upcoming Carbon Border Adjustment Mechanism (CBAM) to your members, customers and supply chains importing g
+  https://www.gov.uk/government/publications/carbon-border-adjustment-mechanism-cbam-communications-resources
+
+- **Draft regulations: Carbon Border Adjustment Mechanism (CBAM)**
+  UK CBAM Portal · 2026-02-10 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
+  This technical consultation seeks comments on the draft secondary legislation for carbon border adjustment mechanism (CBAM)
+  https://www.gov.uk/government/consultations/draft-regulations-carbon-border-adjustment-mechanism-cbam
+
+- **Carbon border adjustment mechanism (CBAM): Policy summary**
+  UK CBAM Portal · 2026-02-10 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
+  This is a policy summary for the carbon border adjustment mechanism.
+  https://www.gov.uk/government/publications/carbon-border-adjustment-mechanism-cbam-policy-summary
+
+- **Factsheet: Carbon border adjustment mechanism**
+  UK CBAM Portal · 2025-04-24 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
+  This publication is licensed under the terms of the Open Government Licence v3.0 except where otherwise stated. To view this licence, visit nationalarchives.gov.uk/doc/open-government-licence/version/
+  https://www.gov.uk/government/publications/factsheet-carbon-border-adjustment-mechanism-cbam/factsheet-carbon-border-adjustment-mechanism
+
+- **Consultation on the introduction of a UK carbon border adjustment mechanism**
+  UK CBAM Portal · 2024-03-21 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
+  This consultation seeks views on proposals for the design and administration of the UK carbon border adjustment mechanism (CBAM) from 1 January 2027.
+  https://www.gov.uk/government/consultations/consultation-on-the-introduction-of-a-uk-carbon-border-adjustment-mechanism
 
 ## 🟠 HIGH (4)
 

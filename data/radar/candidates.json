@@ -2,6 +2,81 @@
   "date": "2026-06-21",
   "stream_a": [
     {
+      "title": "Carbon Border Adjustment Mechanism (CBAM) — communications resources",
+      "summary": "These resources are designed to enable you to cascade accurate, timely information about the upcoming Carbon Border Adjustment Mechanism (CBAM) to your members, customers and supply chains importing goods to the UK from the following 5 sectors: aluminium, cement, fertiliser, hydrogen, iron and steel",
+      "url": "https://www.gov.uk/government/publications/carbon-border-adjustment-mechanism-cbam-communications-resources",
+      "source": "UK CBAM Portal",
+      "published": "2026-04-09",
+      "topic": "EU CBAM — Policy & Implementation 歐盟CBAM政策",
+      "matched_keywords": [
+        "CBAM",
+        "carbon border adjustment"
+      ],
+      "portal": false,
+      "stream": "A",
+      "tier": "TOP"
+    },
+    {
+      "title": "Draft regulations: Carbon Border Adjustment Mechanism (CBAM)",
+      "summary": "This technical consultation seeks comments on the draft secondary legislation for carbon border adjustment mechanism (CBAM)",
+      "url": "https://www.gov.uk/government/consultations/draft-regulations-carbon-border-adjustment-mechanism-cbam",
+      "source": "UK CBAM Portal",
+      "published": "2026-02-10",
+      "topic": "EU CBAM — Policy & Implementation 歐盟CBAM政策",
+      "matched_keywords": [
+        "CBAM",
+        "carbon border adjustment"
+      ],
+      "portal": false,
+      "stream": "A",
+      "tier": "TOP"
+    },
+    {
+      "title": "Carbon border adjustment mechanism (CBAM): Policy summary",
+      "summary": "This is a policy summary for the carbon border adjustment mechanism.",
+      "url": "https://www.gov.uk/government/publications/carbon-border-adjustment-mechanism-cbam-policy-summary",
+      "source": "UK CBAM Portal",
+      "published": "2026-02-10",
+      "topic": "EU CBAM — Policy & Implementation 歐盟CBAM政策",
+      "matched_keywords": [
+        "CBAM",
+        "carbon border adjustment"
+      ],
+      "portal": false,
+      "stream": "A",
+      "tier": "TOP"
+    },
+    {
+      "title": "Factsheet: Carbon border adjustment mechanism",
+      "summary": "This publication is licensed under the terms of the Open Government Licence v3.0 except where otherwise stated. To view this licence, visit nationalarchives.gov.uk/doc/open-government-licence/version/3 or write to the Information Policy Team, The National Archives, Kew, London TW9 4DU, or email: psi@nationalarchives.gov.uk .",
+      "url": "https://www.gov.uk/government/publications/factsheet-carbon-border-adjustment-mechanism-cbam/factsheet-carbon-border-adjustment-mechanism",
+      "source": "UK CBAM Portal",
+      "published": "2025-04-24",
+      "topic": "EU CBAM — Policy & Implementation 歐盟CBAM政策",
+      "matched_keywords": [
+        "carbon border adjustment"
+      ],
+      "portal": false,
+      "stream": "A",
+      "tier": "TOP"
+    },
+    {
+      "title": "Consultation on the introduction of a UK carbon border adjustment mechanism",
+      "summary": "This consultation seeks views on proposals for the design and administration of the UK carbon border adjustment mechanism (CBAM) from 1 January 2027.",
+      "url": "https://www.gov.uk/government/consultations/consultation-on-the-introduction-of-a-uk-carbon-border-adjustment-mechanism",
+      "source": "UK CBAM Portal",
+      "published": "2024-03-21",
+      "topic": "EU CBAM — Policy & Implementation 歐盟CBAM政策",
+      "matched_keywords": [
+        "CBAM",
+        "carbon border adjustment",
+        "UK carbon border"
+      ],
+      "portal": false,
+      "stream": "A",
+      "tier": "TOP"
+    },
+    {
       "title": "台灣碳費可抵減CBAM碳稅，那企業買碳權可以抵扣嗎？歐盟代表這麼說－ESG永續台灣",
       "summary": "為化解歐盟CBAM帶來的碳焦慮，「歐盟碳邊境調整機制（CBAM）台灣丹麥雙向論壇」，邀請丹麥能源署暨歐盟執委CBAM委員會代表何耶柏（Morten Højberg）訪台，說明CBAM進程和出口商因應新制的教戰守則，這也是歐盟推出CBAM以來，首位歐盟相關代表訪台與台灣企業面對面溝通。",
       "url": "https://esg.businesstoday.com.tw/article/category/190807/post/202406060033",
@@ -107,10 +182,10 @@
     }
   ],
   "stats": {
-    "a": 4,
+    "a": 9,
     "b": 2,
     "dupes_collapsed": 0,
-    "dropped_stale": 12,
+    "dropped_stale": 7,
     "dropped_evergreen": 1
   }
 }
