@@ -42,9 +42,9 @@ HIGH_KEYWORDS = [
     "免費配額", "free allocation", "default value", "預設值",
     "塑膠版cbam", "downstream", "下游",
 ]
-PORTAL_SOURCES = {"EU CBAM Portal", "UK CBAM Portal"}
+PORTAL_SOURCES = {"EU CBAM Portal", "UK CBAM Portal", "DG TAXUD CBAM"}
 SOURCE_RANK = {
-    "EU CBAM Portal": 100, "UK CBAM Portal": 100,
+    "EU CBAM Portal": 100, "UK CBAM Portal": 100, "DG TAXUD CBAM": 100,
     "GMK Center": 60, "S&P Global": 60, "Carbon Pulse": 58, "Euractiv": 56,
     "Clear Blue Markets": 50, "Carbon Brief": 50, "Politico Europe": 48,
     "中央社 CNA": 46, "經濟日報 Economic Daily": 46, "聯合新聞網 UDN": 44,

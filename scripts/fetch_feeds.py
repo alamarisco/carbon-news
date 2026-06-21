@@ -464,6 +464,19 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
             r"(?:https://ember-energy\.org)?/latest-insights/[a-z0-9][^?#]*"
         ),
     },
+    # UK CBAM Portal — official GOV.UK CBAM collection (all HMRC guidance, consultations,
+    # publications). Named "UK CBAM Portal" so radar_process.py promotes to TOP tier.
+    # Collection page is SSR; article URLs are relative gov.uk paths.
+    "UK CBAM Portal": {
+        "type": "free",
+        "listing_url": "https://www.gov.uk/government/collections/carbon-border-adjustment-mechanism",
+        "base_url": "https://www.gov.uk",
+        "link_pattern": re.compile(
+            r"(?:https://www\.gov\.uk)?/(?:guidance|government/(?:publications|consultations|"
+            r"news|speeches|statistics|policy-papers))/[a-z0-9][a-z0-9-]*(?:/[a-z0-9-]+)*$"
+        ),
+        "skip_date_filter": True,
+    },
 }
 
 # ── Keyword Configuration ─────────────────────────────────────────────────────
