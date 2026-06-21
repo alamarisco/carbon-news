@@ -207,10 +207,10 @@ RSS_FEEDS: dict[str, dict] = {
         "type": "free",
         "method": "rss",
         "feeds": [
-            "https://money.udn.com/rssfeed/news/1001/5588?ch=money",   # 產業
-            "https://money.udn.com/rssfeed/news/1001/5589?ch=money",   # 國際財經
-            "https://money.udn.com/rssfeed/news/1001/5591?ch=money",   # 金融
-            "https://money.udn.com/rssfeed/news/1001/5597?ch=news",    # 商情 (ESG/綠色產業) — verified June 2026
+            "https://money.udn.com/rssfeed/news/1001/5588?ch=news",   # 國際
+            "https://money.udn.com/rssfeed/news/1001/5589?ch=news",   # 兩岸
+            "https://money.udn.com/rssfeed/news/1001/5591?ch=news",   # 產業
+            "https://money.udn.com/rssfeed/news/1001/5597?ch=news",   # 商情
         ],
     },
 
