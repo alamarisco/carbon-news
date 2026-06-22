@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-21",
+  "date": "2026-06-22",
   "stream_a": [
     {
       "title": "Bonn climate talks: Key outcomes from the June 2026 UN climate conference",
@@ -48,21 +48,6 @@
         "carbon credit",
         "VCM",
         "Article 6"
-      ],
-      "portal": false,
-      "stream": "A",
-      "tier": "HIGH"
-    },
-    {
-      "title": "DRI Expansion vs Pellet Gap: Production Surge & Feedstock Crunch",
-      "summary": "Steel decarbonization is a complex challenge, but securing suitable feedstocks is emerging as a central concern. Direct reduced iron (DRI) remains the primary route for lower-carbon steelmaking, and global momentum is strong. Industry data show 54 announced DRI projects totaling 134 million tonnes of annual capacity. The EU leads the project pipeline, but the MENA […] The post DRI Expansion vs Pel",
-      "url": "https://gmk.center/en/infographic/dri-expansion-vs-pellet-gap-production-surge-feedstock-crunch/",
-      "source": "GMK Center",
-      "published": "2026-06-18",
-      "topic": "Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業",
-      "matched_keywords": [
-        "steel decarbonization",
-        "direct reduced iron"
       ],
       "portal": false,
       "stream": "A",
@@ -123,48 +108,6 @@
       "portal": false,
       "stream": "A",
       "tier": "MED"
-    },
-    {
-      "title": "Top EU Parliament group seeks “breathing space” for industry in upcoming EU carbon market reform -media",
-      "summary": "The European Parliament’s largest political group is weighing changes to the EU carbon market aimed at shielding industry and limiting price volatility, according to a draft internal document seen by Bloomberg.",
-      "url": "https://carbon-pulse.com/523678/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-18",
-      "topic": "EU ETS 歐盟碳交易",
-      "matched_keywords": [
-        "EU carbon market"
-      ],
-      "portal": false,
-      "stream": "A",
-      "tier": "MED"
-    },
-    {
-      "title": "Behind the rhetoric and public criticism, China is adapting to CBAM -report",
-      "summary": "China repeatedly criticises the European Union's carbon border tariff as a unilateral trade measure, but a more pragmatic response is forming behind the scenes, according to a new report that said Beijing is aligning its own carbon architecture with European standards to protect exporters.",
-      "url": "https://carbon-pulse.com/523648/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-18",
-      "topic": "EU CBAM — Policy & Implementation 歐盟CBAM政策",
-      "matched_keywords": [
-        "CBAM"
-      ],
-      "portal": false,
-      "stream": "A",
-      "tier": "MED"
-    },
-    {
-      "title": "FEATURE: Brussels “seriously considering” free EU ETS permits for shipping firms using clean fuels",
-      "summary": "The European Commission is “seriously considering” granting free CO2 permits to shipping companies that use clean fuels as part of the upcoming reform of the EU Emissions Trading System (EU ETS) due to be presented in July.",
-      "url": "https://carbon-pulse.com/523611/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-18",
-      "topic": "EU ETS 歐盟碳交易",
-      "matched_keywords": [
-        "EU ETS"
-      ],
-      "portal": false,
-      "stream": "A",
-      "tier": "MED"
     }
   ],
   "stream_b": [
@@ -173,10 +116,25 @@
       "summary": "Disseminated on behalf of Surge Battery Metals. Lithium Americas (LAC) has officially broken ground at Thacker Pass, Nevada. The project is advancing toward its first production target in 2028. LAC […] The post Thacker Pass Is Being Built: Here Is Why That Is the Best News NILI Investors Have Heard All Year. appeared first on Carbon Credits .",
       "url": "https://carboncredits.com/thacker-pass-is-being-built-here-is-why-that-is-the-best-news-nili-investors-have-heard-all-year-nili/",
       "source": "Carbon Credits",
-      "published": "2026-06-21",
+      "published": "2026-06-22",
       "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
       "matched_keywords": [
         "carbon credit"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "EU ETS expansion would add less than 1% to some long-haul fares while raising billions for climate action – report",
+      "summary": "Extending the EU’s carbon market to cover all flights departing the European Economic Area (EEA) would have only a marginal impact on airfares and passenger demand, while generating billions of euros annually for climate action, according to a new study commissioned by Carbon Market Watch (CMW).",
+      "url": "https://carbon-pulse.com/524149/",
+      "source": "Carbon Pulse",
+      "published": "2026-06-22",
+      "topic": "EU ETS 歐盟碳交易",
+      "matched_keywords": [
+        "EU ETS",
+        "CORSIA"
       ],
       "portal": false,
       "stream": "B",
@@ -487,294 +445,11 @@
       "portal": false,
       "stream": "B",
       "tier": "REF"
-    },
-    {
-      "title": "FEATURE: Corporates excited about new SBTi climate standard’s nod to market instruments",
-      "summary": "Companies are \"excited about finally having clarity\" on using market instruments to show progress towards their climate targets under the newly released Science Based Targets initiative's (SBTi) Corporate Net-Zero Standard, say consultancies referring to the standard's \"incredible ripple effect\".",
-      "url": "https://carbon-pulse.com/523439/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-19",
-      "topic": "Nature-based Solutions 自然碳匯",
-      "matched_keywords": [
-        "VCM",
-        "nature-based carbon"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Brazilian oil major sells CORSIA-certified soy-based SAF batch",
-      "summary": "Brazil's state-controlled oil company completed the production and sale of its first batch of sustainable aviation fuel (SAF) made from soy oil certified under the aviation sector's CORSIA certificate for non-deforestation sourcing.",
-      "url": "https://carbon-pulse.com/523900/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-18",
-      "topic": "CORSIA & Aviation 航空碳抵換",
-      "matched_keywords": [
-        "CORSIA",
-        "sustainable aviation fuel"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Independent monitoring could serve jurisdictional, investor needs in J-REDD+, speakers say",
-      "summary": "Independent due diligence on jurisdictional claims will be increasingly necessary for generating buyer-facing confidence in jurisdictional REDD+ (J-REDD+) programmes, speakers said during an online event on Thursday.",
-      "url": "https://carbon-pulse.com/523896/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-18",
-      "topic": "Nature-based Solutions 自然碳匯",
-      "matched_keywords": [
-        "VCM",
-        "nature-based carbon",
-        "REDD+"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Countries need regulatory frameworks to fill integrity gaps for carbon credit markets -report",
-      "summary": "Regulatory oversight should be viewed as an enabling condition to scale up carbon credit markets, according to new research.",
-      "url": "https://carbon-pulse.com/523890/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-18",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit",
-        "VCM",
-        "Article 6"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "SB64: Swiss ITMO buyer “sitting on a bag of money”, but funds may not be available in a few years",
-      "summary": "Supply bottlenecks make international carbon credit procurement cumbersome, but host country processes need to hasten to stimulate investment, said a representative of Switzerland’s procurement entity, adding domestic political pressures beckon on its horizon.",
-      "url": "https://carbon-pulse.com/523874/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-18",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit",
-        "Article 6"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "SAF Crisis Deepens: IATA Says Aviation’s Net Zero Goal Is at Risk, but Brazil Offers New Hope",
-      "summary": "The aviation industry is making progress toward cutting carbon emissions, but the supply of sustainable aviation fuel (SAF) remains far below what airlines need. According to the International Air Transport […] The post SAF Crisis Deepens: IATA Says Aviation’s Net Zero Goal Is at Risk, but Brazil Offers New Hope appeared first on Carbon Credits .",
-      "url": "https://carboncredits.com/saf-crisis-deepens-iata-says-aviations-net-zero-goal-is-at-risk-but-brazil-offers-new-hope/",
-      "source": "Carbon Credits",
-      "published": "2026-06-18",
-      "topic": "CORSIA & Aviation 航空碳抵換",
-      "matched_keywords": [
-        "carbon credit",
-        "CORSIA",
-        "aviation carbon",
-        "sustainable aviation fuel"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Anthropic Joins Google, Stripe, and Shopify on a $915M Carbon Removal Push",
-      "summary": "The race to scale carbon removal received another major boost. Artificial intelligence (AI) company Anthropic has joined Frontier, a carbon removal advanced market commitment (AMC) coalition that includes Google, Stripe, […] The post Anthropic Joins Google, Stripe, and Shopify on a $915M Carbon Removal Push appeared first on Carbon Credits .",
-      "url": "https://carboncredits.com/anthropic-joins-google-stripe-and-shopify-on-a-915m-carbon-removal-push/",
-      "source": "Carbon Credits",
-      "published": "2026-06-18",
-      "topic": "Carbon Removal & CDR 碳移除",
-      "matched_keywords": [
-        "carbon credit",
-        "carbon offset",
-        "carbon removal",
-        "CDR",
-        "direct air capture",
-        "enhanced weathering",
-        "carbon dioxide removal"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Can the G7 Challenge China’s Rare Earth Monopoly with Its 60% Import Rule?",
-      "summary": "The Group of Seven (G7) nations have launched a major effort to reduce their dependence on China for rare earth minerals. The move comes as Beijing tightens export controls on […] The post Can the G7 Challenge China’s Rare Earth Monopoly with Its 60% Import Rule? appeared first on Carbon Credits .",
-      "url": "https://carboncredits.com/can-the-g7-challenge-chinas-rare-earth-monopoly-with-its-60-import-rule/",
-      "source": "Carbon Credits",
-      "published": "2026-06-18",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Shell’s $1 Billion Wind Exit: Why the Oil Giant Is Rewriting Its Energy Transition Playbook",
-      "summary": "Shell is preparing to sell its offshore wind farm portfolio in a deal that could be worth more than $1 billion, according to a Bloomberg News report. The company has […] The post Shell’s $1 Billion Wind Exit: Why the Oil Giant Is Rewriting Its Energy Transition Playbook appeared first on Carbon Credits .",
-      "url": "https://carboncredits.com/shell-1-billion-offshore-wind-sale-energy-transition-strategy/",
-      "source": "Carbon Credits",
-      "published": "2026-06-18",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Ukraine adopts Article 6 pilot framework, national carbon registry rules",
-      "summary": "Ukraine has adopted a two-year framework on Wednesday to test procedures for authorising, issuing, and transferring mitigation outcomes under Article 6 of the Paris Agreement, alongside rules for a national carbon registry.",
-      "url": "https://carbon-pulse.com/523727/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-18",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon registry",
-        "VCM",
-        "Article 6",
-        "CORSIA",
-        "nature-based carbon"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Biogas carbon project secures approval from Kenya, eyes Article 6, CORSIA trade",
-      "summary": "A Kenyan biogas project has announced it has secured formal approval from the country's government, eyeing Article 6 trade, just days after a government minister said the number of credits allowed for international sale would be limited to around 10 million until 2030.",
-      "url": "https://carbon-pulse.com/523569/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-18",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "VCM",
-        "Article 6",
-        "CORSIA"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Clean aviation firms urge Brussels to extend EU ETS to long‑haul flights",
-      "summary": "A coalition of European clean aviation technology firms has urged the European Commission to extend the EU’s Emissions Trading System (ETS) to international flights, directly challenging an earlier push by major airlines and six EU governments to curb or delay higher carbon charges on the sector.",
-      "url": "https://carbon-pulse.com/523570/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-18",
-      "topic": "EU ETS 歐盟碳交易",
-      "matched_keywords": [
-        "EU ETS",
-        "CORSIA"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "The UN climate process was built for negotiation – now it must support implementation",
-      "summary": "Consultations are underway on reforms to streamline the talks, which take too long to produce outcomes that are often not adequate to tackle the scale of the climate crisis The post The UN climate process was built for negotiation – now it must support implementation appeared first on Climate Home News .",
-      "url": "https://www.climatechangenews.com/2026/06/18/the-un-climate-process-was-built-for-negotiation-now-it-must-support-implementation/",
-      "source": "Climate Home News",
-      "published": "2026-06-18",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit",
-        "Paris Agreement carbon"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "UK carbon markets initiative appoints new chair",
-      "summary": "The UK Carbon Markets Forum (CMF) has appointed a new chair from a major global consultancy, as it seeks to accelerate the growth of global credit markets and deepen engagement across the financial sector.",
-      "url": "https://carbon-pulse.com/523524/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-18",
-      "topic": "UK Carbon Market 英國碳市場",
-      "matched_keywords": [
-        "UK carbon market",
-        "VCM"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Bonn Bulletin: Finance row threatens to scupper work on adaptation goal",
-      "summary": "As the Bonn talks came to a close, many countries expressed disappointment about a lack of progress on work to advance adaptation to climate impacts The post Bonn Bulletin: Finance row threatens to scupper work on adaptation goal appeared first on Climate Home News .",
-      "url": "https://www.climatechangenews.com/2026/06/18/bonn-bulletin-finance-row-threatens-to-scupper-work-on-adaptation-goal/",
-      "source": "Climate Home News",
-      "published": "2026-06-18",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit",
-        "Article 6",
-        "Article 6.4"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Fragmented carbon credit rules could let developers “shop around” for weaker safeguards, report warns",
-      "summary": "Divergent rules for managing carbon reversal risks could weaken market integrity and encourage project developers to choose less demanding standards, according to a report released Thursday.",
-      "url": "https://carbon-pulse.com/523483/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-18",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit",
-        "VCM",
-        "Article 6",
-        "CORSIA",
-        "nature-based carbon"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "EU emissions fall 17% since 2015 as economy continues to grow",
-      "summary": "Greenhouse gas emissions across the EU have fallen by more than 17% over the past decade, even as the bloc's economy expanded, according to fresh data released by Eurostat.",
-      "url": "https://carbon-pulse.com/523446/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-18",
-      "topic": "CORSIA & Aviation 航空碳抵換",
-      "matched_keywords": [
-        "CORSIA"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "利祐任／氣候週 × 散步節的雙齊零願景：台灣未來十年永續運輸轉型對策",
-      "summary": "",
-      "url": "https://e-info.org.tw/node/243557",
-      "source": "環境資訊中心 e-info",
-      "published": "2026-06-18",
-      "topic": "Taiwan Carbon Market 台灣碳市場",
-      "matched_keywords": [
-        "淨零碳排"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
     }
   ],
   "stats": {
-    "a": 11,
-    "b": 38,
+    "a": 7,
+    "b": 21,
     "dupes_collapsed": 0,
     "dropped_stale": 7,
     "dropped_evergreen": 2,
