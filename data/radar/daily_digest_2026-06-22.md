@@ -1,25 +1,25 @@
 # 國際新聞蒐集 — 每日雷達 (Stream A · CBAM core) — 2026-06-22
 
-_7 candidates after dedup · 0 duplicates collapsed_
+_5 candidates after dedup · 0 duplicates collapsed_
 
-## 🟠 HIGH (3)
+## 🟠 HIGH (2)
 
-- **Bonn climate talks: Key outcomes from the June 2026 UN climate conference**
-  Carbon Brief · 2026-06-19 · _Carbon Removal & CDR 碳移除_
-  Two weeks of tense UN climate talks in Bonn, Germany, have produced few tangible outcomes... The post Bonn climate talks: Key outcomes from the June 2026 UN climate conference appeared first on Carbon
-  https://www.carbonbrief.org/bonn-climate-talks-key-outcomes-from-the-june-2026-un-climate-conference/
+- **Green steel producers urge EU to maintain ETS**
+  EUROMETAL · 2026-06-22 · _Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業_
+  GravitHy, Outokumpu, SSAB, Stegra and Hydnum Steel are urging the EU to maintain the current level of ambition of its Emissions Trading System (ETS), Kallanish notes. The group of green steel producer
+  https://eurometal.net/green-steel-producers-urge-eu-to-maintain-ets/?utm_source=rss&utm_medium=rss&utm_campaign=green-steel-producers-urge-eu-to-maintain-ets
 
-- **The steel industry is concerned about the slow progress of green steel projects**
-  GMK Center · 2026-06-19 · _Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業_
-  The steel industry is concerned about the slow progress being made in the field of ‘green’ steel. This was discussed at the annual meeting of steel associations in Singapore, according to Reuters. Acc
-  https://gmk.center/en/news/the-steel-industry-is-concerned-about-the-slow-progress-of-green-steel-projects/
+- **Europe’s green flat steel trade slow; selective premium deals reported**
+  EUROMETAL · 2026-06-22 · _Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業_
+  Trading activity in Europe’s green flat steel market remained subdued during the week to Thursday June 18 with market participants reporting an absence of massive demand due to the lack of regulatory 
+  https://eurometal.net/europes-green-flat-steel-trade-slow-selective-premium-deals-reported/?utm_source=rss&utm_medium=rss&utm_campaign=europes-green-flat-steel-trade-slow-selective-premium-deals-reported
 
-- **BRIEFING: Draft EU CBAM rules “onerous” in practice for foreign carbon credits, experts say**
-  Carbon Pulse · 2026-06-19 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
-  Importers face steep challenges to take advantage of proposed EU rules allowing the application of carbon credits against Carbon Border Adjustment Mechanism (CBAM) fees, due to the “onerous” condition
-  https://carbon-pulse.com/523547/
+## 🟡 MED (3)
 
-## 🟡 MED (4)
+- **Expanding EU carbon market for aviation would barely affect ticket prices, study finds, but would raise billions for climate action.**
+  Carbon Market Watch · 2026-06-22 · _EU ETS 歐盟碳交易_
+  To sate their voracious appetite for greenwashing offsets, major fossil fuel companies have invested considerable resources and effort to lobby, both directly and indirectly, to weaken carbon market f
+  https://carbonmarketwatch.org/2026/06/22/expanding-eu-carbon-market-for-aviation-would-barely-affect-ticket-prices-study-finds-but-would-raise-billions-for-climate-action/
 
 - **Midrex is to build a DRI production plant for US Steel**
   GMK Center · 2026-06-21 · _Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業_
@@ -30,13 +30,3 @@ _7 candidates after dedup · 0 duplicates collapsed_
   Carbon Pulse · 2026-06-19 · _EU ETS 歐盟碳交易_
   China should gradually expand carbon allowance auctions and tighten emissions caps in its national ETS rather than pursue an aggressive reform pathway, according to a modelling study published this we
   https://carbon-pulse.com/524203/
-
-- **EU leaders back ETS review plan, discuss carbon market’s role in next budget**
-  Carbon Pulse · 2026-06-19 · _EU CBAM — Policy & Implementation 歐盟CBAM政策_
-  EU leaders on Friday endorsed the European Commission's plan to review the EU Emissions Trading System (ETS) next month, with proposals on free allowances and industrial emissions benchmarks due in Ju
-  https://carbon-pulse.com/524008/
-
-- **POSCO is launching South Korea’s largest electric arc furnace**
-  GMK Center · 2026-06-19 · _Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業_
-  POSCO has completed construction of South Korea’s largest electric arc furnace (EAF) at its steelworks in Gwangyang (South Jeolla Province). The new facility has an annual production capacity of 2.5 m
-  https://gmk.center/en/news/posco-is-launching-south-korea-s-largest-electric-arc-furnace/
