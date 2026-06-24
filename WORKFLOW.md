@@ -112,17 +112,32 @@ For each picked URL:
 1. **Translate** to Traditional Chinese, ESTC house style, full article (not a summary).
    For multi-section pieces, use **bold sub-headers** — but **do NOT bold body text**. Keep
    figures, company names, official titles, CN codes accurate.
-   - **Body:** acronyms (CBAM, EU ETS, MRV, CSCF, TRQ) may stay in Latin on first mention with a
-     Chinese gloss.
+   - **Body:** acronyms (CBAM, EU ETS, MRV, MSR, CSCF, DRI, EAF) may stay in Latin on first
+     mention with a Chinese gloss.
    - **Titles — no acronyms.** In both the `# headline` and the LINE `中文標題`, spell every term
      out in full Chinese: 碳邊境調整機制 (not CBAM), 歐盟排放交易體系 (not EU ETS), 監測、報告與查證
      (not MRV). Organisation names use the full Chinese name — e.g. 歐洲汽車供應商協會 (not CLEPA),
      歐洲鋼鐵協會 (not EUROFER), 美國戰略暨國際研究中心 (not CSIS). Acronyms may appear later in the body.
 
-2. **Paste-ready LINE message** (Alec copies this into the LINE group):
+   **繁體中文（台灣用語）house style — REQUIRED.** Translate into **Taiwanese Mandarin**, using
+   Taiwan conventions and terminology, **not** PRC usage — including technical terms. Common
+   swaps: 軟體 (not 軟件), 資料/數據 (not just 數據 PRC-style), 品質 (not 質量), 影片 (not 視頻),
+   雷射 (not 激光), 訊號 (not 信號), 業者/廠商/鋼廠 (not 生產商). Domain-preferred TW renderings:
+   排放交易體系/系統 (EU ETS), 免費配額 (free allowances), 碳洩漏 (carbon leakage),
+   碳邊境調整機制 (CBAM), 直接還原鐵 (DRI), 電弧爐 (EAF), 市場穩定準備機制 (MSR),
+   鋼鐵保障措施 (safeguard), 預設值 (default value), 碳費 (Taiwan carbon fee).
+   **Consult the TW glossary** before translating — repo file `reference/glossary_tw.md`, fetchable
+   at `https://raw.githubusercontent.com/alamarisco/cbam-monitor/main/reference/glossary_tw.md`
+   (PRC→TW swaps + domain terms). **Extend it** when new terms come up (a small commit to the repo).
+   Body stays plain (no bold); sub-headers bold.
+
+2. **Paste-ready LINE message** (Alec copies this into the LINE group). Blank line after the
+   title, blank line after the summary, source + URL together at the end:
    ```
    【CBAM新聞】<中文標題>
-   重點：<一到兩句中文重點>
+
+   <一到兩句中文重點>
+
    來源：<媒體>｜<YYYY/MM/DD>
    <URL>
    ```
