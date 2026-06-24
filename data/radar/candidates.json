@@ -1,6 +1,36 @@
 {
-  "date": "2026-06-24",
+  "date": "2026-06-25",
   "stream_a": [
+    {
+      "title": "SSAB Americas is launching a steel recycling project in the US",
+      "summary": "The steel company SSAB Americas, together with its partners The Greenbrier Companies and Alter Trading, has announced the launch of a circular economy project. The initiative aims to demonstrate how recycled materials can be used to produce sustainable steel with near-zero emissions. This is stated in the company’s press release. The project will be launched […] The post SSAB Americas is launching",
+      "url": "https://gmk.center/en/news/ssab-americas-is-launching-a-steel-recycling-project-in-the-us/",
+      "source": "GMK Center",
+      "published": "2026-06-24",
+      "topic": "Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業",
+      "matched_keywords": [
+        "green steel"
+      ],
+      "portal": false,
+      "stream": "A",
+      "tier": "HIGH"
+    },
+    {
+      "title": "CBAM certificate price expected to remain broadly stable in Q2 2026",
+      "summary": "Germany-based business consultancy CO2 IQ has indicated that the Carbon Border Adjustment Mechanism (CBAM) certificate price for the second quarter ...",
+      "url": "https://www.steelorbis.com/steel-news/latest-news/cbam-certificate-price-expected-to-remain-broadly-stable-in-q2-2026-1460467.htm",
+      "source": "SteelOrbis",
+      "published": "2026-06-24",
+      "topic": "EU CBAM — Policy & Implementation 歐盟CBAM政策",
+      "matched_keywords": [
+        "CBAM",
+        "carbon border adjustment",
+        "CBAM certificate"
+      ],
+      "portal": false,
+      "stream": "A",
+      "tier": "HIGH"
+    },
     {
       "title": "CBAM verification timeline “excessively tight”, Italy’s accreditation body warns",
       "summary": "Italy’s national accreditation body has warned that at least an extra year will be needed to enrol companies tasked with checking that carbon prices have been paid in third countries under the EU’s Carbon Border Adjustment Mechanism (CBAM).",
@@ -35,33 +65,46 @@
       "tier": "HIGH"
     },
     {
-      "title": "The price of CBAM certificates is not expected to change significantly in Q2 – forecast",
-      "summary": "The price of CBAM allowances in the second quarter of this year is likely to remain very close to the price seen in January–March. This forecast comes from CO2 iq. As noted, although carbon prices at auctions in the European ETS fell from over €90/t to around €60/t in the first quarter, they remained stable […] The post The price of CBAM certificates is not expected to change significantly in Q2 –",
-      "url": "https://gmk.center/en/news/the-price-of-cbam-certificates-is-not-expected-to-change-significantly-in-q2-forecast/",
-      "source": "GMK Center",
-      "published": "2026-06-23",
-      "topic": "EU CBAM — Policy & Implementation 歐盟CBAM政策",
+      "title": "PREVIEW: France warns against diluting EU ETS, CO2 emission standards for cars",
+      "summary": "Paris has warned the European Union against watering down its climate policy framework ahead of a ministerial meeting on Thursday, stressing that EU laws must remain consistent with the bloc’s 2040 climate objectives agreed earlier this year.",
+      "url": "https://carbon-pulse.com/525498/",
+      "source": "Carbon Pulse",
+      "published": "2026-06-24",
+      "topic": "EU ETS 歐盟碳交易",
       "matched_keywords": [
-        "CBAM",
-        "CBAM certificate"
+        "EU ETS"
       ],
       "portal": false,
       "stream": "A",
-      "tier": "HIGH"
+      "tier": "MED"
     },
     {
-      "title": "Could the energy shock kick-start green steelmaking?",
-      "summary": "",
-      "url": "https://www.ft.com/content/62426cb8-e60c-462a-b44a-34688f728ee1",
-      "source": "Financial Times",
-      "published": "2026-06-23",
-      "topic": "Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業",
+      "title": "FEATURE: Price or volume? EU weighs options for future ETS Market Stability Reserve",
+      "summary": "Policymakers broadly agree that a more responsive Market Stability Reserve (MSR) is needed to make the EU carbon market react faster to price spikes, but they remain split over whether this can be achieved using existing volume-based indicators or whether new price-based triggers are required – a step advocates say could pave the way for a “soft price corridor”.",
+      "url": "https://carbon-pulse.com/525399/",
+      "source": "Carbon Pulse",
+      "published": "2026-06-24",
+      "topic": "EU ETS 歐盟碳交易",
       "matched_keywords": [
-        "green steel"
+        "EU carbon market"
       ],
       "portal": false,
       "stream": "A",
-      "tier": "HIGH"
+      "tier": "MED"
+    },
+    {
+      "title": "Global DRI output down 17.5 percent in May 2026",
+      "summary": "According to the data released by the World Steel Association (worldsteel), global direct reduced iron (DRI) production in the 12 countries ...",
+      "url": "https://www.steelorbis.com/steel-news/latest-news/global-dri-output-down-175-percent-in-may-2026-1460487.htm",
+      "source": "SteelOrbis",
+      "published": "2026-06-24",
+      "topic": "Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業",
+      "matched_keywords": [
+        "direct reduced iron"
+      ],
+      "portal": false,
+      "stream": "A",
+      "tier": "MED"
     },
     {
       "title": "12 EU countries call for expansion of ETS-financed Modernisation Fund",
@@ -90,20 +133,6 @@
       "portal": false,
       "stream": "A",
       "tier": "MED"
-    },
-    {
-      "title": "South Korea has reached a consensus with the EU on European steel quotas",
-      "summary": "South Korea has made progress in negotiations with the EU regarding European steel tariff quotas, which could harm the country’s exporters. This was stated by Industry Minister Kim Jung-kwan, according to The Korea Times. “South Korea’s current quota stands at around 2.58 million tonnes, and we have reached a consensus that it will not be […] The post South Korea has reached a consensus with the E",
-      "url": "https://gmk.center/en/news/south-korea-has-reached-a-consensus-with-the-eu-on-european-steel-quotas/",
-      "source": "GMK Center",
-      "published": "2026-06-23",
-      "topic": "Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業",
-      "matched_keywords": [
-        "steel tariff"
-      ],
-      "portal": false,
-      "stream": "A",
-      "tier": "MED"
     }
   ],
   "stream_b": [
@@ -116,6 +145,229 @@
       "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
       "matched_keywords": [
         "carbon credit"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "World’s Richest 10% Consumers Cause Up to $5.7T in Environmental Damage a Year, New Study Finds",
+      "summary": "A new study has put a price tag on one of the biggest drivers of environmental damage: consumption by the world’s wealthiest households. Researchers from Leiden University and the University […] The post World’s Richest 10% Consumers Cause Up to $5.7T in Environmental Damage a Year, New Study Finds appeared first on Carbon Credits .",
+      "url": "https://carboncredits.com/worlds-richest-10-consumers-cause-up-to-5-7t-in-environmental-damage-a-year-new-study-finds/",
+      "source": "Carbon Credits",
+      "published": "2026-06-24",
+      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
+      "matched_keywords": [
+        "carbon credit"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "INTERVIEW: New standard body EE looks to revive REDD market with fresh approach",
+      "summary": "Few markets have faced as severe a reputational battering as the REDD+ avoided deforestation sector in the last couple of years, but new standard body Equitable Earth (EE) plans to restore faith in saving tropical forestry with a fresh approach that is already set to protect an area the size of Portugal, the chief executive told Carbon Pulse this week.",
+      "url": "https://carbon-pulse.com/525550/",
+      "source": "Carbon Pulse",
+      "published": "2026-06-24",
+      "topic": "Nature-based Solutions 自然碳匯",
+      "matched_keywords": [
+        "VCM",
+        "nature-based carbon",
+        "REDD+"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "DHL’s €3 Billion Clean Energy Bet: Why Logistics Has Become the Next Bottleneck in the Energy Transition",
+      "summary": "As countries invest heavily in clean energy, the equipment needed to build that future is becoming larger, heavier, and more complex to transport. DHL Group believes this challenge represents one […] The post DHL’s €3 Billion Clean Energy Bet: Why Logistics Has Become the Next Bottleneck in the Energy Transition appeared first on Carbon Credits .",
+      "url": "https://carboncredits.com/__trashed/",
+      "source": "Carbon Credits",
+      "published": "2026-06-24",
+      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
+      "matched_keywords": [
+        "carbon credit",
+        "sustainable aviation fuel"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "Tesla (TSLA Stock) Signs 25 GWh Megapack Deal With NatPower to Boost Europe’s Battery Storage Market",
+      "summary": "Europe’s battery storage market is rapidly expanding, and Tesla (TSLA stock) has secured a major energy storage deal. The electric vehicle maker signed a multi-year agreement with NatPower to supply […] The post Tesla (TSLA Stock) Signs 25 GWh Megapack Deal With NatPower to Boost Europe’s Battery Storage Market appeared first on Carbon Credits .",
+      "url": "https://carboncredits.com/tesla-tsla-stock-signs-25-gwh-megapack-deal-with-natpower-to-boost-europes-battery-storage-market/",
+      "source": "Carbon Credits",
+      "published": "2026-06-24",
+      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
+      "matched_keywords": [
+        "carbon credit"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "Sweden’s Biggest Nuclear Bet in 40 Years: Rolls-Royce Lands Historic SMR Deal, Pushing RYCEY Stock Upward",
+      "summary": "Sweden has taken a major step toward expanding nuclear energy for the first time in more than four decades. The country chose Rolls-Royce SMR to provide three small modular reactors […] The post Sweden’s Biggest Nuclear Bet in 40 Years: Rolls-Royce Lands Historic SMR Deal, Pushing RYCEY Stock Upward appeared first on Carbon Credits .",
+      "url": "https://carboncredits.com/swedens-biggest-nuclear-bet-in-40-years-rolls-royce-lands-historic-smr-deal-pushing-rycey-stock-upward/",
+      "source": "Carbon Credits",
+      "published": "2026-06-24",
+      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
+      "matched_keywords": [
+        "carbon credit"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "Amazon, Skyborn Renewables Seal Germany’s Largest 600 MW Offshore Wind Energy Deal",
+      "summary": "Amazon has signed Germany’s biggest-ever corporate clean energy deal, marking another major step in Europe’s renewable energy transition. The tech giant has entered into a 600-MW power purchase agreement (PPA) […] The post Amazon, Skyborn Renewables Seal Germany’s Largest 600 MW Offshore Wind Energy Deal appeared first on Carbon Credits .",
+      "url": "https://carboncredits.com/amazon-skyborn-renewables-seal-germanys-largest-600-mw-offshore-wind-energy-deal/",
+      "source": "Carbon Credits",
+      "published": "2026-06-24",
+      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
+      "matched_keywords": [
+        "carbon credit"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "Brazilian Amazon’s protected areas avoided deforestation of 29 mln ha over 40 years -study",
+      "summary": "Protected areas (PAs) in the Brazilian Amazon prevented the deforestation of more than 29 million hectares between 1985-2024, playing a critical role in biodiversity conservation and climate mitigation, according to a pre-print study.",
+      "url": "https://carbon-pulse.com/525514/",
+      "source": "Carbon Pulse",
+      "published": "2026-06-24",
+      "topic": "Nature-based Solutions 自然碳匯",
+      "matched_keywords": [
+        "nature-based carbon"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "Verra signs over $1mln AI and workflow software deal",
+      "summary": "Verra has signed a multi-year partnership worth more than $1 mln with two software firms to deploy AI-enabled customer service and contract workflow tools across its systems, it announced Tuesday.",
+      "url": "https://carbon-pulse.com/525521/",
+      "source": "Carbon Pulse",
+      "published": "2026-06-24",
+      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
+      "matched_keywords": [
+        "Verra",
+        "VCM"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "Israeli ag tech company issues first verified carbon credits",
+      "summary": "An Israel-based agricultural technology company has issued its first verified carbon removal (CDR) credits, with plans to “disrupt the global CDR market”, according to its CEO.",
+      "url": "https://carbon-pulse.com/525209/",
+      "source": "Carbon Pulse",
+      "published": "2026-06-24",
+      "topic": "Carbon Removal & CDR 碳移除",
+      "matched_keywords": [
+        "carbon credit",
+        "carbon removal",
+        "CDR",
+        "nature-based carbon"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "LCAW26: Indonesia’s new carbon registry coming in two weeks -minister",
+      "summary": "Indonesia is set to launch its carbon credit registry in two weeks, as part of the country's push to drive finance towards the protection of its vast forests, the country's forestry minister confirmed during London Climate Action Week on Wednesday.",
+      "url": "https://carbon-pulse.com/525452/",
+      "source": "Carbon Pulse",
+      "published": "2026-06-24",
+      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
+      "matched_keywords": [
+        "carbon credit",
+        "carbon registry",
+        "VCM",
+        "Article 6",
+        "nature-based carbon"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "LCAW26: Orsted cuts own power emissions 98%, flags supply chain as next carbon challenge",
+      "summary": "Orsted has cut its scope 1 and 2 emissions intensity by more than 98% since 2006, but value chain emissions linked to steel, maritime fuels, and copper now represent the main carbon challenge for its offshore wind business, the Danish offshore wind major said Tuesday in a report launched during London Climate Action Week (LCAW).",
+      "url": "https://carbon-pulse.com/525432/",
+      "source": "Carbon Pulse",
+      "published": "2026-06-24",
+      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
+      "matched_keywords": [
+        "VCM"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "South Korean steelmaker to study carbon sequestration potential of biochar in Indonesia",
+      "summary": "A subsidiary of a major steelmaking group in South Korea is leveraging its recent acquisition of an Indonesian palm oil business to explore the carbon sequestration potential of biochar.",
+      "url": "https://carbon-pulse.com/525412/",
+      "source": "Carbon Pulse",
+      "published": "2026-06-24",
+      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
+      "matched_keywords": [
+        "VCM"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "ICVCM launches new guidance for navigating high-integrity carbon markets",
+      "summary": "The Integrity Council for the Voluntary Carbon Market (ICVCM) has launched the first of a series of modules to help organisations navigate high-integrity carbon markets.",
+      "url": "https://carbon-pulse.com/525097/",
+      "source": "Carbon Pulse",
+      "published": "2026-06-24",
+      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
+      "matched_keywords": [
+        "voluntary carbon market",
+        "ICVCM",
+        "VCM"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "Borneo project targets August listing for biodiversity, carbon tokens",
+      "summary": "A project developer has said it will list biodiversity and carbon tokens by August from a project spanning 8.7 million hectares in the Indonesian part of the island of Borneo.",
+      "url": "https://carbon-pulse.com/525422/",
+      "source": "Carbon Pulse",
+      "published": "2026-06-24",
+      "topic": "Nature-based Solutions 自然碳匯",
+      "matched_keywords": [
+        "nature-based carbon"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "LCAW26: Financial institutions endorse TFFF ahead of COP17",
+      "summary": "Twelve investors and one supporter have endorsed the Tropical Forests Forever Facility (TFFF), sharing a joint statement at London Climate Action Week (LCAW) and calling for more signatories ahead of the UN’s upcoming biodiversity talks in October.",
+      "url": "https://carbon-pulse.com/525393/",
+      "source": "Carbon Pulse",
+      "published": "2026-06-24",
+      "topic": "Nature-based Solutions 自然碳匯",
+      "matched_keywords": [
+        "nature-based carbon"
       ],
       "portal": false,
       "stream": "B",
@@ -226,7 +478,7 @@
       "tier": "REF"
     },
     {
-      "title": "LCAW26: Singapore, ICVCM partner up to advance carbon markets in Asia",
+      "title": "UPDATE – LCAW26: Singapore, ICVCM partner up to advance carbon markets in Asia",
       "summary": "The Singapore government and the Integrity Council for the Voluntary Carbon Market (ICVCM) have signed an agreement to advance high-integrity carbon markets in Asia, they announced Wednesday during London Climate Action Week.",
       "url": "https://carbon-pulse.com/524801/",
       "source": "Carbon Pulse",
@@ -351,243 +603,10 @@
       "portal": false,
       "stream": "B",
       "tier": "REF"
-    },
-    {
-      "title": "Platinum Market in 2026: Price Swings, Supply and Demand Challenges, and the Race to Net Zero",
-      "summary": "Gold has long been seen as the top safe-haven investment. Platinum, however, is gaining attention for its growing role in the global energy transition. Once used mainly in catalytic converters […] The post Platinum Market in 2026: Price Swings, Supply and Demand Challenges, and the Race to Net Zero appeared first on Carbon Credits .",
-      "url": "https://carboncredits.com/platinum-market-in-2026-price-swings-supply-and-demand-challenges-and-the-race-to-net-zero/",
-      "source": "Carbon Credits",
-      "published": "2026-06-23",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "LCAW26: Voluntary and compliance markets will continue to co-exist, with some linkages -registry",
-      "summary": "The widespread expectation that voluntary carbon markets will eventually fold into compliance is unfounded, according to the president of a removals registry, who instead sees both markets continuing to co-exist, with some linkages.",
-      "url": "https://carbon-pulse.com/524907/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-23",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "voluntary carbon market",
-        "VCM"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Beyond Carbon Credits: How KARBNZ Global Is Building a Natural Capital Platform Around Forests, Biomass, and Biochar",
-      "summary": "The global carbon market is entering a new era. Investors, corporations, and regulators are no longer satisfied with projects built mainly around future credit issuance and long validation timelines. Concerns […] The post Beyond Carbon Credits: How KARBNZ Global Is Building a Natural Capital Platform Around Forests, Biomass, and Biochar appeared first on Carbon Credits .",
-      "url": "https://carboncredits.com/beyond-carbon-credits-how-karbnz-global-is-building-a-natural-capital-platform-around-forests-biomass-and-biochar/",
-      "source": "Carbon Credits",
-      "published": "2026-06-23",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "MRV",
-        "voluntary carbon market",
-        "carbon credit",
-        "carbon offset",
-        "Verra",
-        "carbon removal",
-        "CDR",
-        "biochar carbon"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "A buyer’s guide to superpollutant carbon credits",
-      "summary": "BeZero’s ratings of superpollutant projects span from ‘AAA’ to ‘D’, showing substantial variation in over-crediting risk across projects.",
-      "url": "https://bezerocarbon.com/insights/a-buyers-guide-to-superpollutant-carbon-credits",
-      "source": "BeZero Carbon",
-      "published": "2026-06-23",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Philippines expands forest restoration project with carbon aims to 120,000 ha",
-      "summary": "The government of the Philippines and a developer agreed on Tuesday to restore 120,000 hectares of degraded rainforest under an expanded nature recovery project that is expected to generate carbon credits, Carbon Pulse has learned.",
-      "url": "https://carbon-pulse.com/525068/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-23",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit",
-        "nature-based carbon"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Governments join push to scale CORSIA credit supply ahead of 2027 demand",
-      "summary": "Five governments have joined an aviation carbon market alliance aimed at scaling the supply of eligible carbon credits for international airlines, as the sector looks to meet expected demand of up to 250 million emissions units by spring 2027.",
-      "url": "https://carbon-pulse.com/525066/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-23",
-      "topic": "CORSIA & Aviation 航空碳抵換",
-      "matched_keywords": [
-        "carbon credit",
-        "CORSIA",
-        "aviation carbon"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Nature-based solutions fund raises €124 mln in first close",
-      "summary": "A new fund aiming to scale up nature-based solutions has raised €124 million in a first close, with a target of sequestering at least 7 mln tonnes of CO2 over 25 years.",
-      "url": "https://carbon-pulse.com/525049/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-23",
-      "topic": "Nature-based Solutions 自然碳匯",
-      "matched_keywords": [
-        "nature-based carbon",
-        "nature-based solution"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "How 2026–2027 Catalysts Could Make AEMC a Standout Nickel Story for Investors",
-      "summary": "Paid Advertisement – Disseminated on behalf of Alaska Energy Metals Corporation. Alaska Energy Metals Corporation (AEMC) is moving into a more decisive phase. The company is no longer just an […] The post How 2026–2027 Catalysts Could Make AEMC a Standout Nickel Story for Investors appeared first on Carbon Credits .",
-      "url": "https://carboncredits.com/how-2026-2027-catalysts-could-make-aemc-a-standout-nickel-story-for-investors/",
-      "source": "Carbon Credits",
-      "published": "2026-06-23",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "BRIEFING: Thailand carbon market coalesces around THB 50-200 price band as buyers, developers expect growth",
-      "summary": "Thailand's voluntary carbon market is beginning to converge around a domestic price range of THB 50-200 ($1.50-6.10) per tonne of CO2 equivalent, with both buyers and project developers viewing the market positively in terms of climate action and future compliance, according to a survey.",
-      "url": "https://carbon-pulse.com/525025/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-23",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "voluntary carbon market",
-        "VCM",
-        "nature-based carbon"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "INTERVIEW: Adding carbon removals to UK ETS will guarantee a market – but not demand",
-      "summary": "The UK’s planned route for integrating greenhouse gas removals (GGRs) into its Emissions Trading Scheme (ETS) would give project developers access to the compliance market – but it would not guarantee the buyers, a former UK government official told Carbon Pulse.",
-      "url": "https://carbon-pulse.com/524887/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-23",
-      "topic": "EU ETS 歐盟碳交易",
-      "matched_keywords": [
-        "emissions trading scheme",
-        "UK ETS",
-        "VCM",
-        "carbon removal"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Forest projects sequester carbon but fall short on biodiversity, ecosystem health -study",
-      "summary": "Most forest carbon projects analysed by a group of researchers failed to improve the wider ecological health of the land they cover, even when they succeeded in reducing deforestation, according to a new study.",
-      "url": "https://carbon-pulse.com/524991/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-23",
-      "topic": "Nature-based Solutions 自然碳匯",
-      "matched_keywords": [
-        "VCM",
-        "nature-based carbon",
-        "forest carbon"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Japanese manufacturer, Finnish institute move direct ocean capture tech towards pilot testing",
-      "summary": "A Japanese electronics group and a Finnish research institute have advanced an electrochemical direct ocean capture (DOC) technology towards pilot-scale validation, the two announced this month.",
-      "url": "https://carbon-pulse.com/525001/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-23",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "VCM"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Ethiopia drafts bill to include banking sector in carbon markets -local media",
-      "summary": "Ethiopia’s legislature is reviewing a draft Carbon Market Proclamation that would permit local commercial banks and financial institutions to participate directly in carbon trading, local daily Ethiopia Today reported.",
-      "url": "https://carbon-pulse.com/524942/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-23",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "VCM",
-        "Article 6"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Carbon developer group elects Latin America specialist to leadership role",
-      "summary": "An international carbon project developer association has elected a Brazil-based project specialist as co-vice chair, adding Latin American experience to its leadership as it seeks to influence international carbon market rules.",
-      "url": "https://carbon-pulse.com/524927/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-23",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "VCM",
-        "Article 6",
-        "CORSIA"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Southeast Asian climate tech companies launch the first of nine biochar facilities producing carbon removal credits",
-      "summary": "Two climate‑tech companies have launched their first franchise biochar facility in Surat Thani, Thailand, producing carbon removal credits equivalent to more than 15,000 tonnes of CO2 annually, and said the model would be replicated across nine additional sites in Southeast Asia.",
-      "url": "https://carbon-pulse.com/524868/",
-      "source": "Carbon Pulse",
-      "published": "2026-06-23",
-      "topic": "Carbon Removal & CDR 碳移除",
-      "matched_keywords": [
-        "VCM",
-        "carbon removal"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
     }
   ],
   "stats": {
-    "a": 7,
+    "a": 9,
     "b": 31,
     "dupes_collapsed": 0,
     "dropped_stale": 7,
