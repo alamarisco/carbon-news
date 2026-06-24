@@ -22,9 +22,24 @@ the **living weekly doc**, and finalized as a dated `.docx` each week.
 | Drive folder — weekly docs `國際新聞蒐集/2026年/` | `1dwXqv1UMclM1Ni3CIPBMBo62X-W58aFr` |
 | Drive folder — state `國際新聞蒐集/_state/` | `1DKzbo0r0j_7jQmPd9dzB8fTNtMA5RhTX` |
 
-**Script & reference paths** below (e.g. `scripts/append_story.py`, `reference/streams.md`,
-`templates/weekly_template.docx`) are **relative to the skill directory** (`cbam-weekly-news/`),
-which ships the docx tooling. Resolve them there.
+**Where the tooling lives:**
+- **Weekly .docx tools** (`append_story.py`, `build_docx.py`, `extract_prior_urls.py`,
+  `flag_article.py`) and `weekly_template.docx` are **canonical in this repo** under `weekly/`.
+  Fetch them at runtime (see "Weekly tools" below) — `/tmp/cbam_tools/...`. Ignore any copies
+  bundled in the skill; the repo is the single source of truth.
+- **Reference docs** `reference/streams.md`, `reference/sources.md`, `reference/keywords.md` are
+  skill-local (resolve them in the skill dir). The TW glossary is repo-hosted (see FLAG step 1).
+
+### Weekly tools — fetch once per session (FLAG / COMPILE only; RADAR needs none)
+```
+mkdir -p /tmp/cbam_tools/scripts /tmp/cbam_tools/templates
+base="https://raw.githubusercontent.com/alamarisco/cbam-monitor/main/weekly"
+for f in scripts/append_story.py scripts/build_docx.py scripts/extract_prior_urls.py \
+         scripts/flag_article.py templates/weekly_template.docx templates/queue_template.md; do
+  curl -sSL -o "/tmp/cbam_tools/$f" "$base/$f"
+done
+```
+Then run the tools from `/tmp/cbam_tools/scripts/...`.
 
 ---
 
@@ -142,22 +157,25 @@ For each picked URL:
    <URL>
    ```
 
-3. **Append to the living weekly `.docx`** (Drive connector → local → Drive):
+3. **Append to the living weekly `.docx`** (Drive connector → local → Drive). First fetch the
+   weekly tools (see "Weekly tools" above) if not already in `/tmp/cbam_tools`:
    - Download the most recent `.docx` from Drive folder `1dwXqv1UMclM1Ni3CIPBMBo62X-W58aFr` to
-     `/tmp/weekly.docx` (or seed a fresh week by copying `templates/weekly_template.docx` — never
-     a blank `Document`, or the page-1 index table and page-number footer go missing).
+     `/tmp/weekly.docx` (or seed a fresh week by copying
+     `/tmp/cbam_tools/templates/weekly_template.docx` — never a blank `Document`, or the page-1
+     index table and page-number footer go missing).
    - Write the translation to `/tmp/content.txt`: `# headline`, `## sub-header`, plain body lines,
      `SRC <url>`, `DATE <YYYY/MM/DD>`.
-   - Run `python scripts/append_story.py /tmp/weekly.docx /tmp/content.txt /tmp/weekly_out.docx`.
+   - Run `python /tmp/cbam_tools/scripts/append_story.py /tmp/weekly.docx /tmp/content.txt /tmp/weekly_out.docx`.
      It adds a hyperlinked **項次 row** to the index table, inserts a **page break**, applies the
      item house style (新聞標題 auto-numbered 24pt; body/sub-headers Times New Roman + 標楷體 14pt,
      23pt exact line spacing, 9pt space-before; sub-headers bold, **body never bold**), and
-     recalculates `本週共計 N 則`. (`scripts/build_docx.py` is for a full from-scratch rebuild only.)
+     recalculates `本週共計 N 則`. (`/tmp/cbam_tools/scripts/build_docx.py` is for a full
+     from-scratch rebuild only.)
    - Re-upload `/tmp/weekly_out.docx` to Drive folder `1dwXqv1UMclM1Ni3CIPBMBo62X-W58aFr`.
 
-4. **Log the pick to the queue.** Run `python scripts/flag_article.py --root "<Drive root local
-   path>" --week <MM.DD-MM.DD> --url URL --source S --date YYYY/MM/DD --by "Claude"
-   --headline "中文標題"`, then upload the updated `_queue_<week>.md` to Drive `_state/`.
+4. **Log the pick to the queue.** Run `python /tmp/cbam_tools/scripts/flag_article.py
+   --root "<Drive root local path>" --week <MM.DD-MM.DD> --url URL --source S --date YYYY/MM/DD
+   --by "Claude" --headline "中文標題"`, then upload the updated `_queue_<week>.md` to Drive `_state/`.
 
 5. **Update the dedup ledger** via GitHub dispatch (no local clone; works from any machine):
    ```
@@ -183,7 +201,8 @@ The living doc is already mostly built, so this is a light pass.
 Download the most recent `.docx` from Drive `2026年/` to find the previous end date. Coverage
 window starts the day AFTER it (includes the weekend) through this file's end date. Filename label
 follows `MM.DD-MM.DD` (weekdays). Build the dedupe set from `.../state/seen_urls.json` plus the
-previous 4–6 weekly files (`scripts/extract_prior_urls.py`).
+previous 4–6 weekly files (`/tmp/cbam_tools/scripts/extract_prior_urls.py`; fetch the weekly
+tools first — see "Weekly tools" above).
 
 ### Step 2 — Top-up sweep
 Read `stories_<week>.json` from Drive `_state/`. Optionally `web_fetch` tracked sources in
@@ -202,17 +221,19 @@ When a story runs across outlets, choose the most reliable openable version (pre
 SEO/crypto reposts. Use that source's own date.
 
 ### Steps 3–6 — Translate top-ups, assemble, verify, upload
-Build on `templates/weekly_template.docx` and append with `scripts/append_story.py` (preferred),
-or full-rebuild with `scripts/build_docx.py` reproducing the House style below. Verify: every
+Build on `/tmp/cbam_tools/templates/weekly_template.docx` and append with
+`/tmp/cbam_tools/scripts/append_story.py` (preferred), or full-rebuild with
+`/tmp/cbam_tools/scripts/build_docx.py` reproducing the House style below. Verify: every
 story has a working `新聞出處` URL + confirmed `日期`; no duplicates; `本週共計 N 則` matches the
 count; the page-1 index table has one hyperlinked row per story; the footer shows page numbers;
 spot-check 1–2 translations. Upload to Drive `2026年/`, remind Alec to copy it to the company
 Drive, and present with `present_files`.
 
 ### House style
-Every weekly is built on **`templates/weekly_template.docx`** (page-1 title block + empty 項次
-index table + centred page-number footer + the `新聞標題` numbered-list style already defined).
-Seed each new week by copying the template, then add stories with `scripts/append_story.py`.
+Every weekly is built on **`weekly_template.docx`** (page-1 title block + empty 項次 index table
++ centred page-number footer + the `新聞標題` numbered-list style already defined). Seed each new
+week by copying `/tmp/cbam_tools/templates/weekly_template.docx`, then add stories with
+`/tmp/cbam_tools/scripts/append_story.py`.
 
 **Page 1, top (in order):**
 

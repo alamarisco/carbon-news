@@ -36,17 +36,18 @@ other machines. The repo file is the single source of truth and is identical on 
   1. `web_fetch` `.../data/radar/index.json` → read `triage_dated`.
   2. `web_fetch` `.../data/radar/<triage_dated>` → pass to `create_artifact`.
 - **FLAG** = translate (house style), LINE message, append to the weekly `.docx` via the Drive
-  connector + `scripts/append_story.py`, then update the ledger by firing the `flag-pick` GitHub
-  dispatch (see WORKFLOW.md FLAG step 5). No local repo clone needed.
-- **COMPILE** = weekly finalize via Drive connector + `scripts/build_docx.py` / `append_story.py`.
+  connector + the repo's `weekly/scripts/append_story.py`, then update the ledger by firing the
+  `flag-pick` GitHub dispatch (see WORKFLOW.md FLAG step 5). No local repo clone needed.
+- **COMPILE** = weekly finalize via Drive connector + the repo's `weekly/scripts/build_docx.py` /
+  `append_story.py`.
 
-## Skill-local assets (used by FLAG/COMPILE)
+## Assets
 
-- `scripts/append_story.py`, `scripts/build_docx.py`, `scripts/extract_prior_urls.py`,
-  `scripts/flag_article.py` — .docx tooling + queue logging.
-- `templates/weekly_template.docx` — house-style seed for a fresh week.
-- `reference/sources.md`, `reference/keywords.md`, `reference/streams.md` — tracked sources,
-  bilingual keywords, stream/tier mapping.
+- **Weekly .docx tools are canonical in the repo** under `weekly/` (`append_story.py`,
+  `build_docx.py`, `extract_prior_urls.py`, `flag_article.py`, `templates/weekly_template.docx`).
+  WORKFLOW.md fetches them to `/tmp/cbam_tools/` at runtime — ignore any copies bundled in this skill.
+- Skill-local reference docs: `reference/sources.md`, `reference/keywords.md`,
+  `reference/streams.md` — tracked sources, bilingual keywords, stream/tier mapping.
 
-> Any `radar_process.py` bundled in this skill is **stale and unused** — RADAR output is built by
-> CI. Ignore it.
+> Any `radar_process.py` or `scripts/*.py` bundled in this skill is **stale and unused** — RADAR
+> is built by CI; the weekly tools are fetched from the repo. Ignore the bundled copies.
