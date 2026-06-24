@@ -141,10 +141,9 @@ For each picked URL:
    排放交易體系/系統 (EU ETS), 免費配額 (free allowances), 碳洩漏 (carbon leakage),
    碳邊境調整機制 (CBAM), 直接還原鐵 (DRI), 電弧爐 (EAF), 市場穩定準備機制 (MSR),
    鋼鐵保障措施 (safeguard), 預設值 (default value), 碳費 (Taiwan carbon fee).
-   **Consult the TW glossary** before translating — repo file `reference/glossary_tw.md`, fetchable
-   at `https://raw.githubusercontent.com/alamarisco/cbam-monitor/main/reference/glossary_tw.md`
-   (PRC→TW swaps + domain terms). **Extend it** when new terms come up (a small commit to the repo).
-   Body stays plain (no bold); sub-headers bold.
+   **Consult the TW glossary** (Appendix A at the bottom of this file) before translating —
+   PRC→TW swaps + domain-preferred terms. **Extend Appendix A** when new terms come up (a small
+   commit to this file). Body stays plain (no bold); sub-headers bold.
 
 2. **Paste-ready LINE message** (Alec copies this into the LINE group). Blank line after the
    title, blank line after the summary, source + URL together at the end:
@@ -275,3 +274,43 @@ week by copying `/tmp/cbam_tools/templates/weekly_template.docx`, then add stori
 
 See `reference/streams.md`, `reference/sources.md`, `reference/keywords.md` (in the skill) for
 the full bucket → stream/tier mapping, tracked sources, and bilingual keyword set.
+
+---
+
+## Appendix A — 繁體中文（台灣用語）glossary
+
+Consulted by FLAG-mode translation (step 1). Translate into **Taiwanese Mandarin**, never PRC
+usage — including technical terms. **Extend this table** (small commit) whenever a new PRC→TW
+swap or domain term comes up.
+
+### PRC → TW general swaps
+
+| PRC usage | Taiwan usage |
+|---|---|
+| 生產商 | 業者／廠商／鋼廠 |
+| 信號 | 訊號 |
+| 軟件 | 軟體 |
+| 質量 | 品質 |
+| 數據 | 資料（或數據，視語境 / per context） |
+| 視頻 | 影片 |
+| 激光 | 雷射 |
+| relining（高爐 / blast furnace） | 翻修 |
+| steelmaker | 鋼廠／鋼鐵業者 |
+
+### English → preferred TW domain rendering
+
+| English term | Taiwan rendering |
+|---|---|
+| EU ETS (Emissions Trading System) | 歐盟排放交易體系／系統 |
+| free allowances / free allocation | 免費配額 |
+| carbon leakage | 碳洩漏 |
+| CBAM (Carbon Border Adjustment Mechanism) | 碳邊境調整機制 |
+| DRI (direct reduced iron) | 直接還原鐵 |
+| EAF (electric arc furnace) | 電弧爐 |
+| MSR (Market Stability Reserve) | 市場穩定準備機制 |
+| safeguard (measure) | 鋼鐵保障措施／保障措施 |
+| default value | 預設值 |
+| Taiwan carbon fee | 碳費 |
+
+Keep acronyms (CBAM, EU ETS, MRV, MSR, CSCF, DRI, EAF) in Latin on first mention with a Chinese
+gloss; titles spell terms out in full Chinese (no acronyms); body never bold; sub-headers bold.
