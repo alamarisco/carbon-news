@@ -10,12 +10,14 @@ or Markdown.
 Data sources:
   Free (RSS)     — Euractiv, Carbon Brief, Carbon Pulse, Carbon Market Watch,
                    Climate Home News, E3G, Sandbag (CBAM category), Clear Blue Markets,
-                   Politico Europe, EUROMETAL, SteelOrbis, GMK Center, Carbon Credits,
-                   EU Council, Business Standard India, NDTV Profit India,
-                   中央社 CNA, 聯合新聞網 UDN, 經濟日報 Economic Daily (incl. 商情/ESG), 環境資訊中心 e-info
+                   Politico Europe, EUROMETAL, GMK Center, Carbon Credits, EU Council,
+                   European Commission (press corner, text-filtered), The Hindu Business,
+                   NDTV Profit India, 中央社 CNA, 聯合新聞網 UDN,
+                   經濟日報 Economic Daily (incl. 商情/ESG), 環境資訊中心 e-info, ESG遠見
   Free (scraped) — Sylvera (sylvera.com/blog), BeZero Carbon (bezerocarbon.com/insights),
                    今週刊 ESG (esg.businesstoday.com.tw), Ember Energy (ember-energy.org),
-                   DG TAXUD CBAM (ec.europa.eu), 經貿透視 Trademag, SteelOrbis (steel-news listing)
+                   DG TAXUD CBAM (ec.europa.eu), 經貿透視 Trademag, SteelOrbis (steel-news listing),
+                   ICAP (icapcarbonaction.com/en/news)
   Paid (scraped) — 天下雜誌 CommonWealth (cw.com.tw — 永續發展 section; preview only)
                    All confirmed SSR; link-pattern scraper, no JS needed.
   Paid (RSS)     — Financial Times, Nikkei Asia, Bloomberg Green
@@ -235,6 +237,19 @@ RSS_FEEDS: dict[str, dict] = {
         ],
     },
 
+    "ESG遠見": {
+        "type": "free",
+        "method": "rss",
+        # Taiwan ESG/永續 coverage (遠見). RSS at /rss. NOTE: the CDN is flaky — it intermittently
+        # serves a fresh copy (current) and a ~10-month-stale cached copy from different nodes.
+        # This is safe: the RADAR staleness filter drops the stale-copy items (they're genuinely
+        # old-dated), so yield just varies run to run; no mis-dated items leak through.
+        # Keyword filter selects CBAM/碳費/碳邊境 items.
+        "feeds": [
+            "https://esg.gvm.com.tw/rss",
+        ],
+    },
+
     # ── PAID SOURCES (headline + link only) ──────────────────────────────
 
     "Financial Times": {
@@ -314,6 +329,18 @@ RSS_FEEDS: dict[str, dict] = {
         ],
     },
 
+    "European Commission": {
+        "type": "free",
+        "method": "rss",
+        # EC press corner RapidPress RSS API (confirmed June 2026). Text-filtered feeds keep
+        # volume relevant; our keyword filter tightens further. CBAM/ETS announcements land here
+        # before the DG TAXUD page. (policyarea= param returns 400; text= is the working filter.)
+        "feeds": [
+            "https://ec.europa.eu/commission/presscorner/api/rss?text=CBAM&language=en",
+            "https://ec.europa.eu/commission/presscorner/api/rss?text=emissions%20trading&language=en",
+        ],
+    },
+
     # The Parliament Magazine: no native RSS (custom CMS, no feed link) — removed.
 
     # ── CARBON MARKETS ───────────────────────────────────────────────────
@@ -376,6 +403,17 @@ MAX_DETAIL_FETCHES = 15   # max individual article pages to fetch per source per
 SCRAPE_DELAY      = 0.3   # polite inter-request delay (seconds)
 
 LINK_PATTERN_SOURCES: dict[str, dict] = {
+    "ICAP": {
+        "type": "free",
+        "listing_url": "https://icapcarbonaction.com/en/news",
+        "base_url": "https://icapcarbonaction.com",
+        # International Carbon Action Partnership. No RSS (all paths 404). Listing is SSR;
+        # article hrefs are relative /en/news/<slug>. Date from <time datetime="…">,
+        # title from og:title — both confirmed present (June 2026).
+        "link_pattern": re.compile(
+            r"(?:https://icapcarbonaction\.com)?/en/news/[a-z0-9][a-z0-9-]+$"
+        ),
+    },
     "SteelOrbis": {
         "type": "free",
         "listing_url": "https://www.steelorbis.com/steel-news/",
