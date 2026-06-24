@@ -15,10 +15,11 @@ Data sources:
                    中央社 CNA, 聯合新聞網 UDN, 經濟日報 Economic Daily (incl. 商情/ESG), 環境資訊中心 e-info
   Free (scraped) — Sylvera (sylvera.com/blog), BeZero Carbon (bezerocarbon.com/insights),
                    今週刊 ESG (esg.businesstoday.com.tw), Ember Energy (ember-energy.org),
-                   DG TAXUD CBAM (ec.europa.eu), 經貿透視 Trademag
+                   DG TAXUD CBAM (ec.europa.eu), 經貿透視 Trademag, SteelOrbis (steel-news listing)
   Paid (scraped) — 天下雜誌 CommonWealth (cw.com.tw — 永續發展 section; preview only)
                    All confirmed SSR; link-pattern scraper, no JS needed.
-  Paid (RSS)     — Financial Times, Nikkei Asia, Bloomberg Green, S&P Global Commodity Insights
+  Paid (RSS)     — Financial Times, Nikkei Asia, Bloomberg Green
+                   (S&P Global RSS removed June 2026 — Akamai 403s every path; now WebSearch-only)
   Dead (removed) — Reuters (all RSS feeds shut down May 2026)
   Removed feeds  — Parliament Magazine, PIK Potsdam (no native RSS),
                    CNBC TV18 India (geo-blocked; replaced by Business Standard),
@@ -287,22 +288,8 @@ RSS_FEEDS: dict[str, dict] = {
         ],
     },
 
-    "SteelOrbis": {
-        "type": "free",
-        "method": "rss",
-        "feedparser_headers": {
-            "User-Agent": (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/124.0.0.0 Safari/537.36"
-            ),
-            "Accept": "application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.8",
-        },
-        "feeds": [
-            "https://www.steelorbis.com/steel-news/rss/",
-            "https://www.steelorbis.com/rss.xml",
-        ],
-    },
+    # SteelOrbis RSS retired June 2026 — every feed path (/steel-news/rss/, /rss.xml) now 404s.
+    # Moved to LINK_PATTERN_SOURCES below as a scraped listing source (page is SSR, dated articles).
 
     "GMK Center": {
         "type": "free",
@@ -372,15 +359,9 @@ RSS_FEEDS: dict[str, dict] = {
 
     # ── PAID (COMMODITY INTELLIGENCE) ───────────────────────────────────
 
-    "S&P Global Commodity Insights": {
-        "type": "paid",
-        "method": "rss",
-        # Old /commodityinsights/ path redirects — updated to current /commodity-insights/ domain (June 2026)
-        "feeds": [
-            "https://www.spglobal.com/commodity-insights/en/rss-feed/energy",
-            "https://www.spglobal.com/commodity-insights/en/rss-feed/metals",
-        ],
-    },
+    # S&P Global Commodity Insights RSS removed June 2026 — Akamai blocks every rss-feed path
+    # with 403 (datacenter + residential), 0 articles ever ingested. S&P remains a WebSearch
+    # "openable source" for paywalled-pick substitution (see WORKFLOW.md FLAG step 0).
 
     # Reuters RSS feeds shut down — all URLs return connection error or 401 (confirmed May 2026)
 }
@@ -395,6 +376,17 @@ MAX_DETAIL_FETCHES = 15   # max individual article pages to fetch per source per
 SCRAPE_DELAY      = 0.3   # polite inter-request delay (seconds)
 
 LINK_PATTERN_SOURCES: dict[str, dict] = {
+    "SteelOrbis": {
+        "type": "free",
+        "listing_url": "https://www.steelorbis.com/steel-news/",
+        "base_url": "https://www.steelorbis.com",
+        # RSS retired (404). Listing page is SSR; article hrefs are relative
+        # /steel-news/latest-news/<slug>-<id>.htm. Date from JSON-LD datePublished,
+        # title from og:title — both confirmed present (June 2026).
+        "link_pattern": re.compile(
+            r"(?:https://www\.steelorbis\.com)?/steel-news/latest-news/[a-z0-9-]+-\d+\.htm$"
+        ),
+    },
     "Sylvera": {
         "type": "free",
         "listing_url": "https://www.sylvera.com/blog",
