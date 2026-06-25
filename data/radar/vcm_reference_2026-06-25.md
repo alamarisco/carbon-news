@@ -1,6 +1,6 @@
 # VCM / 廣義碳市場參考清單 (Stream B · 研究用, 不進 CBAM 週報) — 2026-06-25
 
-_32 items — collected for research; seed for a future VCM newsletter._
+_31 items — collected for research; seed for a future VCM newsletter._
 
 - **Thacker Pass Is Being Built: Here Is Why That Is the Best News NILI Investors Have Heard All Year.** — Carbon Credits · 2026-06-25 · _Voluntary Carbon Market (VCM) 自願性碳市場_
   https://carboncredits.com/thacker-pass-is-being-built-here-is-why-that-is-the-best-news-nili-investors-have-heard-all-year-nili/
@@ -8,8 +8,6 @@ _32 items — collected for research; seed for a future VCM newsletter._
   https://carbon-pulse.com/525760/
 - **LCAW26: INTERVIEW – Japanese govt should look beyond domestic carbon market to international credits, investor group says** — Carbon Pulse · 2026-06-25 · _Japan Carbon Market 日本碳市場_
   https://carbon-pulse.com/525688/
-- **凝聚同島一命韌性聯防、啟動高溫跨部會調適 環境部召開地方首長會議** — 經濟日報 Economic Daily · 2026-06-25 · _Other 其他_
-  https://money.udn.com/money/story/10871/9588386
 - **朝陽科大永續耀全球 THE影響力排名連8年進榜** — 經濟日報 Economic Daily · 2026-06-25 · _Taiwan Carbon Market 台灣碳市場_
   https://money.udn.com/money/story/5635/9587959
 - **不靠經驗靠數據！產發署攜手永康廠協會 用AI驅動「跨世代超車」** — 經濟日報 Economic Daily · 2026-06-25 · _Taiwan Carbon Market 台灣碳市場_
