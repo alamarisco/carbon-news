@@ -2,14 +2,14 @@ name: CBAM Monitor — Daily Data Feed
 
 on:
   schedule:
-    - cron: "7 8 * * 1-5"    # weekdays 16:07 Taipei — primary (off-peak minute)
-    - cron: "30 9 * * 1-5"   # weekdays 17:30 Taipei — backup 1 (GitHub cron is best-effort)
-    - cron: "0 11 * * 1-5"   # weekdays 19:00 Taipei — backup 2
-    - cron: "7 1 * * 1"      # Monday 09:07 Taipei — weekend catch-up
+    - cron: "30 0 * * 1-5"   # weekdays 08:30 Taipei — primary
+    - cron: "30 1 * * 1-5"   # weekdays 09:30 Taipei — backup 1 (GitHub cron is best-effort)
+    - cron: "0 3 * * 1-5"    # weekdays 11:00 Taipei — backup 2
+    # Monday's morning run gets 72h automatically (see lookback) to catch up the weekend.
   workflow_dispatch:
     inputs:
       hours:
-        description: "Hours lookback (blank = auto: 66 on Monday, else 25)"
+        description: "Hours lookback (blank = auto: 72 on Monday, else 25)"
         required: false
         default: ""
   repository_dispatch:
@@ -63,7 +63,7 @@ jobs:
           if [ -n "${{ github.event.inputs.hours }}" ]; then
             echo "HOURS=${{ github.event.inputs.hours }}" >> "$GITHUB_OUTPUT"
           elif [ "$(date -u +%u)" = "1" ]; then
-            echo "HOURS=66" >> "$GITHUB_OUTPUT"
+            echo "HOURS=72" >> "$GITHUB_OUTPUT"
           else
             echo "HOURS=25" >> "$GITHUB_OUTPUT"
           fi
