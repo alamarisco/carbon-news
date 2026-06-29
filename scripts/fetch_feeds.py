@@ -17,7 +17,7 @@ Data sources:
   Free (scraped) — Sylvera (sylvera.com/blog), BeZero Carbon (bezerocarbon.com/insights),
                    今週刊 ESG (esg.businesstoday.com.tw), Ember Energy (ember-energy.org),
                    DG TAXUD CBAM (ec.europa.eu), 經貿透視 Trademag, SteelOrbis (steel-news listing),
-                   ICAP (icapcarbonaction.com/en/news)
+                   ICAP (icapcarbonaction.com/en/news), Reccessary (reccessary.com/zh-tw)
   Paid (scraped) — 天下雜誌 CommonWealth (cw.com.tw — 永續發展 section; preview only)
                    All confirmed SSR; link-pattern scraper, no JS needed.
   Paid (RSS)     — Financial Times, Nikkei Asia, Bloomberg Green
@@ -25,8 +25,9 @@ Data sources:
   Dead (removed) — Reuters (all RSS feeds shut down May 2026)
   Removed feeds  — Parliament Magazine, PIK Potsdam (no native RSS),
                    CNBC TV18 India (geo-blocked; replaced by Business Standard),
-                   Reccessary, Cnyes, CSRone (no valid RSS),
+                   Cnyes, CSRone (no valid RSS),
                    CTEE, CNA Net Zero (403/JS-rendered)
+                   (Reccessary RSS dead, but re-added June 2026 as a scraper — see below)
 
 Clear Blue Markets notes (confirmed via Chrome, May 2026):
   - Correct domain: clearbluemarkets.com (NOT clearblue.markets)
@@ -380,7 +381,7 @@ RSS_FEEDS: dict[str, dict] = {
     # ── TAIWAN (additional) ──────────────────────────────────────────────
 
     # 工商時報 CTEE: RSS returns 403, search page also returns 403 — removed entirely.
-    # Reccessary /feed/ returns malformed — removed.
+    # Reccessary RSS dead (/feed 404) — re-added as a scraper in LINK_PATTERN_SOURCES below.
     # 鉅亨網 Cnyes API /news/category/*/rss returns malformed (non-standard format) — removed.
     # CSRone /feed/ returns malformed — removed.
 
@@ -440,6 +441,19 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
         # Listing page is JS-rendered (only 2 static articles) — use sitemap instead
         "sitemap_url": "https://bezerocarbon.com/sitemap.xml",
         "link_pattern": re.compile(r"https://bezerocarbon\.com/insights/[a-z0-9][^?#]*$"),
+    },
+    "Reccessary": {
+        "type": "free",
+        "listing_url": "https://www.reccessary.com/zh-tw",
+        # Trailing slash: homepage hrefs are relative WITHOUT a leading slash (zh-tw/news/<slug>),
+        # so base_url + href must insert the slash here.
+        "base_url": "https://www.reccessary.com/",
+        # Taiwan/Asia clean-energy & carbon-market outlet. RSS dead (/feed 404); homepage is SSR
+        # with ~70 article links zh-tw/news/<slug> (strong CBAM/碳費/Asia coverage). Date from
+        # JSON-LD datePublished, title from og:title — both confirmed present (June 2026).
+        "link_pattern": re.compile(
+            r"(?:https://www\.reccessary\.com/)?zh-tw/news/[A-Za-z0-9][A-Za-z0-9-]+$"
+        ),
     },
     "今週刊 ESG": {
         "type": "free",
