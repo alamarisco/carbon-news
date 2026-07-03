@@ -1,6 +1,6 @@
 # 國際新聞蒐集 — 每日雷達 (Stream A · CBAM core) — 2026-07-03
 
-_12 candidates after dedup · 1 duplicates collapsed_
+_13 candidates after dedup · 0 duplicates collapsed_
 
 ## 🟠 HIGH (4)
 
@@ -23,7 +23,12 @@ _12 candidates after dedup · 1 duplicates collapsed_
   The European steel industry has called on EU institutions to preserve the integrity of the EU Emissions Trading System (ETS) and strengthen the Carbon Border Adjustment Mechanism (CBAM), warning that 
   https://eurometal.net/european-steelmakers-urge-eu-to-preserve-ets-as-e10-billion-decarbonization-investments-continue/?utm_source=rss&utm_medium=rss&utm_campaign=european-steelmakers-urge-eu-to-preserve-ets-as-e10-billion-decarbonization-investments-continue
 
-## 🟡 MED (8)
+## 🟡 MED (9)
+
+- **US declines to renew USMCA in current form, Section 232 steel tariffs stay in place**
+  SteelOrbis · 2026-07-03 · _Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業_
+  The US declined to renew the United States-Mexico-Canada Agreement (USMCA) in its current form following the pact's mandatory joint review on July 1, ...
+  https://www.steelorbis.com/steel-news/latest-news/us-declines-to-renew-usmca-in-current-form-section-232-steel-tariffs-stay-in-place-1462298.htm
 
 - **WCI Markets: CCAs quiet, rangebound around $33 amid summer lull**
   Carbon Pulse · 2026-07-02 · _EU ETS 歐盟碳交易_
@@ -55,12 +60,12 @@ _12 candidates after dedup · 1 duplicates collapsed_
   The inclusion of domestic maritime emissions in the UK Emissions Trading System (ETS) from this month is expected to pose limited difficulties for most shipowners, who are already familiar with the EU
   https://carbon-pulse.com/527539/
 
-- **Russia’s MMK reduces coke consumption in blast furnace production**
-  SteelOrbis · 2026-07-02 · _Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業_
-  Russian steelmaker Magnitogorsk Iron and Steel Works (MMK) has announced that it has achieved economic benefits exceeding RUB 5.5 billion through ...
-  https://www.steelorbis.com/steel-news/latest-news/russias-mmk-reduces-coke-consumption-in-blast-furnace-production-1462160.htm
-
 - **India should channel carbon market revenues into industrial decarbonisation, report says**
   Carbon Pulse · 2026-07-02 · _Voluntary Carbon Market (VCM) 自願性碳市場_
   India should establish two national funds financed by revenues generated from its Carbon Credit Trading Scheme (CCTS) to support industrial decarbonisation, a report said.
   https://carbon-pulse.com/528015/
+
+- **台灣穩坐亞洲前段班！金管會重磅預告：今年瞄準四大高碳排產業孵化「可融資永續專案」**
+  ESG遠見 · 2026-07-02 · _Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業_
+  全球氣候治理步入深水區，亞洲正逆勢成為綠色轉型的核心發動機！該如何打破資金與專案的對接斷層，從氣候減碳跨向新興的「自然資本」，共築全新韌性戰略？ The post 台灣穩坐亞洲前段班！金管會重磅預告：今年瞄準四大高碳排產業孵化「可融資永續專案」 appeared first on ESG遠見 - 永續共好 .
+  https://esg.gvm.com.tw/article/120752
