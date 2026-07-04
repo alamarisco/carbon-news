@@ -1,0 +1,94 @@
+name: CBAM Monitor — Weekly VCM Digest
+
+# Emails the Stream B (VCM / 廣義碳市場 / carbon-credit) reference digest once a week.
+# Self-contained: fetches a 7-day window, runs the RADAR processor with ephemeral state
+# (does NOT touch data/ or state/ in the repo), renders Stream B, and emails it.
+
+on:
+  schedule:
+    - cron: "0 8 * * 5"    # Friday 16:00 Taipei — weekly VCM reference (adjust day/time as desired)
+  workflow_dispatch:
+    inputs:
+      hours:
+        description: "Hours lookback (blank = 168 = 7 days)"
+        required: false
+        default: ""
+  repository_dispatch:
+    types: [run-weekly-vcm]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-vcm
+  cancel-in-progress: false
+
+jobs:
+  vcm-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Determine lookback window
+        id: lb
+        run: |
+          if [ -n "${{ github.event.inputs.hours }}" ]; then
+            echo "HOURS=${{ github.event.inputs.hours }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "HOURS=168" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Fetch 7-day window → JSON
+        run: |
+          mkdir -p /tmp/vcm
+          python scripts/fetch_feeds.py --hours ${{ steps.lb.outputs.HOURS }} --format json --output /tmp/vcm/articles.json
+
+      - name: RADAR process (ephemeral state — no repo writes)
+        run: |
+          DATE="$(TZ='Asia/Taipei' date +%F)"
+          # --portal-seen points at /tmp so the weekly run never mutates the repo's portal ledger.
+          # --maxage 8 keeps the whole week (default 4 would drop most of it).
+          python radar/scripts/radar_process.py \
+            --articles /tmp/vcm/articles.json \
+            --seen state/seen_urls.json \
+            --portal-seen /tmp/vcm/portal_seen.json \
+            --outdir /tmp/vcm --date "$DATE" --maxage 8
+
+      - name: Render Stream B digest email
+        id: email
+        run: |
+          DATE="$(TZ='Asia/Taipei' date +%F)"
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+          if python radar/scripts/render_email.py \
+               --candidates /tmp/vcm/candidates.json --date "$DATE" --out /tmp/vcm_email.html --stream b; then
+            NB=$(python -c "import json;print(len(json.load(open('/tmp/vcm/candidates.json')).get('stream_b',[])))")
+            echo "send=yes" >> "$GITHUB_OUTPUT"
+            echo "nb=$NB" >> "$GITHUB_OUTPUT"
+          else
+            echo "No Stream B digest to send."
+            echo "send=no" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Email Stream B digest
+        if: steps.email.outputs.send == 'yes'
+        continue-on-error: true
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_ADDRESS }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          to: ${{ secrets.RECIPIENT_EMAIL }}
+          from: "CBAM Radar — VCM <${{ secrets.GMAIL_ADDRESS }}>"
+          subject: "碳權市場週報 (VCM/廣義碳市場) — ${{ steps.email.outputs.date }} (${{ steps.email.outputs.nb }} items)"
+          html_body: file:///tmp/vcm_email.html
+          convert_markdown: false
