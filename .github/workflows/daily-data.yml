@@ -111,3 +111,36 @@ jobs:
           git commit -m "radar: $(TZ='Asia/Taipei' date +%Y-%m-%d_%H%M)" || exit 0
           git pull --rebase origin main
           git push
+
+      - name: Render RADAR digest email
+        id: email
+        if: steps.guard.outputs.run == 'yes'
+        run: |
+          DATE="$(TZ='Asia/Taipei' date +%F)"
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+          # render_email.py exits 2 if candidates.json is missing or not today's (RADAR failed) → skip send
+          if python radar/scripts/render_email.py \
+               --candidates data/radar/candidates.json --date "$DATE" --out /tmp/radar_email.html; then
+            NA=$(python -c "import json;print(len(json.load(open('data/radar/candidates.json')).get('stream_a',[])))")
+            echo "send=yes" >> "$GITHUB_OUTPUT"
+            echo "na=$NA" >> "$GITHUB_OUTPUT"
+          else
+            echo "Digest not for today — skipping email."
+            echo "send=no" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Email RADAR digest
+        if: steps.guard.outputs.run == 'yes' && steps.email.outputs.send == 'yes'
+        continue-on-error: true   # email is non-critical; data is already committed
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_ADDRESS }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          to: ${{ secrets.RECIPIENT_EMAIL }}
+          from: "CBAM Radar <${{ secrets.GMAIL_ADDRESS }}>"
+          subject: "CBAM 每日雷達 — ${{ steps.email.outputs.date }} (Stream A ${{ steps.email.outputs.na }})"
+          html_body: file:///tmp/radar_email.html
+          convert_markdown: false
