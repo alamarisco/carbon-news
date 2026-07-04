@@ -1,107 +1,31 @@
 {
-  "date": "2026-07-03",
+  "date": "2026-07-04",
   "stream_a": [
     {
-      "title": "Lawmakers agree to assign country-level default values to producers trying to trick EU CBAM",
-      "summary": "Lawmakers in the European Parliament's environment committee want to be able to assign country-level emissions values to goods and origins they suspect of trying to circumvent the EU's Carbon Border Adjustment Mechanism (CBAM), according to a compromise document seen by Carbon Pulse.",
-      "url": "https://carbon-pulse.com/528303/",
+      "title": "EU countries to vote on CBAM carbon price deduction rules in September",
+      "summary": "EU member states will vote in September on rules defining which foreign CO2 prices importers can deduct from their Carbon Border Adjustment Mechanism (CBAM) fees, a European Commission official said.",
+      "url": "https://carbon-pulse.com/528605/",
       "source": "Carbon Pulse",
-      "published": "2026-07-02",
+      "published": "2026-07-03",
       "topic": "EU CBAM — Policy & Implementation 歐盟CBAM政策",
       "matched_keywords": [
         "CBAM",
-        "carbon border adjustment"
+        "carbon border adjustment",
+        "Article 6"
       ],
       "portal": false,
       "stream": "A",
       "tier": "HIGH"
     },
     {
-      "title": "台版ETS年底試行 專家建議借鏡日韓經驗走出台灣模式",
-      "summary": "",
-      "url": "https://e-info.org.tw/node/243606",
-      "source": "環境資訊中心 e-info",
-      "published": "2026-07-02",
-      "topic": "Taiwan Carbon Market 台灣碳市場",
-      "matched_keywords": [
-        "CBAM",
-        "GX-ETS",
-        "碳洩漏",
-        "免費配額",
-        "台灣碳費",
-        "碳費",
-        "環境部"
-      ],
-      "portal": false,
-      "stream": "A",
-      "tier": "HIGH"
-    },
-    {
-      "title": "Free EU ETS permits have stifled investments in green steelmaking, non-profit says",
-      "summary": "The allocation of free allowances under the EU’s Emissions Trading System (EU ETS) has acted as a brake on decarbonisation investment by European steelmakers rather than a catalyst for action, according to a new briefing by Steelwatch.",
-      "url": "https://carbon-pulse.com/528080/",
+      "title": "Euro Markets: EUAs up 0.4% on the week as market settles in for rangebound trading ahead of reforms",
+      "summary": "European carbon prices posted a 0.4% weekly gain, unwinding the previous week's 0.4% decline as EUAs continued to travel sideways in a narrow channel ahead of mid-July's EU ETS reform package, while UKAs dropped 1.4% on the week amid ebbing confidence in a rapid linking agreement.",
+      "url": "https://carbon-pulse.com/528515/",
       "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業",
+      "published": "2026-07-03",
+      "topic": "EU ETS 歐盟碳交易",
       "matched_keywords": [
         "EU ETS",
-        "green steel"
-      ],
-      "portal": false,
-      "stream": "A",
-      "tier": "HIGH"
-    },
-    {
-      "title": "European steelmakers urge EU to preserve ETS as €10 billion decarbonization investments continue",
-      "summary": "The European steel industry has called on EU institutions to preserve the integrity of the EU Emissions Trading System (ETS) and strengthen the Carbon Border Adjustment Mechanism (CBAM), warning that current investment decisions will determine whether steel production, jobs and industrial value creation remain in Europe. In a joint statement, Outokumpu, SSAB, Salzgitter AG, Saarstahl, … The post E",
-      "url": "https://eurometal.net/european-steelmakers-urge-eu-to-preserve-ets-as-e10-billion-decarbonization-investments-continue/?utm_source=rss&utm_medium=rss&utm_campaign=european-steelmakers-urge-eu-to-preserve-ets-as-e10-billion-decarbonization-investments-continue",
-      "source": "EUROMETAL",
-      "published": "2026-07-02",
-      "topic": "EU CBAM — Policy & Implementation 歐盟CBAM政策",
-      "matched_keywords": [
-        "CBAM",
-        "carbon border adjustment"
-      ],
-      "portal": false,
-      "stream": "A",
-      "tier": "HIGH"
-    },
-    {
-      "title": "US declines to renew USMCA in current form, Section 232 steel tariffs stay in place",
-      "summary": "The US declined to renew the United States-Mexico-Canada Agreement (USMCA) in its current form following the pact's mandatory joint review on July 1, ...",
-      "url": "https://www.steelorbis.com/steel-news/latest-news/us-declines-to-renew-usmca-in-current-form-section-232-steel-tariffs-stay-in-place-1462298.htm",
-      "source": "SteelOrbis",
-      "published": "2026-07-03",
-      "topic": "Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業",
-      "matched_keywords": [
-        "steel tariff"
-      ],
-      "portal": false,
-      "stream": "A",
-      "tier": "MED"
-    },
-    {
-      "title": "WCI Markets: CCAs quiet, rangebound around $33 amid summer lull",
-      "summary": "California Carbon Allowance (CCA) futures traded sideways around $33 amid limited activity ahead of the July 4th holiday in the US.",
-      "url": "https://carbon-pulse.com/528273/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "EU ETS 歐盟碳交易",
-      "matched_keywords": [
-        "carbon allowance"
-      ],
-      "portal": false,
-      "stream": "A",
-      "tier": "MED"
-    },
-    {
-      "title": "Euro Markets: EUAs remain rangebound between technical levels as attention shifts to policy developments",
-      "summary": "European carbon prices posted a modest loss on Thursday, moving within a steadily shrinking channel between two key technical levels as trading activity continued to diminish in anticipation of the European Commission's unveiling of its ETS reform package in around two weeks.",
-      "url": "https://carbon-pulse.com/528036/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "EU ETS 歐盟碳交易",
-      "matched_keywords": [
         "ETS reform"
       ],
       "portal": false,
@@ -109,11 +33,11 @@
       "tier": "MED"
     },
     {
-      "title": "DATA DIVE: EU ETS-covered cement and steel emissions slump in H1 2026 as chemicals rebound",
-      "summary": "Cement and steel emissions fell significantly across the EU in the first half of 2026, data shows, while the chemicals sector saw a rise in impact due to the closure of the Strait of Hormuz restricting Asian and Middle Eastern competition.",
-      "url": "https://carbon-pulse.com/528084/",
+      "title": "Wind energy industry urges EU ETS overhaul to prioritise industrial electrification",
+      "summary": "The European Commission should use its upcoming revision of the EU Emissions Trading System (ETS) to redirect billions of euros in carbon market revenues towards industrial electrification, trade association WindEurope has said.",
+      "url": "https://carbon-pulse.com/528581/",
       "source": "Carbon Pulse",
-      "published": "2026-07-02",
+      "published": "2026-07-03",
       "topic": "EU ETS 歐盟碳交易",
       "matched_keywords": [
         "EU ETS"
@@ -123,72 +47,32 @@
       "tier": "MED"
     },
     {
-      "title": "Germany’s first nEHS carbon allowance auction clears at price ceiling",
-      "summary": "Germany's national emissions trading system (nEHS) held its first-ever auction of emissions allowances on Wednesday, with demand strong enough to trigger the scheme's price ceiling and double the volume of permits sold.",
-      "url": "https://carbon-pulse.com/528073/",
+      "title": "Five European Commission departments object to draft EU ETS reform",
+      "summary": "Five European Commission departments have issued negative opinions on a draft reform of the EU’s Emissions Trading System (EU ETS), EU officials told Carbon Pulse.",
+      "url": "https://carbon-pulse.com/528629/",
       "source": "Carbon Pulse",
-      "published": "2026-07-02",
+      "published": "2026-07-03",
       "topic": "EU ETS 歐盟碳交易",
       "matched_keywords": [
-        "carbon allowance"
+        "EU ETS",
+        "ETS reform"
       ],
       "portal": false,
       "stream": "A",
       "tier": "MED"
     },
     {
-      "title": "Daily News 02 / 07 / 2026",
-      "summary": "European Commission Daily news Brussels, 02 Jul 2026 €2.5 billion of EU ETS revenues invested in cleaner energy systems in 11 EU countries The European Commission and the European Investment Bank have today annou...",
-      "url": "https://ec.europa.eu/commission/presscorner/detail/en/mex_26_1507",
-      "source": "European Commission",
-      "published": "2026-07-02",
-      "topic": "EU ETS 歐盟碳交易",
-      "matched_keywords": [
-        "EU ETS"
-      ],
-      "portal": false,
-      "stream": "A",
-      "tier": "MED"
-    },
-    {
-      "title": "FEATURE: Shipowners face choppy but navigable seas from inclusion in UK ETS, say experts",
-      "summary": "The inclusion of domestic maritime emissions in the UK Emissions Trading System (ETS) from this month is expected to pose limited difficulties for most shipowners, who are already familiar with the EU’s carbon pricing regime, but it is also unlikely to significantly cut emissions, experts said.",
-      "url": "https://carbon-pulse.com/527539/",
+      "title": "MENA Roundup: Gulf countries build up voluntary carbon markets at home",
+      "summary": "Middle Eastern and North African (MENA) countries last month offered carrots, sticks, and capacity support to accelerate domestic and regional carbon market development.",
+      "url": "https://carbon-pulse.com/528595/",
       "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "UK Carbon Market 英國碳市場",
-      "matched_keywords": [
-        "UK ETS",
-        "UK emissions trading"
-      ],
-      "portal": false,
-      "stream": "A",
-      "tier": "MED"
-    },
-    {
-      "title": "India should channel carbon market revenues into industrial decarbonisation, report says",
-      "summary": "India should establish two national funds financed by revenues generated from its Carbon Credit Trading Scheme (CCTS) to support industrial decarbonisation, a report said.",
-      "url": "https://carbon-pulse.com/528015/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
+      "published": "2026-07-03",
       "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
       "matched_keywords": [
         "CBAM",
-        "carbon credit"
-      ],
-      "portal": false,
-      "stream": "A",
-      "tier": "MED"
-    },
-    {
-      "title": "台灣穩坐亞洲前段班！金管會重磅預告：今年瞄準四大高碳排產業孵化「可融資永續專案」",
-      "summary": "全球氣候治理步入深水區，亞洲正逆勢成為綠色轉型的核心發動機！該如何打破資金與專案的對接斷層，從氣候減碳跨向新興的「自然資本」，共築全新韌性戰略？ The post 台灣穩坐亞洲前段班！金管會重磅預告：今年瞄準四大高碳排產業孵化「可融資永續專案」 appeared first on ESG遠見 - 永續共好 .",
-      "url": "https://esg.gvm.com.tw/article/120752",
-      "source": "ESG遠見",
-      "published": "2026-07-02",
-      "topic": "Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業",
-      "matched_keywords": [
-        "高碳排產業"
+        "voluntary carbon market",
+        "VCM",
+        "Article 6"
       ],
       "portal": false,
       "stream": "A",
@@ -201,7 +85,7 @@
       "summary": "Disseminated on behalf of Surge Battery Metals. Lithium Americas (LAC) has officially broken ground at Thacker Pass, Nevada. The project is advancing toward its first production target in 2028. LAC […] The post Thacker Pass Is Being Built: Here Is Why That Is the Best News NILI Investors Have Heard All Year. appeared first on Carbon Credits .",
       "url": "https://carboncredits.com/thacker-pass-is-being-built-here-is-why-that-is-the-best-news-nili-investors-have-heard-all-year-nili/",
       "source": "Carbon Credits",
-      "published": "2026-07-03",
+      "published": "2026-07-04",
       "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
       "matched_keywords": [
         "carbon credit"
@@ -215,7 +99,7 @@
       "summary": "Paid Advertisement – Disseminated on behalf of Alaska Energy Metals Corporation. Alaska Energy Metals Corporation (AEMC) is moving into a more decisive phase. The company is no longer just an […] The post How 2026–2027 Catalysts Could Make AEMC a Standout Nickel Story for Investors appeared first on Carbon Credits .",
       "url": "https://carboncredits.com/how-2026-2027-catalysts-could-make-aemc-a-standout-nickel-story-for-investors/",
       "source": "Carbon Credits",
-      "published": "2026-07-03",
+      "published": "2026-07-04",
       "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
       "matched_keywords": [
         "carbon credit"
@@ -225,25 +109,11 @@
       "tier": "REF"
     },
     {
-      "title": "INTERVIEW: Korean securities firm eyes potential in growing CORSIA market, secures its first procurement contract",
-      "summary": "A major securities firm in South Korea has facilitated the country's first CORSIA-eligible emission unit (EEU) purchase agreement for a domestic airline, signalling its strategic push to expand its presence in the emerging compliance market for the aviation industry, a manager at the company told Carbon Pulse.",
-      "url": "https://carbon-pulse.com/528483/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-03",
-      "topic": "CORSIA & Aviation 航空碳抵換",
-      "matched_keywords": [
-        "CORSIA"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "東海岸需要這麼多觀光飯店嗎？ 來都蘭走一趟，聽見那些被忽略的文資及部落聲音",
-      "summary": "",
-      "url": "https://e-info.org.tw/node/243610",
-      "source": "環境資訊中心 e-info",
-      "published": "2026-07-03",
+      "title": "綠領人才缺工23萬人超夯！五成以上不限年資、薪資中位數達 57K",
+      "summary": "畢業季綠領工作夯！平均每月近3萬職缺創10年新高，AI綠領需求5年翻倍，企業更面臨23萬人才缺口。環境部4日攜手104人力銀行發布《2026上半年綠領人才就業趨勢報告》指出，在淨零轉型、AI快速發展及國際永續規範推動下，綠領人才已成為企業爭相延攬的新目標，薪資也優於一般職缺。",
+      "url": "https://money.udn.com/money/story/10871/9606877",
+      "source": "經濟日報 Economic Daily",
+      "published": "2026-07-04",
       "topic": "Other 其他",
       "matched_keywords": [
         "環境部"
@@ -253,56 +123,48 @@
       "tier": "REF"
     },
     {
-      "title": "採購法修法說明會首場起跑 陳金德：有助提升政府採購品質",
-      "summary": "為凝聚社會對於採購法修法方向的共識，行政院工程會7月2日於環境部舉辦「政府採購法修法鄉鎮市公所說明會」，共135人出席。由行政院政務委員兼工程會主委陳金德率同仁與第一線鄉鎮市公所同仁交流、傾聽意見。...",
-      "url": "https://udn.com/news/story/6656/9604352",
-      "source": "聯合新聞網 UDN",
+      "title": "Spéciale Aix : l’incroyable manège des prétendants",
+      "summary": "LE MENU DU JOUR — Vrais et faux prétendants à l’Elysée : ils étaient (presque) tous là à manœuvrer. — Bardella ou Le Pen, Le Pen ou Bardella : ce qu’en pensent les Aixois. — Les dessous de la mégafiesta de l’ambassade américaine, qui ferait (presque) de l’ombre aux ReAix. BLM AU CONFESSIONNAL. “Une campagne, c’est […]",
+      "url": "https://www.politico.eu/article/speciale-aix-lincroyable-manege-des-pretendants/?utm_source=RSS_Feed&utm_medium=RSS&utm_campaign=RSS_Syndication",
+      "source": "Politico Europe",
+      "published": "2026-07-04",
+      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
+      "matched_keywords": [
+        "Verra"
+      ],
+      "portal": false,
+      "stream": "B",
+      "tier": "REF"
+    },
+    {
+      "title": "Canadian national carbon credit framework pledged under new multi-billion dollar prosperity agreement",
+      "summary": "British Columbia and Canada signed a multi-billion dollar prosperity agreement, including a commitment to develop a multilateral National Carbon Credit Framework.",
+      "url": "https://carbon-pulse.com/528720/",
+      "source": "Carbon Pulse",
       "published": "2026-07-03",
-      "topic": "Other 其他",
+      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
       "matched_keywords": [
-        "環境部"
+        "carbon credit",
+        "nature-based carbon"
       ],
       "portal": false,
       "stream": "B",
       "tier": "REF"
     },
     {
-      "title": "Chile approves 2026-30 energy roadmap with pilot ETS, $100 mln Article 6 funding target",
-      "summary": "Chile’s Ministry of Energy has formally approved its Energy Roadmap 2026-30, placing the sectoral emissions trading system (ETS) pilot and international carbon markets as key instruments in the country’s energy transition.",
-      "url": "https://carbon-pulse.com/528455/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "Article 6 & Paris Agreement 第六條",
+      "title": "Amazon’s Biggest Forest Carbon Bet in South Africa Shows Why Nature-Based Climate Finance is Winning",
+      "summary": "Amazon is making one of its biggest investments in nature-based carbon removal. The company has agreed to buy about half of the carbon credits expected from South Africa’s Bacon Tree […] The post Amazon’s Biggest Forest Carbon Bet in South Africa Shows Why Nature-Based Climate Finance is Winning appeared first on Carbon Credits .",
+      "url": "https://carboncredits.com/amazons-biggest-forest-carbon-bet-in-south-africa-shows-why-nature-based-climate-finance-is-winning/",
+      "source": "Carbon Credits",
+      "published": "2026-07-03",
+      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
       "matched_keywords": [
-        "Article 6"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Real CORSIA demand could be 38% lower than theoretical obligation, analysts say",
-      "summary": "The demand for Eligible Emissions Units (EEUs) under the UN’s CORSIA aviation offsetting scheme could be far below the 198 mln EEUs due to be retired by Jan. 2028, largely because of limited enforcement – while uncertain supply thins liquidity in the market, according to an analysis published Thursday.",
-      "url": "https://carbon-pulse.com/528442/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "CORSIA & Aviation 航空碳抵換",
-      "matched_keywords": [
-        "CORSIA",
-        "aviation offset"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Guyana pledges 32.7 MtCO2e annual emissions cut in UN targets, all from forest carbon",
-      "summary": "Guyana has released its third Nationally Determined Contribution (NDC) to the Paris Agreement, in which it pledges to reduce forest carbon emissions by 32.7 million tonnes CO2e per year by 2030, depending on carbon finance.",
-      "url": "https://carbon-pulse.com/528394/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "Nature-based Solutions 自然碳匯",
-      "matched_keywords": [
+        "voluntary carbon market",
+        "carbon credit",
+        "carbon offset",
+        "VCM",
+        "carbon removal",
+        "direct air capture",
         "nature-based carbon",
         "forest carbon"
       ],
@@ -311,28 +173,11 @@
       "tier": "REF"
     },
     {
-      "title": "UPDATE – Carbon credit insurers receive Verra approval for durability pilot",
-      "summary": "A Zurich-headquartered carbon credit insurer has received Verra approval for its reversal insurance under the standard's durability pilot initiative.",
-      "url": "https://carbon-pulse.com/528339/",
+      "title": "Crowdfunding campaign targets regen agriculture soil carbon projects in Spain",
+      "summary": "A crowdfunding campaign has been launched in Spain to finance the expansion of soil carbon projects, aiming to bridge a financing gap between the adoption of regenerative farming and the issuance of carbon credits.",
+      "url": "https://carbon-pulse.com/528699/",
       "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit",
-        "Verra",
-        "VCM",
-        "nature-based carbon"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Brazilian development bank seeks buyers for R$6 bln in reforestation carbon credits",
-      "summary": "Brazil's National Bank for Social and Economic Development (BNDES) launched a public call on Thursday to attract large companies interested in buying carbon credits from reforestation in the Amazon Rainforest.",
-      "url": "https://carbon-pulse.com/528350/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
+      "published": "2026-07-03",
       "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
       "matched_keywords": [
         "carbon credit",
@@ -344,243 +189,43 @@
       "tier": "REF"
     },
     {
-      "title": "World Bank Ends 45% Climate Finance Target: What Changes Now?",
-      "summary": "The World Bank has made a major change to its climate strategy. It has dropped its target of directing 45% of its annual financing to climate-related projects after pressure from […] The post World Bank Ends 45% Climate Finance Target: What Changes Now? appeared first on Carbon Credits .",
-      "url": "https://carboncredits.com/world-bank-ends-45-climate-finance-target-what-changes-now/",
-      "source": "Carbon Credits",
-      "published": "2026-07-02",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Google’s Carbon Emissions Fall, But AI Makes Its Net-Zero “Moonshoot” Goal Harder Than Ever",
-      "summary": "Google has reached another important climate milestone. Yet, the company says its biggest environmental goal is becoming more difficult to achieve. In its 2026 Environmental Report, Google announced a 2% […] The post Google’s Carbon Emissions Fall, But AI Makes Its Net-Zero “Moonshoot” Goal Harder Than Ever appeared first on Carbon Credits .",
-      "url": "https://carboncredits.com/google-ai-emissions-net-zero-environmental-report-2026/",
-      "source": "Carbon Credits",
-      "published": "2026-07-02",
+      "title": "DeBriefed 3 July 2026: US faces scorching Independence Day | Record ocean temperatures | Vietnam’s EV surge",
+      "summary": "Welcome to Carbon Brief’s DeBriefed. An essential guide to the week’s key developments relating to climate... The post DeBriefed 3 July 2026: US faces scorching Independence Day | Record ocean temperatures | Vietnam’s EV surge appeared first on Carbon Brief .",
+      "url": "https://www.carbonbrief.org/debriefed-3-july-2026-us-faces-scorching-independence-day-record-ocean-temperatures-vietnams-ev-surge/",
+      "source": "Carbon Brief",
+      "published": "2026-07-03",
       "topic": "Carbon Removal & CDR 碳移除",
       "matched_keywords": [
-        "carbon credit",
-        "carbon removal",
-        "direct air capture",
-        "nature-based carbon"
+        "carbon dioxide removal"
       ],
       "portal": false,
       "stream": "B",
       "tier": "REF"
     },
     {
-      "title": "ASEAN Could Unlock an $8.5 Billion Carbon Market Opportunity Through CORSIA",
-      "summary": "The aviation industry is under pressure to cut emissions, and carbon credits are crucial in this effort. A recent report from Abatable suggests that Southeast Asia has a strong chance […] The post ASEAN Could Unlock an $8.5 Billion Carbon Market Opportunity Through CORSIA appeared first on Carbon Credits .",
-      "url": "https://carboncredits.com/asean-could-unlock-an-8-5-billion-carbon-market-opportunity-through-corsia/",
-      "source": "Carbon Credits",
-      "published": "2026-07-02",
-      "topic": "CORSIA & Aviation 航空碳抵換",
+      "title": "UK engineered carbon removal credits could top 850 mln by 2050 -report",
+      "summary": "Total UK-based engineered carbon removal credit supply could reach up to 852 million by 2050 under a high-growth scenario, according to modelling commissioned by the British government.",
+      "url": "https://carbon-pulse.com/528210/",
+      "source": "Carbon Pulse",
+      "published": "2026-07-03",
+      "topic": "Carbon Removal & CDR 碳移除",
       "matched_keywords": [
-        "carbon credit",
-        "carbon offset",
-        "CORSIA",
-        "aviation carbon",
-        "sustainable aviation fuel"
+        "VCM",
+        "carbon removal"
       ],
       "portal": false,
       "stream": "B",
       "tier": "REF"
     },
     {
-      "title": "Bitcoin Price Falls Below $60K, But Its Biggest Story Is the Green Revolution in Mining",
-      "summary": "Bitcoin is back in the spotlight after a sharp price drop. After climbing above $126,000 late last year, the world’s largest cryptocurrency has fallen below $60,000, losing more than half […] The post Bitcoin Price Falls Below $60K, But Its Biggest Story Is the Green Revolution in Mining appeared first on Carbon Credits .",
-      "url": "https://carboncredits.com/bitcoin-price-below-60k-clean-energy-mining-sustainability/",
-      "source": "Carbon Credits",
-      "published": "2026-07-02",
+      "title": "India proposes carbon intensity targets for iron, steel under ETS",
+      "summary": "India's environment ministry has proposed carbon intensity targets for iron and steel producers under its Carbon Credit Trading Scheme, the largest sector yet brought under the compliance mechanism.",
+      "url": "https://carbon-pulse.com/528618/",
+      "source": "Carbon Pulse",
+      "published": "2026-07-03",
       "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
       "matched_keywords": [
         "carbon credit"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "EU countries urged to step up Mediterranean seagrass restoration efforts",
-      "summary": "EU member states need to step up efforts to recover Mediterranean seagrass meadows, including by allocating long-term funding and improving restoration planning, according to a report.",
-      "url": "https://carbon-pulse.com/528260/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "Nature-based Solutions 自然碳匯",
-      "matched_keywords": [
-        "nature-based carbon"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "European bank buys SAF to help cut its supply chain emissions",
-      "summary": "A European bank and airline have teamed up to increase to supply the airline with sustainable aviation fuel (SAF), helping to cut the bank's supply chain emissions.",
-      "url": "https://carbon-pulse.com/528200/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "CORSIA & Aviation 航空碳抵換",
-      "matched_keywords": [
-        "CORSIA",
-        "sustainable aviation fuel"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "INTERVIEW: New standard targets Global South developers with no upfront fees",
-      "summary": "A Bengaluru-based carbon registry and standard startup is looking to claw market share from established voluntary carbon standards by eliminating upfront costs for developers and targeting under-capitalised projects across the Global South.",
-      "url": "https://carbon-pulse.com/528157/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon registry",
-        "carbon standard",
-        "VCM"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "DATA DIVE: Brazil leads the way in CDM transitional approvals, as one-quarter of eligible activities meet June deadline",
-      "summary": "Brazil has approved nearly all of its eligible Clean Development Mechanism (CDM) activities to transition to Paris-era carbon crediting, far more than any other country, as around 25% of all potential projects that could have moved to the new system secured government approval in time.",
-      "url": "https://carbon-pulse.com/527582/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit",
-        "VCM",
-        "Article 6"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "First PACM carbon credits still face quality risks despite tougher accounting rules, says rating agency",
-      "summary": "The first carbon credits approved for issuance under the Paris Agreement Crediting Mechanism (PACM) show that the UN's new system is improving the quality of legacy Clean Development Mechanism (CDM) projects through more conservative carbon accounting, but significant project-level risks remain, according to a new analysis.",
-      "url": "https://carbon-pulse.com/528125/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit",
-        "VCM",
-        "Article 6"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "In Guatemala, Indigenous women build climate resilience with old and new farming methods",
-      "summary": "Ancestral knowledge combined with climate-smart techniques is boosting food security and increasing family incomes in the Lake Atitlán region The post In Guatemala, Indigenous women build climate resilience with old and new farming methods appeared first on Climate Home News .",
-      "url": "https://www.climatechangenews.com/2026/07/02/in-guatemala-indigenous-women-build-climate-resilience-with-old-and-new-farming-methods/",
-      "source": "Climate Home News",
-      "published": "2026-07-02",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "carbon credit"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Carbon standard finalises new bioCCS methodology in bid to align with EU carbon removal framework",
-      "summary": "Rainbow has finalised a methodology for biogenic carbon capture and storage (bioCCS) that directly incorporates requirements from the EU’s Carbon Removals and Carbon Farming (CRCF) regulation, marking one of the first voluntary carbon market methodologies explicitly designed around the bloc's emerging carbon removal certification framework.",
-      "url": "https://carbon-pulse.com/528111/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "Voluntary Carbon Market (VCM) 自願性碳市場",
-      "matched_keywords": [
-        "voluntary carbon market",
-        "carbon standard",
-        "VCM",
-        "carbon removal",
-        "nature-based carbon"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Malawi eyes carbon markets to help fund its third climate plan",
-      "summary": "Malawi has highlighted carbon markets as one of the financing mechanisms it intends to use to implement a more ambitious third Nationally Determined Contribution (NDC), as the climate-vulnerable African nation seeks to bring in greater domestic and international support for emissions reductions.",
-      "url": "https://carbon-pulse.com/528095/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "Article 6 & Paris Agreement 第六條",
-      "matched_keywords": [
-        "Article 6"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Indian developer, Thai non-profit partner on nature‑based carbon projects in Southeast Asia",
-      "summary": "An Indian project developer and Thai non-profit have signed a memorandum of understanding (MoU) to collaborate on nature-based solutions (NbS) project development in Southeast Asia.",
-      "url": "https://carbon-pulse.com/528040/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "Nature-based Solutions 自然碳匯",
-      "matched_keywords": [
-        "nature-based carbon",
-        "nature-based solution"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "ESG台灣快訊》AI搶電怎麼解？經濟部修法，蓋資料中心須過5大審查",
-      "summary": "近日極端天氣接連衝擊台灣，豪雨造成花蓮堰塞湖蓄水持續增加、巴威下週恐成「大而強」颱風；另一方面，環境部首度針對「連續3天40℃」極端高溫兵推停電與熱傷害情境。同時，7月起職場霸凌納入《職安法》規範，經濟部也修法強化AI資料中心設置審查，兼顧供電與產業發展。 The post ESG台灣快訊》AI搶電怎麼解？經濟部修法，蓋資料中心須過5大審查 appeared first on ESG遠見 - 永續共好 .",
-      "url": "https://esg.gvm.com.tw/article/120739",
-      "source": "ESG遠見",
-      "published": "2026-07-02",
-      "topic": "Other 其他",
-      "matched_keywords": [
-        "環境部"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "Green Climate Fund approves projects set to remove nearly 20 mln tonnes of CO2",
-      "summary": "The Green Climate Fund (GCF) on Thursday approved at least four projects spanning Southeast Asia, the Pacific, Africa, and South Asia that are expected to collectively deliver almost 19.4 million tonnes of CO2e in emissions reductions or removals, while channelling more than $311 mln into climate-resilient agriculture and forest restoration.",
-      "url": "https://carbon-pulse.com/528026/",
-      "source": "Carbon Pulse",
-      "published": "2026-07-02",
-      "topic": "Nature-based Solutions 自然碳匯",
-      "matched_keywords": [
-        "nature-based carbon"
-      ],
-      "portal": false,
-      "stream": "B",
-      "tier": "REF"
-    },
-    {
-      "title": "別等2029才買綠電！五位專家告訴你：企業該如何擺脫能源焦慮、翻轉長遠競爭力？",
-      "summary": "AI浪潮引爆全球用電量飆升，淨零碳排與供電穩定已成台灣高科技供應鏈的生死存亡之戰。到底企業該如何從被動節能轉向主動布局能源韌性，打造跨產業的轉型典範？ The post 別等2029才買綠電！五位專家告訴你：企業該如何擺脫能源焦慮、翻轉長遠競爭力？ appeared first on ESG遠見 - 永續共好 .",
-      "url": "https://esg.gvm.com.tw/article/120768",
-      "source": "ESG遠見",
-      "published": "2026-07-02",
-      "topic": "Taiwan Carbon Market 台灣碳市場",
-      "matched_keywords": [
-        "淨零碳排"
       ],
       "portal": false,
       "stream": "B",
@@ -588,8 +233,8 @@
     }
   ],
   "stats": {
-    "a": 13,
-    "b": 26,
+    "a": 5,
+    "b": 10,
     "dupes_collapsed": 0,
     "dropped_stale": 6,
     "dropped_evergreen": 1,
