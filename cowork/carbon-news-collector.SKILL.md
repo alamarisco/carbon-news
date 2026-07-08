@@ -52,9 +52,13 @@ for f in scripts/append_story.py scripts/build_docx.py scripts/extract_prior_url
 done
 ```
 Run everything from `/tmp/carbon_tools/scripts/...`. RADAR only needs `parse_digest_email.py`;
-FLAG/COMPILE need the rest. Skill-local reference docs (resolve in this skill's folder):
-`reference/sources.md`, `reference/keywords.md`, `reference/streams.md` — tracked sources,
-bilingual keywords, stream/tier mapping.
+FLAG/COMPILE need the rest.
+
+**Tracked sources and the full keyword list live in the repo's actual code** (not a separate
+reference doc — nothing here to lose on reinstall): `scripts/fetch_feeds.py` (every RSS/scraped
+source + the full bilingual keyword list) and `radar/scripts/radar_process.py` (stream/tier
+classification). See "Tracked sources" and "Priority model" below for the parts FLAG/COMPILE
+actually use.
 
 ---
 
@@ -137,6 +141,29 @@ create year subfolders under it automatically (e.g. `<local_root>/2026年/` hold
 
 ---
 
+## Tracked sources (used by FLAG step 0 and COMPILE Step 2.6 — "prefer an openable source")
+
+Preferred **openable** outlets, roughly most- to least-authoritative for CBAM/carbon-market
+substance — reach for these first when swapping out a paywalled pick or top-up sweeping:
+**GMK Center, S&P Global (free items), Carbon Pulse (headline+summary only — see FLAG step 0),
+Euractiv, EUROMETAL, Politico Europe, Clear Blue Markets, Carbon Brief, Reuters/AP reprints,
+Argus, Montel**, plus the official EU/UK portals below.
+
+Full current source list (RSS + scraped), for context — the actual fetch config is
+`scripts/fetch_feeds.py` in the repo, always current:
+- **Official portals (TOP tier):** DG TAXUD CBAM (`taxation-customs.ec.europa.eu`), UK CBAM
+  Portal (`gov.uk/money/carbon-border-adjustment-mechanism`), EU Council, European Commission
+  press corner.
+- **EU/int'l policy & markets:** Euractiv, Carbon Brief, Carbon Pulse, Carbon Market Watch,
+  Climate Home News, Politico Europe, E3G, Sandbag, Clear Blue Markets, ICAP, GMK Center,
+  EUROMETAL, SteelOrbis, Carbon Credits, Ember Energy.
+- **Taiwan/Chinese-language:** 中央社 CNA, 經濟日報 Economic Daily, 聯合新聞網 UDN, 環境資訊中心
+  e-info, ESG遠見, 今週刊 ESG, 天下雜誌 CommonWealth (paid), 經貿透視 Trademag, Reccessary.
+- **India:** The Hindu Business, NDTV Profit India.
+- **Paid (headline+link only):** Financial Times, Nikkei Asia, Bloomberg Green.
+
+---
+
 ## FLAG mode (on pick — one article at a time)
 
 For each picked URL:
@@ -147,8 +174,8 @@ For each picked URL:
    cannot fully read), do **not** translate from the snippet — `WebSearch` the same story from an
    openable outlet and switch to it before translating:
    - Search the headline's key facts (e.g. `EU CBAM draft rules onerous importers June 2026`),
-     preferring `reference/sources.md` names that are openable: GMK Center, S&P Global (free
-     items), Euractiv, EUROMETAL, Reuters/AP reprints, Argus, Montel, official EU/UK pages.
+     preferring the openable outlets in "Tracked sources" below (GMK Center, S&P Global free
+     items, Euractiv, EUROMETAL, Reuters/AP reprints, Argus, Montel, official EU/UK pages).
    - **Verify it's the same story, not just the same topic:** same event/announcement, same key
      figures, and a publication date within ~1–2 days of the Carbon Pulse item (watch the
      republish-date trap in COMPILE Step 2.5).
@@ -240,11 +267,10 @@ previous 4–6 weekly files (`/tmp/carbon_tools/scripts/extract_prior_urls.py --
 fetch the tools first — see "Fetch tools" above).
 
 ### Step 2 — Top-up sweep
-Read `stories_<week>.json` from `<local_root>/<year>年/` if present. Optionally `web_fetch`
-tracked sources in `reference/sources.md` for anything missed, date-restricted. A bare "CBAM"
-search is not sufficient — many in-scope stories (EU ETS, 免費配額, steel safeguard, Taiwan
-碳費/電力排碳係數, 塑膠版CBAM, India–EU FTA) never contain the literal "CBAM". Drop anything in the
-dedupe set.
+Read `stories_<week>.json` from `<local_root>/<year>年/` if present. Optionally `web_fetch` the
+tracked sources listed above for anything missed, date-restricted. A bare "CBAM" search is not
+sufficient — many in-scope stories (EU ETS, 免費配額, steel safeguard, Taiwan 碳費/電力排碳係數,
+塑膠版CBAM, India–EU FTA) never contain the literal "CBAM". Drop anything in the dedupe set.
 
 ### Step 2.5 — Verify every new candidate's date (REQUIRED)
 `web_fetch` and read the real `published_time` before shortlisting. Traps: republish/aggregator
@@ -252,9 +278,9 @@ date ≠ original (EUROMETAL republishes SteelOrbis/Kallanish days later); a 「
 event day, not the publication month; cross-check substance against recent editions, not the URL.
 
 ### Step 2.6 — Prefer a reliable, openable source
-When a story runs across outlets, choose the most reliable openable version (prefer
-`reference/sources.md`: GMK Center, S&P Global, Carbon Pulse, Euractiv, EUROMETAL). Avoid
-SEO/crypto reposts. Use that source's own date.
+When a story runs across outlets, choose the most reliable openable version (prefer the
+outlets listed under "Tracked sources": GMK Center, S&P Global, Carbon Pulse, Euractiv,
+EUROMETAL). Avoid SEO/crypto reposts. Use that source's own date.
 
 ### Steps 3–6 — Translate top-ups, assemble, verify, save
 Build on `/tmp/carbon_tools/templates/weekly_template.docx` and append with
@@ -301,17 +327,27 @@ week by copying `/tmp/carbon_tools/templates/weekly_template.docx`, then add sto
 
 ## Priority model (used by CI's RADAR ranking — reference only)
 
-- **🔴 TOP** — any NEW EU/UK official-portal item.
-- **🟠 HIGH** — EU CBAM policy · **UK CBAM policy** · Taiwan exposure (碳費, 電力排碳係數,
-  steel/cement/aluminium exporters) · covered goods (鋼鐵/水泥/鋁/化肥/氫/塑膠版CBAM) · industry
-  & trade response · WTO & third-country (India, China, Turkey).
-- **🟡 MED** — tangential CBAM mentions, market-price notes, secondary commentary.
-- **Stream B (reference only, NOT triaged)** — VCM, compliance markets, CORSIA, CDR, Article 6,
-  nature-based, Japan/Korea domestic ETS. Listed for research; never alerted or added to the
-  weekly doc.
+- **🔴 TOP** — any NEW item from an official portal: **DG TAXUD CBAM**, **UK CBAM Portal**
+  (`SOURCE_RANK` 100, staleness-exempt — official docs don't expire).
+- **🟠 HIGH** — a *strong* CBAM/carbon-border signal (not just a bare "CBAM" mention): EU/UK CBAM
+  policy, Taiwan exposure (碳費, 電力排碳係數, steel/cement/aluminium exporters), covered goods
+  (鋼鐵/水泥/鋁/化肥/氫/塑膠版CBAM), free allocation, default value, safeguard/關稅配額, green/
+  low-carbon steel or cement, industry & trade response, WTO/third-country (India, China, Turkey).
+- **🟡 MED** — a bare "CBAM"/carbon-border mention without a strong signal above; tangential
+  market-price notes, secondary commentary.
+- **Stream B (reference only, NOT triaged)** — VCM, Article 6, CORSIA/aviation, carbon removal/
+  CDR, nature-based solutions, Japan/Korea domestic ETS. Listed for research; never alerted or
+  added to the weekly doc.
 
-See `reference/streams.md`, `reference/sources.md`, `reference/keywords.md` (in this skill) for
-the full bucket → stream/tier mapping, tracked sources, and bilingual keyword set.
+**Topic buckets** (used for both classification and the weekly doc's section order): EU CBAM —
+Policy & Implementation · EU ETS · UK Carbon Market · Taiwan Carbon Market · Japan Carbon Market ·
+Korea Carbon Market · Voluntary Carbon Market (VCM) · Article 6 & Paris Agreement · CORSIA &
+Aviation · Carbon Removal & CDR · Nature-based Solutions · Cement, Steel & Hard-to-Abate Industry
+· Industry & Trade Response · Analysis & Research · Other.
+
+The full classification logic (exact keyword lists, source-rank table, staleness rules) lives in
+`radar/scripts/radar_process.py` and `scripts/fetch_feeds.py` in the repo — always current, and
+CI already applies it before the digest is emailed. Nothing to re-derive here.
 
 ---
 
