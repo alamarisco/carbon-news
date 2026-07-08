@@ -478,9 +478,12 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
         "type": "free",
         "listing_url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
         "base_url": "https://taxation-customs.ec.europa.eu",
-        # EC CBAM info/news pages — date from article:published_time meta
+        # "Latest developments" links dated news items at /news/<slug>-YYYY-MM-DD_en. The old
+        # single-segment pattern matched only evergreen landing pages (which radar_process then
+        # drops for lacking /news/), so this source yielded nothing. Match /news/ items directly.
+        # Date from article:published_time meta; portal source → TOP tier, staleness-exempt.
         "link_pattern": re.compile(
-            r"https://taxation-customs\.ec\.europa\.eu/[a-z0-9_-]+_en$"
+            r"https://taxation-customs\.ec\.europa\.eu/news/[a-z0-9][a-z0-9-]+_en$"
         ),
         "skip_date_filter": True,
     },
@@ -513,7 +516,9 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
     # Collection page is SSR; article URLs are relative gov.uk paths.
     "UK CBAM Portal": {
         "type": "free",
-        "listing_url": "https://www.gov.uk/government/collections/carbon-border-adjustment-mechanism",
+        # gov.uk's current CBAM hub (money/ section, confirmed June 2026); links HMRC guidance,
+        # consultations, and publications. Replaced the older /government/collections/ page.
+        "listing_url": "https://www.gov.uk/money/carbon-border-adjustment-mechanism",
         "base_url": "https://www.gov.uk",
         "link_pattern": re.compile(
             r"(?:https://www\.gov\.uk)?/(?:guidance|government/(?:publications|consultations|"
