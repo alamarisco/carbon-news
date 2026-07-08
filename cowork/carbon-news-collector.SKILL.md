@@ -36,8 +36,10 @@ script bundled directly in this skill folder is ever stale, ignore it; always re
 | Key | Value |
 |---|---|
 | Repo slug | `alamarisco/carbon-news` |
-| Drive folder — weekly docs `國際新聞蒐集/2026年/` | `1dwXqv1UMclM1Ni3CIPBMBo62X-W58aFr` |
-| Drive folder — state `國際新聞蒐集/_state/` | `1DKzbo0r0j_7jQmPd9dzB8fTNtMA5RhTX` |
+
+**No local folder is hardcoded here** — this skill runs on more than one machine. See
+"Local output" below: FLAG/COMPILE ask once per session where the weekly `.docx` and queue
+files live on *this* machine, then reuse that answer.
 
 ### Fetch tools — once per session
 ```
@@ -62,7 +64,7 @@ bilingual keywords, stream/tier mapping.
 |---|---|---|
 | **RADAR** | daily/weekly ("run the radar", "今天有什麼CBAM新聞") | Find the CI-emailed digest, parse it, present a numbered pick-list in chat. |
 | **FLAG** | when the user picks items (or pastes a link) | Translate (house style), emit a paste-ready 中文 LINE message, append to the living weekly doc, log the pick, update the ledger via GitHub dispatch. |
-| **COMPILE** | end of week | Top-up sweep, verify, finalize the dated `.docx` in Drive `2026年/`. |
+| **COMPILE** | end of week | Top-up sweep, verify, finalize the dated `.docx` locally. |
 
 **Architecture, briefly:** GitHub Actions (`daily-data.yml` weekday mornings ~08:23 Taipei;
 `weekly-vcm.yml` Monday) fetch feeds, run RADAR processing, and email the digest — entirely in
@@ -119,6 +121,22 @@ Before shortlisting a picked story, if a date looks off, `web_fetch` the article
 
 ---
 
+## Local output (ask once per session)
+
+This skill runs on more than one machine, so **never hardcode a folder path**. The first time
+FLAG or COMPILE needs to read/write the weekly `.docx` or queue files in a session, ask the user:
+
+> "Where should I read/save the weekly 國際新聞蒐集 files on this machine? (e.g.
+> `~/Documents/CarbonNews/`)"
+
+Remember the answer as `<local_root>` for the rest of the session — don't ask again. The scripts
+create year subfolders under it automatically (e.g. `<local_root>/2026年/` holds
+`每週國際新聞蒐集_<week_label>.docx` and `_queue_<week>.md` together — that's how
+`flag_article.py`/`extract_prior_urls.py` already work, confirmed from their source). Put
+`stories_<week>.json` (COMPILE Step 2) in the same year folder.
+
+---
+
 ## FLAG mode (on pick — one article at a time)
 
 For each picked URL:
@@ -170,25 +188,27 @@ For each picked URL:
    <URL>
    ```
 
-3. **Append to the living weekly `.docx`** (Drive connector → local → Drive). First fetch the
-   weekly tools (see "Fetch tools" above) if not already in `/tmp/carbon_tools`:
-   - Download the most recent `.docx` from Drive folder `1dwXqv1UMclM1Ni3CIPBMBo62X-W58aFr` to
-     `/tmp/weekly.docx` (or seed a fresh week by copying
-     `/tmp/carbon_tools/templates/weekly_template.docx` — never a blank `Document`, or the page-1
-     index table and page-number footer go missing).
+3. **Append to the living weekly `.docx`** — a local file under `<local_root>/<year>年/` (see
+   "Local output" above; ask first if `<local_root>` isn't established yet this session). Fetch
+   the weekly tools (see "Fetch tools" above) if not already in `/tmp/carbon_tools`:
+   - Find the current week's `.docx` in `<local_root>/<year>年/`, or seed a fresh week by copying
+     `/tmp/carbon_tools/templates/weekly_template.docx` into that folder — never start from a
+     blank `Document`, or the page-1 index table and page-number footer go missing.
    - Write the translation to `/tmp/content.txt`: `# headline`, `## sub-header`, plain body lines,
      `SRC <url>`, `DATE <YYYY/MM/DD>`.
-   - Run `python /tmp/carbon_tools/scripts/append_story.py /tmp/weekly.docx /tmp/content.txt /tmp/weekly_out.docx`.
-     It adds a hyperlinked **項次 row** to the index table, inserts a **page break**, applies the
-     item house style (新聞標題 auto-numbered 24pt; body/sub-headers Times New Roman + 標楷體 14pt,
-     23pt exact line spacing, 9pt space-before; sub-headers bold, **body never bold**), and
-     recalculates `本週共計 N 則`. (`/tmp/carbon_tools/scripts/build_docx.py` is for a full
-     from-scratch rebuild only.)
-   - Re-upload `/tmp/weekly_out.docx` to Drive folder `1dwXqv1UMclM1Ni3CIPBMBo62X-W58aFr`.
+   - Run `python /tmp/carbon_tools/scripts/append_story.py <weekly.docx> /tmp/content.txt <weekly.docx>`
+     (write back to the same path, or to a temp copy then move it back). It adds a hyperlinked
+     **項次 row** to the index table, inserts a **page break**, applies the item house style
+     (新聞標題 auto-numbered 24pt; body/sub-headers Times New Roman + 標楷體 14pt, 23pt exact line
+     spacing, 9pt space-before; sub-headers bold, **body never bold**), and recalculates
+     `本週共計 N 則`. (`/tmp/carbon_tools/scripts/build_docx.py` is for a full from-scratch
+     rebuild only.)
+   - It's already saved at its local path — no upload step.
 
 4. **Log the pick to the queue.** Run `python /tmp/carbon_tools/scripts/flag_article.py
-   --root "<Drive root local path>" --week <MM.DD-MM.DD> --url URL --source S --date YYYY/MM/DD
-   --by "Claude" --headline "中文標題"`, then upload the updated `_queue_<week>.md` to Drive `_state/`.
+   --root "<local_root>" --week <MM.DD-MM.DD> --url URL --source S --date YYYY/MM/DD
+   --by "Claude" --headline "中文標題"` — it writes `_queue_<week>.md` directly into
+   `<local_root>/<year>年/` (creating the year folder if needed). Already local — no upload step.
 
 5. **Update the dedup ledger** via GitHub dispatch (no local clone; works from any machine):
    ```
@@ -211,17 +231,20 @@ Skip silently if the URL is already in the ledger or queue.
 The living doc is already mostly built, so this is a light pass.
 
 ### Step 1 — Establish the week & dedupe set
-Download the most recent `.docx` from Drive `2026年/` to find the previous end date. Coverage
-window starts the day AFTER it (includes the weekend) through this file's end date. Filename label
-follows `MM.DD-MM.DD` (weekdays). Build the dedupe set from `.../state/seen_urls.json` plus the
-previous 4–6 weekly files (`/tmp/carbon_tools/scripts/extract_prior_urls.py`; fetch the tools
-first — see "Fetch tools" above).
+Look at the most recent `.docx` in `<local_root>/<year>年/` (see "Local output" above) to find
+the previous end date. Coverage window starts the day AFTER it (includes the weekend) through
+this file's end date. Filename label follows `MM.DD-MM.DD` (weekdays). Build the dedupe set from
+the repo's ledger — `web_fetch`
+`https://raw.githubusercontent.com/alamarisco/carbon-news/main/state/seen_urls.json` — plus the
+previous 4–6 weekly files (`/tmp/carbon_tools/scripts/extract_prior_urls.py --root <local_root>`;
+fetch the tools first — see "Fetch tools" above).
 
 ### Step 2 — Top-up sweep
-Read `stories_<week>.json` from Drive `_state/`. Optionally `web_fetch` tracked sources in
-`reference/sources.md` for anything missed, date-restricted. A bare "CBAM" search is not
-sufficient — many in-scope stories (EU ETS, 免費配額, steel safeguard, Taiwan 碳費/電力排碳係數,
-塑膠版CBAM, India–EU FTA) never contain the literal "CBAM". Drop anything in the dedupe set.
+Read `stories_<week>.json` from `<local_root>/<year>年/` if present. Optionally `web_fetch`
+tracked sources in `reference/sources.md` for anything missed, date-restricted. A bare "CBAM"
+search is not sufficient — many in-scope stories (EU ETS, 免費配額, steel safeguard, Taiwan
+碳費/電力排碳係數, 塑膠版CBAM, India–EU FTA) never contain the literal "CBAM". Drop anything in the
+dedupe set.
 
 ### Step 2.5 — Verify every new candidate's date (REQUIRED)
 `web_fetch` and read the real `published_time` before shortlisting. Traps: republish/aggregator
@@ -233,14 +256,15 @@ When a story runs across outlets, choose the most reliable openable version (pre
 `reference/sources.md`: GMK Center, S&P Global, Carbon Pulse, Euractiv, EUROMETAL). Avoid
 SEO/crypto reposts. Use that source's own date.
 
-### Steps 3–6 — Translate top-ups, assemble, verify, upload
+### Steps 3–6 — Translate top-ups, assemble, verify, save
 Build on `/tmp/carbon_tools/templates/weekly_template.docx` and append with
 `/tmp/carbon_tools/scripts/append_story.py` (preferred), or full-rebuild with
 `/tmp/carbon_tools/scripts/build_docx.py` reproducing the House style below. Verify: every
 story has a working `新聞出處` URL + confirmed `日期`; no duplicates; `本週共計 N 則` matches the
 count; the page-1 index table has one hyperlinked row per story; the footer shows page numbers;
-spot-check 1–2 translations. Upload to Drive `2026年/`, remind Alec to copy it to the company
-Drive, and present with `present_files`.
+spot-check 1–2 translations. Save to `<local_root>/<year>年/`, remind Alec to copy the finished
+file to wherever it needs to go next (e.g. the company Drive) — that hand-off stays manual —
+and present with `present_files`.
 
 ### House style
 Every weekly is built on **`weekly_template.docx`** (page-1 title block + empty 項次 index table
