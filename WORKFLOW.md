@@ -1,6 +1,6 @@
 # 國際新聞蒐集 — RADAR + Weekly Collector (authoritative workflow)
 
-**This file is the single source of truth for the `cbam-weekly-news` Cowork skill.**
+**This file is the single source of truth for the `carbon-news-collector` Cowork skill.**
 The skill is a thin shell that fetches this file and follows it. To change the workflow,
 edit **this file in the carbon-news repo and commit** — do **not** edit the skill (managed-skill
 edits are wiped by the next server sync, and they diverge per machine).
@@ -8,10 +8,10 @@ edits are wiped by the next server sync, and they diverge per machine).
 Raw URL the skill fetches:
 `https://raw.githubusercontent.com/alamarisco/carbon-news/main/WORKFLOW.md`
 
-> **Delivery is email-only now.** The daily CBAM radar (Stream A) and the weekly VCM digest
-> (Stream B) are emailed by CI. There is **no** interactive triage page and **no** file output in
-> the repo. Cowork's role is FLAG + COMPILE: the user forwards/pastes stories from the email and
-> Cowork translates them and maintains the weekly `.docx`.
+> **Delivery is email-only.** The daily CBAM digest (Stream A) and the weekly VCM digest
+> (Stream B) are emailed by CI — there is no triage page and no file output in the repo.
+> **RADAR mode = search Gmail for that email, parse it, present a numbered pick-list.**
+> Then FLAG/COMPILE work as before: translate picked stories, LINE message, weekly `.docx`.
 
 Daily triage and weekly compilation for the 產品碳洩漏管理與公眾溝通計畫 international news brief.
 News is collected by CI continuously, alerted to the LINE group as it is picked, translated into
@@ -27,24 +27,26 @@ the **living weekly doc**, and finalized as a dated `.docx` each week.
 | Drive folder — weekly docs `國際新聞蒐集/2026年/` | `1dwXqv1UMclM1Ni3CIPBMBo62X-W58aFr` |
 | Drive folder — state `國際新聞蒐集/_state/` | `1DKzbo0r0j_7jQmPd9dzB8fTNtMA5RhTX` |
 
-**Where the tooling lives:**
-- **Weekly .docx tools** (`append_story.py`, `build_docx.py`, `extract_prior_urls.py`,
-  `flag_article.py`) and `weekly_template.docx` are **canonical in this repo** under `weekly/`.
-  Fetch them at runtime (see "Weekly tools" below) — `/tmp/cbam_tools/...`. Ignore any copies
-  bundled in the skill; the repo is the single source of truth.
+**Where the tooling lives — all canonical in this repo, fetched to `/tmp/carbon_tools/` at
+runtime. Ignore any copies bundled in the skill; the repo is the single source of truth.**
+- **RADAR parser** — `radar/scripts/parse_digest_email.py` (used in RADAR mode, below).
+- **Weekly .docx tools** — `weekly/scripts/{append_story,build_docx,extract_prior_urls,
+  flag_article}.py` + `weekly/templates/weekly_template.docx` (used in FLAG/COMPILE).
 - **Reference docs** `reference/streams.md`, `reference/sources.md`, `reference/keywords.md` are
   skill-local (resolve them in the skill dir). The TW glossary is repo-hosted (see FLAG step 1).
 
-### Weekly tools — fetch once per session (FLAG / COMPILE only; RADAR needs none)
+### Fetch tools — once per session
 ```
-mkdir -p /tmp/cbam_tools/scripts /tmp/cbam_tools/templates
-base="https://raw.githubusercontent.com/alamarisco/carbon-news/main/weekly"
+mkdir -p /tmp/carbon_tools/scripts /tmp/carbon_tools/templates
+base="https://raw.githubusercontent.com/alamarisco/carbon-news/main"
+curl -sSL -o /tmp/carbon_tools/scripts/parse_digest_email.py "$base/radar/scripts/parse_digest_email.py"
 for f in scripts/append_story.py scripts/build_docx.py scripts/extract_prior_urls.py \
          scripts/flag_article.py templates/weekly_template.docx templates/queue_template.md; do
-  curl -sSL -o "/tmp/cbam_tools/$f" "$base/$f"
+  curl -sSL -o "/tmp/carbon_tools/$f" "$base/weekly/$f"
 done
 ```
-Then run the tools from `/tmp/cbam_tools/scripts/...`.
+Then run everything from `/tmp/carbon_tools/scripts/...`. RADAR only needs
+`parse_digest_email.py`; FLAG/COMPILE need the rest.
 
 ---
 
@@ -52,7 +54,7 @@ Then run the tools from `/tmp/cbam_tools/scripts/...`.
 
 | Mode | When | What it does |
 |---|---|---|
-| **RADAR** | daily/weekly | **Delivered by email, not Cowork.** CI emails the daily CBAM digest (Stream A) and weekly VCM digest (Stream B). If asked to "run the radar", tell the user it's in their inbox; there's no triage page to fetch. |
+| **RADAR** | daily/weekly ("run the radar", "今天有什麼CBAM新聞") | CI emails the digest; RADAR mode finds that email, parses it, and presents a numbered pick-list in chat. No triage page, no script re-run of RADAR itself. |
 | **FLAG** | when the user picks items (or pastes a link) | Translate (house style), emit a paste-ready 中文 LINE message, append to the living weekly doc, log the pick, update the ledger via GitHub dispatch. |
 | **COMPILE** | end of week | Top-up sweep, verify, finalize the dated `.docx` in Drive `2026年/`. |
 
@@ -67,22 +69,55 @@ Then run the tools from `/tmp/cbam_tools/scripts/...`.
   repo — dedup state lives in GitHub Actions cache.
 - **There is no triage page and no `data/` output.** Do not try to `web_fetch` a triage or
   candidates file — they no longer exist. Do NOT run `radar_process.py` locally; any copy bundled
-  in the skill is stale and unused.
+  in the skill is stale and unused. RADAR mode's job is to **find and parse the email**, not to
+  regenerate anything.
 - **The dedup seed is `state/seen_urls.json` in the repo.** FLAG appends to it via the
   `flag-pick` dispatch (below). The Drive `_state/seen_urls.json` is deprecated.
 
 ---
 
-## RADAR mode — email-delivered (nothing to run in Cowork)
+## RADAR mode — search the digest email, parse it, present picks
 
-The radar is two emails, produced by CI:
-- **Daily** — CBAM core (Stream A), weekday mornings, subject `CBAM 每日雷達 — <date> …`.
-- **Weekly** — VCM / 廣義碳市場 (Stream B), Mondays, subject `碳權市場週報 …`.
+The radar is two emails, produced by CI. Both are rendered by `radar/scripts/render_email.py`,
+which embeds a hidden, machine-readable item list as an HTML comment
+(`<!--RADAR_ITEMS_JSON:[...]-->`) right before the closing tag — invisible to a human reader,
+trivial to parse deterministically. **Always parse via this payload, not by reading the visible
+HTML** (Gmail forwarding/quoting reformats markup, but the comment survives).
 
-If the user asks to "run the radar" / "今天有什麼CBAM新聞": point them to the daily email — there
-is no page to fetch or present. To act on a story, the user forwards or pastes its URL and you go
-to **FLAG mode**. (If a daily email is missing, the staleness alarm opens a repo issue; they can
-re-run `daily-data.yml` from the Actions tab.)
+| | Daily — CBAM core (Stream A) | Weekly — VCM / 廣義碳市場 (Stream B) |
+|---|---|---|
+| Subject prefix | `CBAM 每日雷達 — <date> …` | `碳權市場週報 …` |
+| Cadence | weekday mornings | Mondays |
+| Grouped by | tier (TOP/HIGH/MED) | topic |
+
+### R1 — Find the email (Gmail connector)
+Search for the most recent match:
+- Daily: `subject:"CBAM 每日雷達" newer_than:2d`
+- Weekly: `subject:"碳權市場週報" newer_than:9d`
+
+Fetch the **raw/full HTML body** of that message (not the plain-text snippet, not a
+quoted/forwarded re-render) and save it to `/tmp/digest.html`.
+
+### R2 — Parse it (deterministic — don't eyeball the HTML)
+Fetch `parse_digest_email.py` if not already in `/tmp/carbon_tools` (see "Fetch tools" above),
+then:
+```
+python /tmp/carbon_tools/scripts/parse_digest_email.py --html /tmp/digest.html --out /tmp/digest.json
+```
+This extracts the embedded JSON and also prints a numbered plain-text list
+(`1. [TOP] headline / source · date / url`, etc.) — paste that directly into chat as the
+pick-list. Exit code 2 means the wrong content was fetched (re-check R1 — likely a quoted/
+plain-text copy without the hidden marker).
+
+### R3 — Hand off to FLAG
+When the user picks by number (or pastes a URL directly, which still works), look up the
+corresponding item's `url`/`title`/`source`/`published` in `digest.json` and proceed to
+**FLAG mode** for each.
+
+### If no matching email is found
+Check the staleness — CI opens a repo issue if the daily digest hasn't run in >26h. The user can
+re-run `daily-data.yml` (or `weekly-vcm.yml`) from the GitHub Actions tab, then retry R1 after it
+completes (~2 min).
 
 ### Date-verification (still applies at FLAG time)
 Before shortlisting a picked story, if a date looks off, `web_fetch` the article and confirm
@@ -143,22 +178,22 @@ For each picked URL:
    ```
 
 3. **Append to the living weekly `.docx`** (Drive connector → local → Drive). First fetch the
-   weekly tools (see "Weekly tools" above) if not already in `/tmp/cbam_tools`:
+   weekly tools (see "Fetch tools" above) if not already in `/tmp/carbon_tools`:
    - Download the most recent `.docx` from Drive folder `1dwXqv1UMclM1Ni3CIPBMBo62X-W58aFr` to
      `/tmp/weekly.docx` (or seed a fresh week by copying
-     `/tmp/cbam_tools/templates/weekly_template.docx` — never a blank `Document`, or the page-1
+     `/tmp/carbon_tools/templates/weekly_template.docx` — never a blank `Document`, or the page-1
      index table and page-number footer go missing).
    - Write the translation to `/tmp/content.txt`: `# headline`, `## sub-header`, plain body lines,
      `SRC <url>`, `DATE <YYYY/MM/DD>`.
-   - Run `python /tmp/cbam_tools/scripts/append_story.py /tmp/weekly.docx /tmp/content.txt /tmp/weekly_out.docx`.
+   - Run `python /tmp/carbon_tools/scripts/append_story.py /tmp/weekly.docx /tmp/content.txt /tmp/weekly_out.docx`.
      It adds a hyperlinked **項次 row** to the index table, inserts a **page break**, applies the
      item house style (新聞標題 auto-numbered 24pt; body/sub-headers Times New Roman + 標楷體 14pt,
      23pt exact line spacing, 9pt space-before; sub-headers bold, **body never bold**), and
-     recalculates `本週共計 N 則`. (`/tmp/cbam_tools/scripts/build_docx.py` is for a full
+     recalculates `本週共計 N 則`. (`/tmp/carbon_tools/scripts/build_docx.py` is for a full
      from-scratch rebuild only.)
    - Re-upload `/tmp/weekly_out.docx` to Drive folder `1dwXqv1UMclM1Ni3CIPBMBo62X-W58aFr`.
 
-4. **Log the pick to the queue.** Run `python /tmp/cbam_tools/scripts/flag_article.py
+4. **Log the pick to the queue.** Run `python /tmp/carbon_tools/scripts/flag_article.py
    --root "<Drive root local path>" --week <MM.DD-MM.DD> --url URL --source S --date YYYY/MM/DD
    --by "Claude" --headline "中文標題"`, then upload the updated `_queue_<week>.md` to Drive `_state/`.
 
@@ -186,8 +221,8 @@ The living doc is already mostly built, so this is a light pass.
 Download the most recent `.docx` from Drive `2026年/` to find the previous end date. Coverage
 window starts the day AFTER it (includes the weekend) through this file's end date. Filename label
 follows `MM.DD-MM.DD` (weekdays). Build the dedupe set from `.../state/seen_urls.json` plus the
-previous 4–6 weekly files (`/tmp/cbam_tools/scripts/extract_prior_urls.py`; fetch the weekly
-tools first — see "Weekly tools" above).
+previous 4–6 weekly files (`/tmp/carbon_tools/scripts/extract_prior_urls.py`; fetch the weekly
+tools first — see "Fetch tools" above).
 
 ### Step 2 — Top-up sweep
 Read `stories_<week>.json` from Drive `_state/`. Optionally `web_fetch` tracked sources in
@@ -206,9 +241,9 @@ When a story runs across outlets, choose the most reliable openable version (pre
 SEO/crypto reposts. Use that source's own date.
 
 ### Steps 3–6 — Translate top-ups, assemble, verify, upload
-Build on `/tmp/cbam_tools/templates/weekly_template.docx` and append with
-`/tmp/cbam_tools/scripts/append_story.py` (preferred), or full-rebuild with
-`/tmp/cbam_tools/scripts/build_docx.py` reproducing the House style below. Verify: every
+Build on `/tmp/carbon_tools/templates/weekly_template.docx` and append with
+`/tmp/carbon_tools/scripts/append_story.py` (preferred), or full-rebuild with
+`/tmp/carbon_tools/scripts/build_docx.py` reproducing the House style below. Verify: every
 story has a working `新聞出處` URL + confirmed `日期`; no duplicates; `本週共計 N 則` matches the
 count; the page-1 index table has one hyperlinked row per story; the footer shows page numbers;
 spot-check 1–2 translations. Upload to Drive `2026年/`, remind Alec to copy it to the company
@@ -217,8 +252,8 @@ Drive, and present with `present_files`.
 ### House style
 Every weekly is built on **`weekly_template.docx`** (page-1 title block + empty 項次 index table
 + centred page-number footer + the `新聞標題` numbered-list style already defined). Seed each new
-week by copying `/tmp/cbam_tools/templates/weekly_template.docx`, then add stories with
-`/tmp/cbam_tools/scripts/append_story.py`.
+week by copying `/tmp/carbon_tools/templates/weekly_template.docx`, then add stories with
+`/tmp/carbon_tools/scripts/append_story.py`.
 
 **Page 1, top (in order):**
 
