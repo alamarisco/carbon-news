@@ -389,7 +389,7 @@ RSS_FEEDS: dict[str, dict] = {
 
     # S&P Global Commodity Insights RSS removed June 2026 — Akamai blocks every rss-feed path
     # with 403 (datacenter + residential), 0 articles ever ingested. S&P remains a WebSearch
-    # "openable source" for paywalled-pick substitution (see WORKFLOW.md FLAG step 0).
+    # "openable source" for paywalled-pick substitution (see carbon-news-collector FLAG step 0).
 
     # Reuters RSS feeds shut down — all URLs return connection error or 401 (confirmed May 2026)
 }
