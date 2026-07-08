@@ -7,7 +7,7 @@ name: CBAM Monitor — Flag Pick Ledger
 #   curl -X POST \
 #     -H "Authorization: Bearer $CBAM_GH_TOKEN" \
 #     -H "Content-Type: application/json" \
-#     https://api.github.com/repos/alamarisco/cbam-monitor/dispatches \
+#     https://api.github.com/repos/alamarisco/carbon-news/dispatches \
 #     -d '{"event_type":"flag-pick","client_payload":{"urls":["URL1","URL2"]}}'
 #
 # CBAM_GH_TOKEN must be a fine-grained PAT with contents:write on this repo.

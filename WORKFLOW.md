@@ -2,11 +2,16 @@
 
 **This file is the single source of truth for the `cbam-weekly-news` Cowork skill.**
 The skill is a thin shell that fetches this file and follows it. To change the workflow,
-edit **this file in the cbam-monitor repo and commit** — do **not** edit the skill (managed-skill
+edit **this file in the carbon-news repo and commit** — do **not** edit the skill (managed-skill
 edits are wiped by the next server sync, and they diverge per machine).
 
 Raw URL the skill fetches:
-`https://raw.githubusercontent.com/alamarisco/cbam-monitor/main/WORKFLOW.md`
+`https://raw.githubusercontent.com/alamarisco/carbon-news/main/WORKFLOW.md`
+
+> **Delivery is email-only now.** The daily CBAM radar (Stream A) and the weekly VCM digest
+> (Stream B) are emailed by CI. There is **no** interactive triage page and **no** file output in
+> the repo. Cowork's role is FLAG + COMPILE: the user forwards/pastes stories from the email and
+> Cowork translates them and maintains the weekly `.docx`.
 
 Daily triage and weekly compilation for the 產品碳洩漏管理與公眾溝通計畫 international news brief.
 News is collected by CI continuously, alerted to the LINE group as it is picked, translated into
@@ -18,7 +23,7 @@ the **living weekly doc**, and finalized as a dated `.docx` each week.
 
 | Key | Value |
 |---|---|
-| Repo slug | `alamarisco/cbam-monitor` |
+| Repo slug | `alamarisco/carbon-news` |
 | Drive folder — weekly docs `國際新聞蒐集/2026年/` | `1dwXqv1UMclM1Ni3CIPBMBo62X-W58aFr` |
 | Drive folder — state `國際新聞蒐集/_state/` | `1DKzbo0r0j_7jQmPd9dzB8fTNtMA5RhTX` |
 
@@ -33,7 +38,7 @@ the **living weekly doc**, and finalized as a dated `.docx` each week.
 ### Weekly tools — fetch once per session (FLAG / COMPILE only; RADAR needs none)
 ```
 mkdir -p /tmp/cbam_tools/scripts /tmp/cbam_tools/templates
-base="https://raw.githubusercontent.com/alamarisco/cbam-monitor/main/weekly"
+base="https://raw.githubusercontent.com/alamarisco/carbon-news/main/weekly"
 for f in scripts/append_story.py scripts/build_docx.py scripts/extract_prior_urls.py \
          scripts/flag_article.py templates/weekly_template.docx templates/queue_template.md; do
   curl -sSL -o "/tmp/cbam_tools/$f" "$base/$f"
@@ -47,7 +52,7 @@ Then run the tools from `/tmp/cbam_tools/scripts/...`.
 
 | Mode | When | What it does |
 |---|---|---|
-| **RADAR** | daily ("run the radar", "今天有什麼CBAM新聞") | Fetch the **CI-built** triage page and present it. No script execution, no portal diffing, no translation. |
+| **RADAR** | daily/weekly | **Delivered by email, not Cowork.** CI emails the daily CBAM digest (Stream A) and weekly VCM digest (Stream B). If asked to "run the radar", tell the user it's in their inbox; there's no triage page to fetch. |
 | **FLAG** | when the user picks items (or pastes a link) | Translate (house style), emit a paste-ready 中文 LINE message, append to the living weekly doc, log the pick, update the ledger via GitHub dispatch. |
 | **COMPILE** | end of week | Top-up sweep, verify, finalize the dated `.docx` in Drive `2026年/`. |
 
@@ -55,52 +60,33 @@ Then run the tools from `/tmp/cbam_tools/scripts/...`.
 
 ## Architecture (read once)
 
-- **CI is the engine.** The cbam-monitor GitHub Action (`daily-data.yml`) runs every weekday
-  16:07 Taipei + Monday catch-up. It fetches all feeds (including EU `DG TAXUD CBAM` and
-  `UK CBAM Portal` sources), runs `radar/scripts/radar_process.py` with portal dedup + staleness
-  filtering, and commits the finished triage HTML to the repo. **You do not re-run any of this.**
-- **Do NOT run `radar_process.py` locally.** If you find a copy bundled in the skill folder,
-  ignore it — it is stale and unused. RADAR = fetch the artifact CI already built.
-- **The dedup ledger is `state/seen_urls.json` in the repo**, not Drive. RADAR dedup is applied
-  by CI; FLAG appends to it via the `flag-pick` dispatch (below). The Drive `_state/seen_urls.json`
-  is deprecated — do not read or write it.
+- **CI is the engine, and it is email-only.** The carbon-news GitHub Actions (`daily-data.yml`
+  weekday mornings ~08:23 Taipei; `weekly-vcm.yml` Monday) fetch all feeds (including EU
+  `DG TAXUD CBAM` and `UK CBAM Portal`), run `radar/scripts/radar_process.py` with portal dedup +
+  staleness filtering **entirely in /tmp**, and **email** the digest. Nothing is written to the
+  repo — dedup state lives in GitHub Actions cache.
+- **There is no triage page and no `data/` output.** Do not try to `web_fetch` a triage or
+  candidates file — they no longer exist. Do NOT run `radar_process.py` locally; any copy bundled
+  in the skill is stale and unused.
+- **The dedup seed is `state/seen_urls.json` in the repo.** FLAG appends to it via the
+  `flag-pick` dispatch (below). The Drive `_state/seen_urls.json` is deprecated.
 
 ---
 
-## RADAR mode (daily)
+## RADAR mode — email-delivered (nothing to run in Cowork)
 
-### R1 — Find today's triage (web_fetch)
-`web_fetch` → `https://raw.githubusercontent.com/alamarisco/cbam-monitor/main/data/radar/index.json`
-It returns `{"date","triage_dated","built_at"}`. Use `triage_dated` to fetch the dated file
-(more cache-stable than `triage_latest.html`):
-`https://raw.githubusercontent.com/alamarisco/cbam-monitor/main/data/radar/<triage_dated>`
+The radar is two emails, produced by CI:
+- **Daily** — CBAM core (Stream A), weekday mornings, subject `CBAM 每日雷達 — <date> …`.
+- **Weekly** — VCM / 廣義碳市場 (Stream B), Mondays, subject `碳權市場週報 …`.
 
-Sanity-check `built_at` and `date` are today (Taipei). If they're stale (>1 day old), the
-Action may have been skipped — see the fallback below.
+If the user asks to "run the radar" / "今天有什麼CBAM新聞": point them to the daily email — there
+is no page to fetch or present. To act on a story, the user forwards or pastes its URL and you go
+to **FLAG mode**. (If a daily email is missing, the staleness alarm opens a repo issue; they can
+re-run `daily-data.yml` from the Actions tab.)
 
-### R2 — Present the triage page
-Pass the fetched HTML straight to `create_artifact`. It shows Stream A grouped by tier
-(🔴TOP / 🟠HIGH / 🟡MED, TOP+HIGH pre-checked) with a "Send selection to Claude" button, and
-Stream B as a collapsed reference list. The user ticks what they want and clicks send — that
-returns the picks and triggers FLAG mode.
-
-### R3 — (optional) machine-readable candidates
-If you need structured data (counts, summaries), also `web_fetch`
-`.../data/radar/candidates.json`. Do not rebuild it.
-
-### Fallback — if the triage is stale or empty
-The Action emails a "Daily Data Feed: all jobs have failed" notice on failure. If today's
-triage is missing/stale: (a) check the **CBAM Global Monitor 碳邊境調整機制週報** email digest in
-Gmail (`CBAM Global Monitor newer_than:2d`) and parse its article list as the candidate pool,
-and/or (b) `web_fetch` the EU/UK official portals directly:
-- EU — `https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en`
-- UK — `https://www.gov.uk/government/collections/carbon-border-adjustment-mechanism`
-Dedup against `.../state/seen_urls.json`, then present manually. This is a rare degraded mode.
-
-### Date-verification (REQUIRED before anything is shortlisted)
-CI dates are usually reliable, but if a date looks off, `web_fetch` the article and confirm
-`meta article:published_time` before keeping it. (See COMPILE Step 2.5 traps — republish ≠
-original date.)
+### Date-verification (still applies at FLAG time)
+Before shortlisting a picked story, if a date looks off, `web_fetch` the article and confirm
+`meta article:published_time`. (See COMPILE Step 2.5 traps — republish ≠ original date.)
 
 ---
 
@@ -181,7 +167,7 @@ For each picked URL:
    curl -X POST \
      -H "Authorization: Bearer $(gh auth token)" \
      -H "Content-Type: application/json" \
-     https://api.github.com/repos/alamarisco/cbam-monitor/dispatches \
+     https://api.github.com/repos/alamarisco/carbon-news/dispatches \
      -d '{"event_type":"flag-pick","client_payload":{"urls":["<URL>"]}}'
    ```
    Requires `gh` authenticated on this machine (`gh auth status`). If `gh` is unavailable,

@@ -14,12 +14,12 @@ description: >
 
 # 國際新聞蒐集 — RADAR + Weekly Collector
 
-**The authoritative, up-to-date workflow lives in the cbam-monitor repo, not in this skill.**
+**The authoritative, up-to-date workflow lives in the carbon-news repo, not in this skill.**
 
 At the start of every run, `web_fetch`:
 
 ```
-https://raw.githubusercontent.com/alamarisco/cbam-monitor/main/WORKFLOW.md
+https://raw.githubusercontent.com/alamarisco/carbon-news/main/WORKFLOW.md
 ```
 
 and follow it exactly. It contains the current RADAR / FLAG / COMPILE steps, account constants
@@ -31,10 +31,9 @@ other machines. The repo file is the single source of truth and is identical on 
 
 ## Quick reference (authoritative version is WORKFLOW.md)
 
-- **RADAR** = fetch the CI-built triage and present it. Do **not** run `radar_process.py` locally;
-  CI already built today's triage with portal dedup + staleness filtering applied.
-  1. `web_fetch` `.../data/radar/index.json` → read `triage_dated`.
-  2. `web_fetch` `.../data/radar/<triage_dated>` → pass to `create_artifact`.
+- **RADAR** = email-only. CI emails the daily CBAM digest (Stream A) and weekly VCM digest
+  (Stream B). There is no triage page or `data/` output to fetch. If asked to "run the radar",
+  point the user to their inbox. Do **not** run `radar_process.py` locally.
 - **FLAG** = translate (house style), LINE message, append to the weekly `.docx` via the Drive
   connector + the repo's `weekly/scripts/append_story.py`, then update the ledger by firing the
   `flag-pick` GitHub dispatch (see WORKFLOW.md FLAG step 5). No local repo clone needed.
