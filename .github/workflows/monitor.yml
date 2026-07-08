@@ -1,34 +1,37 @@
-name: CBAM Monitor — Staleness Alarm
+name: Carbon News — Staleness Alarm
+
+# Email-only pipeline has no committed heartbeat, so check the last successful daily-data
+# run via the API and open an issue if the digest hasn't run in >26h.
 
 on:
   schedule:
-    - cron: "23 12 * * 1-5"
+    - cron: "23 12 * * 1-5"   # 20:23 Taipei weekday — after the morning digest window
   workflow_dispatch:
 
 permissions:
   contents: read
   issues: write
+  actions: read
 
 jobs:
   check-freshness:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Alarm if heartbeat is stale
+      - name: Alarm if no recent daily-data run
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if [ ! -f data/last_run.txt ]; then echo "No heartbeat yet"; exit 0; fi
-          LAST=$(git log -1 --format=%ct -- data/last_run.txt)
-          AGE_H=$(( ( $(date +%s) - LAST ) / 3600 ))
-          echo "Heartbeat age: ${AGE_H}h"
+          LAST=$(gh run list --repo "${{ github.repository }}" --workflow=daily-data.yml \
+                   --status success -L 1 --json updatedAt --jq '.[0].updatedAt // empty')
+          if [ -z "$LAST" ]; then echo "No successful runs found yet"; exit 0; fi
+          AGE_H=$(( ( $(date +%s) - $(date -d "$LAST" +%s) ) / 3600 ))
+          echo "Last successful daily-data run: ${AGE_H}h ago"
           if [ "$AGE_H" -gt 26 ]; then
-            TITLE="⚠️ CBAM daily-data appears stale (${AGE_H}h)"
-            EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq 'length')
+            TITLE="⚠️ Carbon News daily digest appears stale (${AGE_H}h)"
+            EXISTING=$(gh issue list --repo "${{ github.repository }}" --state open \
+                         --search "$TITLE in:title" --json number --jq 'length')
             if [ "$EXISTING" = "0" ]; then
-              gh issue create --title "$TITLE" --body "data/last_run.txt hasn't updated in ${AGE_H}h — the daily-data schedule was likely skipped. Re-run: gh workflow run daily-data.yml"
+              gh issue create --repo "${{ github.repository }}" --title "$TITLE" \
+                --body "No successful daily-data run in ${AGE_H}h — GitHub cron likely skipped it. Re-run: gh workflow run daily-data.yml"
             fi
           fi

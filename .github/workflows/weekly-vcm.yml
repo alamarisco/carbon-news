@@ -1,12 +1,14 @@
-name: CBAM Monitor — Weekly VCM Digest
+name: Carbon News — Weekly VCM Digest
 
-# Emails the Stream B (VCM / 廣義碳市場 / carbon-credit) reference digest once a week.
-# Self-contained: fetches a 7-day window, runs the RADAR processor with ephemeral state
-# (does NOT touch data/ or state/ in the repo), renders Stream B, and emails it.
+# Emails the Stream B (VCM / 廣義碳市場 / carbon-credit) reference digest once a week (Monday).
+# Self-contained + email-only: fetches a 7-day window, runs RADAR with ephemeral /tmp state
+# (no repo writes), renders Stream B, and emails it. A tiny Actions-cache marker prevents the
+# backup slot from double-sending.
 
 on:
   schedule:
-    - cron: "0 8 * * 5"    # Friday 16:00 Taipei — weekly VCM reference (adjust day/time as desired)
+    - cron: "23 1 * * 1"    # Monday 09:23 Taipei — primary (off-peak minute)
+    - cron: "7 3 * * 1"     # Monday 11:07 Taipei — backup
   workflow_dispatch:
     inputs:
       hours:
@@ -37,6 +39,17 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Restore VCM state
+        uses: actions/cache@v4
+        with:
+          path: .vcmstate
+          key: vcm-state-${{ github.run_id }}
+          restore-keys: vcm-state-
+      - name: Prepare state
+        run: |
+          mkdir -p .vcmstate
+          [ -f .vcmstate/last_emailed.txt ] || echo "none" > .vcmstate/last_emailed.txt
+
       - name: Determine lookback window
         id: lb
         run: |
@@ -46,39 +59,43 @@ jobs:
             echo "HOURS=168" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Fetch 7-day window → JSON
+      - name: Skip if already emailed today
+        id: guard
+        run: |
+          TODAY="$(TZ='Asia/Taipei' date +%F)"
+          echo "date=$TODAY" >> "$GITHUB_OUTPUT"
+          if [ "${{ github.event_name }}" = "schedule" ] && grep -qx "$TODAY" .vcmstate/last_emailed.txt; then
+            echo "Already emailed this week ($TODAY) — skipping backup."
+            echo "run=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Fetch 7-day window → RADAR → render Stream B
+        id: email
+        if: steps.guard.outputs.run == 'yes'
         run: |
           mkdir -p /tmp/vcm
-          python scripts/fetch_feeds.py --hours ${{ steps.lb.outputs.HOURS }} --format json --output /tmp/vcm/articles.json
-
-      - name: RADAR process (ephemeral state — no repo writes)
-        run: |
-          DATE="$(TZ='Asia/Taipei' date +%F)"
-          # --portal-seen points at /tmp so the weekly run never mutates the repo's portal ledger.
-          # --maxage 8 keeps the whole week (default 4 would drop most of it).
+          python scripts/fetch_feeds.py --hours ${{ steps.lb.outputs.HOURS }} \
+            --format json --output /tmp/vcm/articles.json
+          # ephemeral /tmp portal ledger + --maxage 8 (keep the whole week); never touches repo state
           python radar/scripts/radar_process.py \
             --articles /tmp/vcm/articles.json \
             --seen state/seen_urls.json \
             --portal-seen /tmp/vcm/portal_seen.json \
-            --outdir /tmp/vcm --date "$DATE" --maxage 8
-
-      - name: Render Stream B digest email
-        id: email
-        run: |
-          DATE="$(TZ='Asia/Taipei' date +%F)"
-          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+            --outdir /tmp/vcm --date "${{ steps.guard.outputs.date }}" --maxage 8
           if python radar/scripts/render_email.py \
-               --candidates /tmp/vcm/candidates.json --date "$DATE" --out /tmp/vcm_email.html --stream b; then
-            NB=$(python -c "import json;print(len(json.load(open('/tmp/vcm/candidates.json')).get('stream_b',[])))")
+               --candidates /tmp/vcm/candidates.json --date "${{ steps.guard.outputs.date }}" \
+               --out /tmp/vcm_email.html --stream b; then
             echo "send=yes" >> "$GITHUB_OUTPUT"
-            echo "nb=$NB" >> "$GITHUB_OUTPUT"
+            echo "nb=$(python -c "import json;print(len(json.load(open('/tmp/vcm/candidates.json')).get('stream_b',[])))")" >> "$GITHUB_OUTPUT"
           else
-            echo "No Stream B digest to send."
             echo "send=no" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Email Stream B digest
-        if: steps.email.outputs.send == 'yes'
+        id: send
+        if: steps.guard.outputs.run == 'yes' && steps.email.outputs.send == 'yes'
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
@@ -87,8 +104,12 @@ jobs:
           secure: true
           username: ${{ secrets.GMAIL_ADDRESS }}
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
-          to: ${{ secrets.RECIPIENT_EMAIL }}
-          from: "CBAM Radar — VCM <${{ secrets.GMAIL_ADDRESS }}>"
-          subject: "碳權市場週報 (VCM/廣義碳市場) — ${{ steps.email.outputs.date }} (${{ steps.email.outputs.nb }} items)"
+          to: ${{ secrets.VCM_RECIPIENTS }}
+          from: "Carbon News — VCM <${{ secrets.GMAIL_ADDRESS }}>"
+          subject: "碳權市場週報 (VCM/廣義碳市場) — ${{ steps.guard.outputs.date }} (${{ steps.email.outputs.nb }} items)"
           html_body: file:///tmp/vcm_email.html
           convert_markdown: false
+
+      - name: Mark emailed
+        if: steps.guard.outputs.run == 'yes' && steps.send.outcome == 'success'
+        run: echo "${{ steps.guard.outputs.date }}" > .vcmstate/last_emailed.txt
