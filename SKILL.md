@@ -1,58 +1,30 @@
 ---
 name: cbam-monitor
 description: >
-  Weekly automated briefing on carbon border adjustment mechanisms (CBAM) across
-  the EU, UK, Taiwan, and other jurisdictions — runs via GitHub Actions every
-  Monday. Use this skill when the user asks about CBAM news, EU CBAM
-  implementation, UK CBAM progress, Taiwan export exposure, CBAM trade law or
-  WTO developments, or wants to check on or update the newsletter setup. Also
-  trigger for casual references like "any CBAM news this week", "what's new
-  with the carbon border tax", "碳邊境調整機制最新動態", or "run the CBAM monitor".
+  Reference documentation for the CBAM/carbon news fetch pipeline (sources,
+  keywords, topic classification) implemented in scripts/fetch_feeds.py. The
+  actual daily/weekly delivery is handled by the daily-data.yml and
+  weekly-vcm.yml GitHub Actions workflows and operated via the
+  carbon-news-collector skill (cowork/carbon-news-collector.SKILL.md) — use
+  that skill for running RADAR, flagging stories, or compiling the weekly
+  doc. Use this file when you need to know which sources are tracked, what
+  keywords/topics fetch_feeds.py matches on, or how to customize them.
 ---
 
-# CBAM Global Monitor 碳邊境調整機制週報
+# CBAM fetch pipeline — sources, keywords, topic classification
 
-Fetch, filter, and deliver a weekly newsletter covering carbon border adjustment
-mechanisms across all active and emerging jurisdictions — EU, UK, Taiwan export
-exposure, and global developments.
+Reference documentation for `scripts/fetch_feeds.py`, which fetches and
+filters carbon border adjustment mechanism (CBAM) and related carbon-market
+news across the EU, UK, Taiwan, and other jurisdictions. This script is
+shared infrastructure for the current pipeline — `daily-data.yml` (Stream A,
+daily CBAM digest) and `weekly-vcm.yml` (Stream B, weekly VCM digest) both
+call it, then `radar/scripts/radar_process.py` re-buckets its output into
+Stream A/B for email delivery.
 
-## Purpose
-
-Weekly intelligence briefing on CBAM policy developments, organized by
-jurisdiction. Designed for two audiences simultaneously:
-
-- **Expert digest**: Full summaries, keyword tags, and source attribution for
-  policy depth
-- **Shareable summary**: "Key Developments" section at the top — short, scannable,
-  suitable for forwarding to contacts
-
-## Operation
-
-Runs automatically every **Monday at 08:30 Taipei time** via GitHub Actions.
-The workflow fetches articles, formats the HTML newsletter, and emails it.
-
-```bash
-# Manual run from Codespace (or local machine with outbound HTTP)
-cd <repo-root>
-pip install -r cbam-monitor/requirements.txt
-
-python cbam-monitor/scripts/fetch_feeds.py \
-  --hours 168 --format json --output /tmp/cbam_articles.json
-
-python cbam-monitor/scripts/format_newsletter.py \
-  --input /tmp/cbam_articles.json --output /tmp/cbam_newsletter.html
-
-# Debug: print sample unmatched entries to diagnose keyword gaps
-python cbam-monitor/scripts/fetch_feeds.py --hours 168 --debug
-```
-
-Required GitHub repository secrets:
-- `GMAIL_ADDRESS` — sender Gmail address
-- `GMAIL_APP_PASSWORD` — Gmail App Password (not account password)
-- `RECIPIENT_EMAIL` — delivery address (alec.martin@gmail.com)
-
-To trigger a manual run: Actions → "CBAM Global Monitor — Weekly Briefing" →
-Run workflow. Override hours lookback (e.g., 336 for a two-week catch-up).
+> The standalone weekly "CBAM Global Monitor" briefing (its own workflow and
+> two-tier HTML format) has been retired in favor of the Stream A/B split
+> above. For day-to-day operation (RADAR/FLAG/COMPILE), see
+> `cowork/carbon-news-collector.SKILL.md`.
 
 ---
 
@@ -138,27 +110,11 @@ retaliation, CBAM challenge, CBAM India, CBAM China
 
 ---
 
-## Output Format
+## Delivery Format
 
-### Two-tier HTML newsletter
-
-**Tier 1 — Key Developments** (top of email, shareable):
-- One lead item per non-empty topic bucket (up to 6 items)
-- Each item: topic tag pill → headline link → first sentence of summary → source/date
-- Green highlight box — visually distinct, works standalone as a forward
-
-**Tier 2 — Full Briefing** (rest of email, analyst-level):
-- One H2 section per topic bucket, ordered as above
-- Each article: headline (linked), source + date, full summary (free) or "behind paywall" note (paid), keyword tags
-- Green accent color scheme throughout
-
-### Subject line format
-```
-CBAM Global Monitor | 碳邊境調整機制週報 — YYYY-MM-DD (N articles)
-```
-
-### Archive
-Save HTML to: `Carbon Markets/cbam-monitor/briefings/cbam-briefing-YYYY-MM-DD.html`
+Output format, subject lines, and stream tiering (Stream A/B, TOP/HIGH/MED)
+are defined in `radar/scripts/radar_process.py` and `radar/scripts/render_email.py`
+— see `cowork/carbon-news-collector.SKILL.md` for the current architecture.
 
 ---
 
@@ -166,9 +122,14 @@ Save HTML to: `Carbon Markets/cbam-monitor/briefings/cbam-briefing-YYYY-MM-DD.ht
 
 - **Add/remove keywords**: Edit `KEYWORDS_EN` / `KEYWORDS_ZH` in `fetch_feeds.py`
 - **Add sources**: Add a new entry to `RSS_FEEDS` dict in `fetch_feeds.py`
-- **Add/rename topics**: Edit `TOPIC_PATTERNS` and `TOPIC_ORDER` in both scripts
-- **Change schedule**: Edit the cron expression in `briefing.yml`
-- **Change recipient**: Update `RECIPIENT_EMAIL` secret in GitHub repo settings
+- **Add/rename topics**: Edit `TOPIC_PATTERNS` and `TOPIC_ORDER` in `fetch_feeds.py`
+  (and `HIGH_KEYWORDS`/stream logic in `radar/scripts/radar_process.py` if the
+  change should affect Stream A/B classification)
+- **Change schedule**: `daily-data.yml` is triggered externally by cron-job.org
+  (see workflow file comments); `weekly-vcm.yml` still uses a native GitHub
+  `schedule:` block — edit the cron expression in the workflow file
+- **Change recipients**: Update the `CBAM_RECIPIENTS` (daily) or `VCM_RECIPIENTS`
+  (weekly) secret in GitHub repo settings
 
 ---
 
