@@ -690,6 +690,14 @@ KEYWORDS_EN = [
     # ── Company watch (CBAM-exposed producers) ────────────────────────────
     "Norsk Hydro",
     "TCC cement",
+
+    # ── Taiwan green finance / ESG (Taiwan-anchored; generic global ESG excluded)
+    "Taiwan green bond",
+    "Taiwan sustainable finance",
+    "Taiwan taxonomy",
+    "Taiwan sustainability disclosure",
+    "Taiwan ISSB",
+    "FSC Taiwan",
 ]
 
 # Chinese — matched as-is (no lowercasing) against same combined text
@@ -790,6 +798,17 @@ KEYWORDS_ZH = [
     "鋼鐵關稅",
     "低碳氫",
     "綠氫",
+
+    # Taiwan-specific green finance / ESG (folded in from the old weekly cowork
+    # task — Taiwan-anchored only; generic global ESG intentionally excluded)
+    "綠色金融行動方案",
+    "永續分類標準",
+    "永續經濟活動認定",
+    "上市櫃永續報告",
+    "永續報告書",
+    "氣候相關財務揭露",
+    "碳揭露",
+    "範疇三",
 ]
 
 # ── Topic Classification ──────────────────────────────────────────────────────
@@ -825,6 +844,12 @@ TOPIC_PATTERNS: dict[str, list[str]] = {
         "碳邊境 出口", "碳邊境 鋼鐵", "碳邊境 鋁業",
         "台灣碳費", "台灣碳市場", "碳費", "台灣碳權交易所", "碳排放交易所",
         "碳盤查", "碳中和", "淨零碳排", "排碳",
+        # Taiwan-specific green finance / ESG (folded in from old weekly task)
+        "taiwan green bond", "taiwan sustainable finance", "taiwan taxonomy",
+        "taiwan sustainability disclosure", "taiwan issb", "fsc taiwan",
+        "綠色金融行動方案", "永續分類標準", "永續經濟活動認定",
+        "上市櫃永續報告", "永續報告書", "氣候相關財務揭露", "碳揭露",
+        "範疇三",
     ],
     "Japan Carbon Market 日本碳市場": [
         "japan ets", "japan carbon market", "japan carbon pricing",
