@@ -2,14 +2,14 @@ name: Carbon News — Daily CBAM Digest
 
 # Email-only: fetches, runs RADAR, and emails the Stream A (CBAM core) digest.
 # No repo writes — dedup state (portal ledger + last-emailed date) lives in GitHub Actions cache.
-# Off-peak odd-minute crons + 2 backups dodge GitHub's peak-hour cron lag/skips.
+# Scheduling is handled externally by cron-job.org (weekday mornings, ~08:23 Taipei), which
+# calls workflow_dispatch directly — GitHub's own schedule: trigger queues up (and can be
+# dropped) at peak minutes. The "already emailed today" guard below and the backup-slot
+# comments are left in place; if cron-job.org proves unreliable, a native schedule: block
+# (primary + backups) can be reinstated here with no other changes needed.
 
 on:
-  schedule:
-    - cron: "23 0 * * 1-5"   # 08:23 Taipei — primary
-    - cron: "47 1 * * 1-5"   # 09:47 Taipei — backup 1
-    - cron: "7 3 * * 1-5"    # 11:07 Taipei — backup 2
-    # Monday runs get 72h lookback automatically (see lookback) to catch up the weekend.
+  # Monday runs get 72h lookback automatically (see lookback) to catch up the weekend.
   workflow_dispatch:
     inputs:
       hours:
