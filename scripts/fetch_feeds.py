@@ -1,22 +1,25 @@
 #!/usr/bin/env python3
 """
-CBAM Global Monitor — News Aggregator
-======================================
-Fetches news on carbon border adjustment mechanisms (CBAM) from free and paid
-RSS feeds across EU, UK, Taiwan, and global trade sources. Keyword-filters
-for CBAM relevance, classifies by jurisdiction/topic, and outputs HTML, JSON,
-or Markdown.
+carbon-news — News Aggregator
+=============================
+Fetches carbon-market news from free and paid RSS feeds and scraped listing
+pages across the EU, UK, Taiwan, Asia and other jurisdictions. Keyword-filters
+for carbon relevance, classifies into topic buckets, and outputs JSON (what the
+pipeline uses), HTML, or Markdown.
+
+Broadened July 2026 from CBAM-specific to carbon markets generally — CBAM is
+still a heavily-weighted keyword set, but no longer the exclusive focus.
 
 Data sources:
-  Free (RSS)     — Euractiv, Carbon Brief, Carbon Pulse, Carbon Market Watch,
+  Free (RSS)     — Euractiv, Carbon Brief, Carbon Market Watch,
                    Climate Home News, E3G, Sandbag (CBAM category), Clear Blue Markets,
-                   Politico Europe, EUROMETAL, GMK Center, Carbon Credits, EU Council,
+                   Politico Europe, EUROMETAL, GMK Center, EU Council,
                    European Commission (press corner, text-filtered), The Hindu Business,
                    NDTV Profit India, 中央社 CNA, 聯合新聞網 UDN,
-                   經濟日報 Economic Daily (incl. 商情/ESG), 環境資訊中心 e-info, ESG遠見
+                   經濟日報 Economic Daily (incl. 商情/ESG), 環境資訊中心 e-info
   Free (scraped) — Sylvera (sylvera.com/blog), BeZero Carbon (bezerocarbon.com/insights),
                    今週刊 ESG (esg.businesstoday.com.tw), Ember Energy (ember-energy.org),
-                   DG TAXUD CBAM (ec.europa.eu), 經貿透視 Trademag, SteelOrbis (steel-news listing),
+                   經貿透視 Trademag, SteelOrbis (steel-news listing),
                    ICAP (icapcarbonaction.com/en/news), Reccessary (reccessary.com/zh-tw)
   Paid (scraped) — 天下雜誌 CommonWealth (cw.com.tw — 永續發展 section; preview only)
                    All confirmed SSR; link-pattern scraper, no JS needed.
@@ -28,6 +31,9 @@ Data sources:
                    Cnyes, CSRone (no valid RSS),
                    CTEE, CNA Net Zero (403/JS-rendered)
                    (Reccessary RSS dead, but re-added June 2026 as a scraper — see below)
+  Retired July 2026 — DG TAXUD CBAM and UK CBAM Portal (gov.uk) page scrapers. Official
+                   EU/UK developments now reach the digest via third-party reporting; the
+                   EU Council and European Commission RSS feeds are retained.
 
 Clear Blue Markets notes (confirmed via Chrome, May 2026):
   - Correct domain: clearbluemarkets.com (NOT clearblue.markets)
@@ -38,7 +44,7 @@ Feed URL verification status (run check_feeds.py from Codespace to confirm):
   ✅ Confirmed (same as working semiconductor newsletter):
        CNA FeedBurner, Economic Daily UDN, FT (world/markets/companies/asia-pacific), Nikkei
   ⚠️  Unverified (CBAM-specific, sandbox cannot reach outbound):
-       Euractiv, Carbon Brief, Carbon Pulse, E3G, Sandbag, Ember Climate
+       Euractiv, Carbon Brief, E3G, Sandbag, Ember Climate
   🔍 Scraped (no RSS — confirmed SSR via Chrome inspection):
        Sylvera (sylvera.com/blog), BeZero Carbon (bezerocarbon.com/insights)
   🔧 Fixed vs. original draft:
@@ -119,24 +125,9 @@ RSS_FEEDS: dict[str, dict] = {
         ],
     },
 
-    "Carbon Pulse": {
-        "type": "free",
-        "method": "rss",
-        "feeds": [
-            # Topic-specific category feeds (confirmed May 2026)
-            "https://carbon-pulse.com/category/international/cbam-tariffs/feed/",
-            "https://carbon-pulse.com/category/emea/emea-compliance-markets-taxes/feed/",
-            "https://carbon-pulse.com/category/international/paris-article-6/feed/",
-            "https://carbon-pulse.com/category/international/aviation/feed/",
-            "https://carbon-pulse.com/category/voluntary/vcm-developments/feed/",
-            "https://carbon-pulse.com/category/voluntary/vcm-governance/feed/",
-            "https://carbon-pulse.com/category/asia-pacific/apac-compliance-markets-taxes/feed/",
-            "https://carbon-pulse.com/category/asia-pacific/asia/feed/",
-            "https://carbon-pulse.com/category/nature-based-carbon/feed/",
-            "https://carbon-pulse.com/category/co2-management/engineered-removals/feed/",
-            "https://carbon-pulse.com/feed/",  # general feed as fallback
-        ],
-    },
+    # Carbon Pulse removed July 2026 — subscription access lapsed, so its feeds yield
+    # headlines that can't be opened. Re-add the category feeds from git history if a
+    # subscription is restored.
 
     "Carbon Market Watch": {
         "type": "free",
@@ -238,18 +229,9 @@ RSS_FEEDS: dict[str, dict] = {
         ],
     },
 
-    "ESG遠見": {
-        "type": "free",
-        "method": "rss",
-        # Taiwan ESG/永續 coverage (遠見). RSS at /rss. NOTE: the CDN is flaky — it intermittently
-        # serves a fresh copy (current) and a ~10-month-stale cached copy from different nodes.
-        # This is safe: the RADAR staleness filter drops the stale-copy items (they're genuinely
-        # old-dated), so yield just varies run to run; no mis-dated items leak through.
-        # Keyword filter selects CBAM/碳費/碳邊境 items.
-        "feeds": [
-            "https://esg.gvm.com.tw/rss",
-        ],
-    },
+    # ESG遠見 removed July 2026 — the broad 永續/ESG keyword surface pulled in non-carbon
+    # lifestyle and corporate-governance pieces that landed in the Taiwan and Other buckets.
+    # Taiwan coverage continues via CNA, Economic Daily, UDN, e-info and Reccessary.
 
     # ── PAID SOURCES (headline + link only) ──────────────────────────────
 
@@ -346,13 +328,10 @@ RSS_FEEDS: dict[str, dict] = {
 
     # ── CARBON MARKETS ───────────────────────────────────────────────────
 
-    "Carbon Credits": {
-        "type": "free",
-        "method": "rss",
-        "feeds": [
-            "https://carboncredits.com/feed/",
-        ],
-    },
+    # Carbon Credits (carboncredits.com) removed July 2026 — dominated the VCM bucket
+    # (10 of 49 items in a live run) with stock-promotion pieces on mining tickers rather
+    # than carbon-market news. VCM coverage continues via Clear Blue Markets, Sylvera,
+    # BeZero, Carbon Market Watch and Climate Home News.
 
     # PIK Potsdam: both /en/news/rss and /en/news/latest-news/@@rss return malformed — removed.
 
@@ -474,19 +453,6 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
         "link_pattern": re.compile(r"https://www\.cw\.com\.tw/article/\d+$"),
     },
     # 工商時報 CTEE: RSS /rss/all.xml returns 403; search page also returns 403 — removed.
-    "DG TAXUD CBAM": {
-        "type": "free",
-        "listing_url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
-        "base_url": "https://taxation-customs.ec.europa.eu",
-        # "Latest developments" links dated news items at /news/<slug>-YYYY-MM-DD_en. The old
-        # single-segment pattern matched only evergreen landing pages (which radar_process then
-        # drops for lacking /news/), so this source yielded nothing. Match /news/ items directly.
-        # Date from article:published_time meta; portal source → TOP tier, staleness-exempt.
-        "link_pattern": re.compile(
-            r"https://taxation-customs\.ec\.europa\.eu/news/[a-z0-9][a-z0-9-]+_en$"
-        ),
-        "skip_date_filter": True,
-    },
     "經貿透視 Trademag": {
         "type": "free",
         "listing_url": "https://www.trademag.org.tw/",
@@ -511,21 +477,10 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
             r"(?:https://ember-energy\.org)?/latest-insights/[a-z0-9][^?#]*"
         ),
     },
-    # UK CBAM Portal — official GOV.UK CBAM collection (all HMRC guidance, consultations,
-    # publications). Named "UK CBAM Portal" so radar_process.py promotes to TOP tier.
-    # Collection page is SSR; article URLs are relative gov.uk paths.
-    "UK CBAM Portal": {
-        "type": "free",
-        # gov.uk's current CBAM hub (money/ section, confirmed June 2026); links HMRC guidance,
-        # consultations, and publications. Replaced the older /government/collections/ page.
-        "listing_url": "https://www.gov.uk/money/carbon-border-adjustment-mechanism",
-        "base_url": "https://www.gov.uk",
-        "link_pattern": re.compile(
-            r"(?:https://www\.gov\.uk)?/(?:guidance|government/(?:publications|consultations|"
-            r"news|speeches|statistics|policy-papers))/[a-z0-9][a-z0-9-]*(?:/[a-z0-9-]+)*$"
-        ),
-        "skip_date_filter": True,
-    },
+    # Official EU/UK portal scrapers (DG TAXUD CBAM, UK CBAM Portal / gov.uk) retired
+    # July 2026 — the digest now relies on third-party reporting of official developments.
+    # EU Council and European Commission RSS feeds above are kept: they are feeds, not
+    # page scrapes, and carry Council/EC press releases nothing else covers.
 }
 
 # ── Keyword Configuration ─────────────────────────────────────────────────────
@@ -799,8 +754,8 @@ KEYWORDS_ZH = [
     "低碳氫",
     "綠氫",
 
-    # Taiwan-specific green finance / ESG (folded in from the old weekly cowork
-    # task — Taiwan-anchored only; generic global ESG intentionally excluded)
+    # Taiwan-specific green finance / ESG — Taiwan-anchored only; generic
+    # global ESG intentionally excluded
     "綠色金融行動方案",
     "永續分類標準",
     "永續經濟活動認定",
@@ -812,9 +767,22 @@ KEYWORDS_ZH = [
 ]
 
 # ── Topic Classification ──────────────────────────────────────────────────────
+#
+# Consolidated to 8 buckets (July 2026, down from 15). Rationale:
+#   - CBAM, EU ETS, UK, Japan, Korea, India/Turkey are all compliance regimes —
+#     one bucket, with CBAM keywords listed first (radar_process sorts CBAM items
+#     to the top within the bucket, since CBAM is the brief's core beat).
+#   - Taiwan stays its own bucket despite also being a compliance regime: it is
+#     the core domestic audience concern and carries the green-finance keywords.
+#   - Article 6 + CORSIA merged; CDR + nature-based merged.
+#   - The old "Cement, Steel & Hard-to-Abate" bucket is retired: CBAM-tagged
+#     sectoral terms (cbam steel, aluminium cbam, 鋁業碳關稅…) moved into
+#     Compliance so they stay with CBAM, and the rest (decarbonisation tech,
+#     tariffs, named producers) moved into Industry & Trade Response.
 
 TOPIC_PATTERNS: dict[str, list[str]] = {
-    "EU CBAM — Policy & Implementation 歐盟CBAM政策": [
+    "Compliance Carbon Markets 強制性碳市場": [
+        # CBAM — core mechanism
         "cbam", "carbon border adjustment", "carbon border mechanism",
         "carbon border tax", "cbam certificate", "cbam declarant",
         "cbam transitional", "cbam definitive", "cbam registry",
@@ -826,19 +794,34 @@ TOPIC_PATTERNS: dict[str, list[str]] = {
         "碳邊境調整機制", "碳邊境調節機制", "歐盟碳邊境", "碳關稅",
         "碳邊境調整", "碳邊境稅", "cbam憑證", "免費配額",
         "暫停條款", "下游擴展", "塑膠版cbam", "塑膠碳關稅",
-    ],
-    "EU ETS 歐盟碳交易": [
+        # CBAM — sectoral scope (from the retired steel/cement bucket)
+        "cbam steel", "cbam aluminium", "cbam aluminum", "cbam cement",
+        "cbam iron", "cbam fertiliser", "cbam fertilizer",
+        "aluminium cbam", "aluminum cbam", "fertiliser cbam",
+        "fertilizer cbam", "urea cbam", "cbam hydrogen", "hydrogen cbam",
+        "鋁業碳關稅", "鋁cbam", "化肥碳費", "尿素碳稅",
+        # EU ETS
         "eu ets", "european emissions trading", "ets reform",
         "carbon allowance", "carbon permit", "eua price",
         "eu carbon market", "emissions trading scheme", "cap and trade",
         "歐盟碳排放交易", "碳排放配額", "碳交易體系",
-    ],
-    "UK Carbon Market 英國碳市場": [
+        # UK
         "uk ets", "uk emissions trading", "uk carbon market",
         "uk carbon price", "uk carbon border", "uk cbam",
         "英國碳邊境", "英國碳市場", "hmrc carbon",
+        # Japan
+        "japan ets", "japan carbon market", "japan carbon pricing",
+        "gx-ets", "gx league", "japan emissions trading",
+        "日本碳市場", "GX聯盟",
+        # Korea
+        "korea ets", "k-ets", "south korea carbon",
+        "korea carbon market", "korea emissions trading",
+        "韓國碳排放交易", "K-ETS", "南韓碳市場",
+        # India / other emerging compliance regimes
+        "india carbon market", "india ets", "india carbon tax",
+        "turkey ets", "印度碳市場",
     ],
-    "Taiwan Carbon Market 台灣碳市場": [
+    "Taiwan 台灣碳市場與綠色金融": [
         "taiwan carbon", "taiwan ets", "taiwan carbon fee",
         "tcx carbon", "taiwan carbon market",
         "碳邊境 出口", "碳邊境 鋼鐵", "碳邊境 鋁業",
@@ -851,68 +834,51 @@ TOPIC_PATTERNS: dict[str, list[str]] = {
         "上市櫃永續報告", "永續報告書", "氣候相關財務揭露", "碳揭露",
         "範疇三",
     ],
-    "Japan Carbon Market 日本碳市場": [
-        "japan ets", "japan carbon market", "japan carbon pricing",
-        "gx-ets", "gx league", "japan emissions trading",
-        "日本碳市場", "GX聯盟",
-    ],
-    "Korea Carbon Market 韓國碳市場": [
-        "korea ets", "k-ets", "south korea carbon",
-        "korea carbon market", "korea emissions trading",
-        "韓國碳排放交易", "K-ETS", "南韓碳市場",
-    ],
     "Voluntary Carbon Market (VCM) 自願性碳市場": [
         "voluntary carbon market", "carbon credit", "carbon offset",
         "carbon registry", "icvcm", "ccp label", "core carbon principles",
         "verra", "gold standard", "carbon standard", "vcm",
+        "india carbon credit",
         "自願性碳市場", "碳信用", "碳抵換", "碳權", "自願減量",
     ],
-    "Article 6 & Paris Agreement 第六條": [
+    "Article 6 & CORSIA 第六條與航空": [
         "article 6", "paris agreement carbon", "itmos",
         "corresponding adjustment", "article 6.2", "article 6.4",
         "carbon crediting mechanism",
         "巴黎協定碳交易", "第六條",
-    ],
-    "CORSIA & Aviation 航空碳抵換": [
         "corsia", "aviation carbon", "aviation offset",
         "sustainable aviation fuel", "saf carbon", "icao carbon",
         "航空碳抵換", "永續航空燃料",
     ],
-    "Carbon Removal & CDR 碳移除": [
+    "Carbon Removal & Nature 碳移除與自然碳匯": [
         "carbon removal", "cdr", "direct air capture",
         "dac carbon", "biochar carbon", "enhanced weathering",
         "carbon dioxide removal",
         "碳移除", "直接空氣捕捉",
-    ],
-    "Nature-based Solutions 自然碳匯": [
         "nature-based carbon", "forest carbon", "redd+",
         "blue carbon", "soil carbon credit", "nature-based solution",
         "自然碳匯", "森林碳匯",
     ],
-    "Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業": [
-        "cbam steel", "cbam aluminium", "cbam aluminum", "cbam cement",
-        "cbam iron", "cbam fertiliser", "cbam fertilizer",
+    "Industry & Trade Response 產業與貿易回應": [
+        "cbam industry", "carbon leakage",
+        "cbam wto", "cbam challenge", "cbam retaliation",
+        "carbon pricing equivalence", "cbam india", "cbam china",
+        "trade carbon", "india cbam", "india carbon border",
+        "india steel cbam", "india aluminium cbam",
+        "australia carbon leakage",
+        "印度碳邊境", "印度碳關稅", "碳洩漏",
+        # Hard-to-abate industry (from the retired steel/cement bucket) — the
+        # non-CBAM remainder: decarbonisation tech, tariffs, named producers.
         "steel carbon", "cement carbon",
         "steel decarbonisation", "steel decarbonization",
         "cement decarbonisation", "cement decarbonization",
         "green steel", "hard-to-abate", "blast furnace",
         "electric arc furnace", "direct reduced iron", "dri steel",
         "eurofer", "carbon steel", "low-carbon steel", "low-carbon cement",
-        "aluminium cbam", "aluminum cbam", "fertiliser cbam",
-        "fertilizer cbam", "urea cbam", "hbi carbon", "norsk hydro",
-        "tcc cement", "steel tariff", "aluminium tariff", "aluminum tariff",
+        "hbi carbon", "norsk hydro", "tcc cement",
+        "steel tariff", "aluminium tariff", "aluminum tariff",
         "鋼鐵減碳", "水泥減碳", "高碳排產業", "鋼鐵碳排",
-        "鋁業碳關稅", "鋁cbam", "化肥碳費", "尿素碳稅",
         "台泥", "亞泥", "國產建材", "歐洲鋼鐵", "鋼鐵關稅",
-    ],
-    "Industry & Trade Response 產業與貿易回應": [
-        "cbam industry", "carbon leakage",
-        "cbam wto", "cbam challenge", "cbam retaliation",
-        "carbon pricing equivalence", "cbam india", "cbam china",
-        "cbam hydrogen", "hydrogen cbam", "trade carbon",
-        "india cbam", "turkey ets", "australia carbon leakage",
-        "印度碳市場", "印度碳邊境", "印度碳關稅",
-        "碳洩漏",
     ],
     "Analysis & Research 分析與研究": [
         "carbon market report", "carbon market analysis",
@@ -922,18 +888,11 @@ TOPIC_PATTERNS: dict[str, list[str]] = {
 }
 
 TOPIC_ORDER = [
-    "EU CBAM — Policy & Implementation 歐盟CBAM政策",
-    "EU ETS 歐盟碳交易",
-    "UK Carbon Market 英國碳市場",
-    "Taiwan Carbon Market 台灣碳市場",
-    "Japan Carbon Market 日本碳市場",
-    "Korea Carbon Market 韓國碳市場",
+    "Compliance Carbon Markets 強制性碳市場",
+    "Taiwan 台灣碳市場與綠色金融",
     "Voluntary Carbon Market (VCM) 自願性碳市場",
-    "Article 6 & Paris Agreement 第六條",
-    "CORSIA & Aviation 航空碳抵換",
-    "Carbon Removal & CDR 碳移除",
-    "Nature-based Solutions 自然碳匯",
-    "Cement, Steel & Hard-to-Abate Industry 水泥鋼鐵與高碳產業",
+    "Article 6 & CORSIA 第六條與航空",
+    "Carbon Removal & Nature 碳移除與自然碳匯",
     "Industry & Trade Response 產業與貿易回應",
     "Analysis & Research 分析與研究",
     "Other 其他",
@@ -966,7 +925,12 @@ def matches_keywords(text: str) -> list[str]:
 
 
 def classify_topic(matched_keywords: list[str]) -> str:
-    """Assign article to the best-matching topic bucket."""
+    """Assign article to the best-matching topic bucket.
+
+    Cross-cutting articles (an EU ETS revision piece that also discusses CORSIA,
+    say) score in several buckets. Ties break by TOPIC_ORDER position, so the
+    more central bucket wins rather than whichever dict order happened to favour.
+    """
     scores: dict[str, int] = defaultdict(int)
     kw_lower = [k.lower() for k in matched_keywords]
     for topic, patterns in TOPIC_PATTERNS.items():
@@ -979,7 +943,7 @@ def classify_topic(matched_keywords: list[str]) -> str:
             if kw in patterns:
                 scores[topic] += 1
     if scores:
-        return max(scores, key=scores.get)
+        return min(scores, key=lambda t: (-scores[t], TOPIC_ORDER.index(t)))
     return "Other 其他"
 
 
@@ -1626,9 +1590,9 @@ def format_html(articles: list[dict], run_time: str) -> str:
   <div style="text-align:center;padding:16px 0;border-top:1px solid #ddd;
        color:#999;font-size:11px;">
     Carbon Markets Global Monitor &middot; Weekly Edition<br/>
-    Sources: Euractiv · Carbon Brief · Carbon Pulse · Carbon Market Watch ·
+    Sources: Euractiv · Carbon Brief · Carbon Market Watch ·
     Climate Home News · Politico Europe · E3G · Sandbag · Clear Blue Markets ·
-    EU Council · EUROMETAL · SteelOrbis · GMK Center · Carbon Credits ·
+    EU Council · EUROMETAL · SteelOrbis · GMK Center ·
     Business Standard India · NDTV Profit India ·
     Ember Energy · Sylvera · BeZero Carbon · DG TAXUD CBAM · 今週刊 ESG · 天下雜誌 ·
     經貿透視 Trademag · CNA · UDN · Economic Daily · 環境資訊中心 ·

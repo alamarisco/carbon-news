@@ -1,0 +1,142 @@
+name: Carbon News — Weekly Digest
+
+# Single weekly digest (merged July 2026 from the former daily CBAM digest + weekly VCM
+# digest). Fetches a 7-day window, processes, renders one topic-grouped email, and sends it.
+# Self-contained + email-only: everything happens in /tmp, no repo writes.
+#
+# Scheduling: cron-job.org is the PRIMARY trigger (Mondays 09:00 Taipei). It POSTs to
+#   https://api.github.com/repos/alamarisco/carbon-news/actions/workflows/weekly-digest.yml/dispatches
+# with body {"ref":"main"} — i.e. the workflow_dispatch endpoint, NOT repository_dispatch.
+# The schedule: slots below are BACKUPS — GitHub's own cron queues at peak minutes and can be
+# dropped entirely, so it is not trusted as primary.
+#
+# Because the automated primary arrives as workflow_dispatch, the "already emailed today"
+# guard applies to it too, so a cron-job.org retry can't double-send. Forcing a same-day
+# re-send is therefore an EXPLICIT opt-in via the `force` input, not a side effect of the
+# trigger type. repository_dispatch is kept as an alternative entry point.
+
+on:
+  schedule:
+    - cron: "7 2 * * 1"     # Monday 10:07 Taipei — backup 1 (an hour after the primary)
+    - cron: "7 3 * * 1"     # Monday 11:07 Taipei — backup 2
+  workflow_dispatch:
+    inputs:
+      hours:
+        description: "Hours lookback (blank = 168 = 7 days)"
+        required: false
+        default: ""
+      force:
+        description: "Re-send even if a digest already went out today"
+        required: false
+        type: boolean
+        default: false
+  repository_dispatch:
+    types: [run-weekly, run-daily]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-digest
+  cancel-in-progress: false
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Restore digest state
+        uses: actions/cache@v4
+        with:
+          path: .state
+          key: digest-state-${{ github.run_id }}
+          restore-keys: digest-state-
+      - name: Prepare state
+        run: |
+          mkdir -p .state
+          [ -f .state/last_emailed.txt ] || echo "none" > .state/last_emailed.txt
+          [ -f .state/seen_urls.json ] || echo '{"urls":{}}' > .state/seen_urls.json
+
+      - name: Determine lookback window
+        id: lb
+        run: |
+          if [ -n "${{ github.event.inputs.hours }}" ]; then
+            echo "HOURS=${{ github.event.inputs.hours }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "HOURS=168" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Applies to EVERY trigger, including the cron-job.org workflow_dispatch that is the
+      # automated primary — otherwise a retry from it would double-send. Only an explicit
+      # force=true overrides, so re-sending on the same day is always deliberate.
+      - name: Skip if already emailed today
+        id: guard
+        run: |
+          TODAY="$(TZ='Asia/Taipei' date +%F)"
+          echo "date=$TODAY" >> "$GITHUB_OUTPUT"
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then
+            echo "force=true — sending regardless of today's state."
+            echo "run=yes" >> "$GITHUB_OUTPUT"
+          elif grep -qx "$TODAY" .state/last_emailed.txt; then
+            echo "Already emailed today ($TODAY) — skipping."
+            echo "run=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Fetch 7-day window → process → render digest
+        id: build
+        if: steps.guard.outputs.run == 'yes'
+        run: |
+          mkdir -p /tmp/radar
+          python scripts/fetch_feeds.py --hours ${{ steps.lb.outputs.HOURS }} \
+            --format json --output /tmp/radar/latest.json
+          # --maxage 8 keeps the whole week; never touches repo state
+          python scripts/radar_process.py \
+            --articles /tmp/radar/latest.json \
+            --ledger .state/seen_urls.json \
+            --outdir /tmp/radar --date "${{ steps.guard.outputs.date }}" --maxage 8
+          if python scripts/render_email.py \
+               --candidates /tmp/radar/candidates.json --date "${{ steps.guard.outputs.date }}" \
+               --out /tmp/radar_email.html; then
+            echo "send=yes" >> "$GITHUB_OUTPUT"
+            echo "n=$(python -c "import json;print(len(json.load(open('/tmp/radar/candidates.json')).get('items',[])))")" >> "$GITHUB_OUTPUT"
+          else
+            echo "send=no" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Email weekly digest
+        id: send
+        if: steps.guard.outputs.run == 'yes' && steps.build.outputs.send == 'yes'
+        continue-on-error: true   # transient SMTP failure → guard leaves today unmarked, backup retries
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_ADDRESS }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          to: ${{ secrets.CBAM_RECIPIENTS }}
+          from: "Carbon News <${{ secrets.GMAIL_ADDRESS }}>"
+          subject: "Carbon News 碳市場每週彙整 — ${{ steps.guard.outputs.date }} (${{ steps.build.outputs.n }} items)"
+          html_body: file:///tmp/radar_email.html
+          convert_markdown: false
+
+      # Only commit state on success → a failed send lets a backup slot retry with the same
+      # candidates. Promoting the ledger here (not in radar_process.py) is what guarantees an
+      # undelivered story is never marked as seen.
+      - name: Mark emailed and promote ledger
+        if: steps.guard.outputs.run == 'yes' && steps.send.outcome == 'success'
+        run: |
+          echo "${{ steps.guard.outputs.date }}" > .state/last_emailed.txt
+          cp /tmp/radar/ledger_next.json .state/seen_urls.json
+          python -c "import json;print('[ledger]',len(json.load(open('.state/seen_urls.json'))['urls']),'URLs')"
