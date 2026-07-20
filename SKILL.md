@@ -1,152 +1,244 @@
 ---
-name: cbam-monitor
+name: carbon-news
 description: >
-  Reference documentation for the CBAM/carbon news fetch pipeline (sources,
-  keywords, topic classification) implemented in scripts/fetch_feeds.py. The
-  actual daily/weekly delivery is handled by the daily-data.yml and
-  weekly-vcm.yml GitHub Actions workflows and operated via the
-  carbon-news-collector skill (cowork/carbon-news-collector.SKILL.md) — use
-  that skill for running RADAR, flagging stories, or compiling the weekly
-  doc. Use this file when you need to know which sources are tracked, what
-  keywords/topics fetch_feeds.py matches on, or how to customize them.
+  Reference documentation for the carbon-news fetch pipeline (sources,
+  keywords, topic classification) implemented in scripts/fetch_feeds.py.
+  Delivery is a single weekly email sent by the weekly-digest.yml GitHub
+  Actions workflow. Use this file when you need to know which sources are
+  tracked, what keywords/topics fetch_feeds.py matches on, or how to
+  customize them.
 ---
 
-# CBAM fetch pipeline — sources, keywords, topic classification
+# carbon-news pipeline — sources, keywords, topic classification
 
 Reference documentation for `scripts/fetch_feeds.py`, which fetches and
-filters carbon border adjustment mechanism (CBAM) and related carbon-market
-news across the EU, UK, Taiwan, and other jurisdictions. This script is
-shared infrastructure for the current pipeline — `daily-data.yml` (Stream A,
-daily CBAM digest) and `weekly-vcm.yml` (Stream B, weekly VCM digest) both
-call it, then `radar/scripts/radar_process.py` re-buckets its output into
-Stream A/B for email delivery.
+keyword-filters carbon-market news across the EU, UK, Taiwan, Asia and other
+jurisdictions. The pipeline is three scripts and one workflow:
 
-> The standalone weekly "CBAM Global Monitor" briefing (its own workflow and
-> two-tier HTML format) has been retired in favor of the Stream A/B split
-> above. For day-to-day operation (RADAR/FLAG/COMPILE), see
-> `cowork/carbon-news-collector.SKILL.md`.
+```
+scripts/fetch_feeds.py    fetch + keyword-filter + classify → latest.json
+scripts/radar_process.py  dedupe + drop stale/evergreen/already-sent + order → candidates.json
+scripts/render_email.py   candidates.json → email-safe HTML
+.github/workflows/weekly-digest.yml   runs all three Monday morning, emails the result
+```
+
+`scripts/check_feeds.py` is a health checker — it imports the source config
+from `fetch_feeds.py` and probes every feed, so it never goes out of sync.
+
+> **Restructured July 2026.** Formerly a CBAM-specific brief with a daily
+> digest (`daily-data.yml`, Stream A) plus a weekly VCM digest
+> (`weekly-vcm.yml`, Stream B). Now a **single weekly carbon-news digest**:
+> no Stream A/B split, no TOP/HIGH/MED priority tiers, and no CBAM-first
+> ordering — items are grouped by topic bucket. Also removed: the official
+> EU/UK portal scrapers (official developments now arrive via third-party
+> reporting), three noisy sources (Carbon Pulse, Carbon Credits, ESG遠見), and
+> the Cowork `carbon-news-collector` skill along with its FLAG/COMPILE `.docx`
+> tooling and `flag-pick.yml` dispatch. The seen-URL ledger was rebuilt as a
+> rolling, self-pruning one held in the Actions cache (see Delivery).
 
 ---
 
 ## Sources
 
-### Free sources — RSS (headline + summary + link)
+Source config lives in `RSS_FEEDS` and `LINK_PATTERN_SOURCES` in
+`fetch_feeds.py` — that is authoritative; the tables below are a snapshot.
+Run `python scripts/check_feeds.py` to probe them all for health.
+
+### Free — RSS
 
 | Source | Feeds | Notes |
 |--------|-------|-------|
-| **Euractiv** | `euractiv.com/sections/climate-environment/feed/` | Primary EU policy coverage |
-| | `euractiv.com/sections/trade/feed/` | WTO/trade law angle |
-| | `euractiv.com/sections/energy/feed/` | Electricity/hydrogen scope debates |
-| **Carbon Brief** | `feeds.feedburner.com/carbonbrief` | Canonical FeedBurner URL (confirmed May 2026) |
-| **Carbon Pulse** | `carbon-pulse.com/feed/` | Market-facing news, CBAM tracking |
+| **Euractiv** | `euractiv.com/feed/` | Primary EU policy coverage. Section feeds are Cloudflare-blocked — main feed only |
+| **Carbon Brief** | `carbonbrief.org/feed/` | Direct feed; the FeedBurner URL was hijacked May 2026 |
+| **Carbon Market Watch** | `carbonmarketwatch.org/feed/` | EU carbon policy watchdog |
+| **Climate Home News** | `climatechangenews.com/feed/` | International climate policy |
+| **Politico Europe** | energy section + main | Energy section is the more targeted of the two |
 | **E3G** | `e3g.org/feed/` | EU climate policy think tank |
-| **Sandbag** | `sandbag.org.uk/feed/` | EU/UK industrial decarbonization |
-| **Ember Climate** | `ember-climate.org/feed/` | Power sector; electricity scope |
-| **Clear Blue Markets** | `clearbluemarkets.com/knowledge-base/rss.xml` | Full articles; `<category>CBAM</category>` tags; confirmed May 2026 |
-| | `clearbluemarkets.com/news/rss.xml` | Company news/press releases (lower priority) |
-| **中央社 CNA** | FeedBurner: finance, intworld, mainland, technology, politics | Taiwan perspective; keyword match on 碳邊境調整機制 |
-| **經濟日報** | UDN money feeds (產業, 國際財經, 金融) | Taiwan export industry coverage |
+| **Sandbag** | `sandbag.be/category/cbam/feed/` | EU entity; `sandbag.org.uk` is empty |
+| **Clear Blue Markets** | knowledge-base + news `rss.xml` | Full articles, `<category>` tags |
+| **EU Council** | press releases + `THMENV` register | Council CBAM/ETS milestones |
+| **European Commission** | press corner RapidPress API (text-filtered) | EC announcements land here first |
+| **EUROMETAL** | `eurometal.net/feed/` | European metals association |
+| **GMK Center** | `gmk.center/en/feed/` | Ukrainian steel analytics; strong CBAM coverage |
+| **The Hindu Business** | Economy feed | India trade/carbon |
+| **NDTV Profit India** | FeedBurner | India business wire |
+| **中央社 CNA** | FeedBurner ×5 (財經/國際/兩岸/科技/政治) | Taiwan; Chinese-keyword match |
+| **經濟日報 Economic Daily** | UDN money ×4 (國際/兩岸/產業/商情) | Taiwan export industry |
+| **聯合新聞網 UDN** | 要聞 feed `6638` | Other UDN category feeds return empty titles |
+| **環境資訊中心 e-info** | `e-info.org.tw/rss/eic.xml` | Title-only match (feed summaries empty) |
 
-### Free sources — scraped (headline + summary + link)
+### Free — scraped (no RSS available)
 
-Both sites confirmed SSR (May 2026). `fetch_feeds.py` scrapes them automatically
-via `fetch_link_pattern_source()` — no login needed for public blog/insights content.
+All confirmed SSR; `fetch_link_pattern_source()` collects article hrefs by
+regex from a listing page (or sitemap), then fetches each for date + summary.
+Max 15 article fetches per source per run, 0.3s polite delay.
 
-| Source | Listing page | Article URL pattern | Notes |
-|--------|-------------|---------------------|-------|
-| **Sylvera** | `sylvera.com/blog` | `/blog/[slug]` | Public blog; keyword-filtered |
-| **BeZero Carbon** | `bezerocarbon.com/insights` | `/insights/[slug]` | Public insights; keyword-filtered |
+| Source | Listing page |
+|--------|-------------|
+| **ICAP** | `icapcarbonaction.com/en/news` |
+| **SteelOrbis** | `steelorbis.com/steel-news/` (RSS retired June 2026) |
+| **Sylvera** | `sylvera.com/blog` |
+| **BeZero Carbon** | `bezerocarbon.com/sitemap.xml` (listing page is JS-rendered) |
+| **Ember Energy** | `ember-energy.org/latest-insights/` (RSS Cloudflare-blocked) |
+| **Reccessary** | `reccessary.com/zh-tw` (RSS dead; Taiwan/Asia clean energy) |
+| **今週刊 ESG** | `esg.businesstoday.com.tw` |
+| **經貿透視 Trademag** | `trademag.org.tw` |
 
-### Paid sources (headline + link only)
+### Paid (headline + link only — do not summarize)
 
-| Source | Feeds | Notes |
-|--------|-------|-------|
-| **Financial Times** | `ft.com/world/europe`, `markets`, `companies`, `world/asia-pacific`, `world` | Wire-level; Europe + Asia angles |
-| **Nikkei Asia** | `asia.nikkei.com/rss/feed/nar` | Asia trade impact on CBAM |
-| **Reuters** | `feeds.reuters.com/reuters/environment` | Climate/environment desk |
-| | `feeds.reuters.com/reuters/businessnews` | Breaking wire news |
+| Source | Feeds |
+|--------|-------|
+| **Financial Times** | `world`, `markets`, `companies`, `world/asia-pacific`, `world/europe` |
+| **Nikkei Asia** | `asia.nikkei.com/rss/feed/nar` |
+| **Bloomberg Green** | `feeds.bloomberg.com/green/news.rss` |
+| **天下雜誌 CommonWealth** | scraped 永續發展 section (preview only) |
+
+**Removed sources**: Carbon Pulse (subscription lapsed July 2026), Carbon
+Credits (July 2026 — stock-promotion pieces flooding the VCM bucket), ESG遠見
+(July 2026 — non-carbon ESG/lifestyle items), DG TAXUD CBAM + UK CBAM Portal
+(portal scrapers retired July 2026), Reuters (all RSS shut down May 2026),
+S&P Global (Akamai 403s), CTEE / Cnyes / CSRone / CNA Net Zero (403 or
+JS-rendered), Parliament Magazine / PIK Potsdam (no RSS).
 
 ---
 
 ## Topic Classification
 
-Articles are classified into one of eight topic buckets:
+Articles are classified into one of eight topic buckets (consolidated from 15
+in July 2026). `TOPIC_ORDER` in `fetch_feeds.py` is the section order in the
+email, and is mirrored in `radar_process.py` and `render_email.py`.
 
 | Bucket | What goes here |
 |--------|----------------|
-| **EU CBAM — Policy & Implementation** | EC regulation changes, CBAM registry updates, DG TAXUD/DG CLIMA guidance, scope expansions, price of certificates, declarant obligations, embedded emissions methodology |
-| **UK CBAM** | HMRC announcements, UK government consultations, UK scheme design, alignment/divergence from EU |
-| **Taiwan & Export Exposure** | Impact on Taiwanese steel, aluminium, cement exporters; 工總/industry associations; 環境部/經濟部 response |
-| **Industry & Trade Response** | Sector-level responses (EUROFER, European Aluminium, cement associations), company compliance strategy, equivalence determinations, exemption applications |
-| **WTO & Trade Law** | WTO compatibility debates, third-country retaliation (India, China, Turkey), CBAM legal challenges, carbon pricing equivalence determinations |
-| **Other Jurisdictions** | Australia, Canada, Japan, South Korea, US carbon border discussions; regional CBAM-equivalent proposals |
-| **Analysis & Research** | ERCST, E3G, Bruegel, Carbon Brief deep dives; academic papers; think tank assessments |
-| **Other** | Anything matching keywords not fitting above categories |
+| **Compliance Carbon Markets 強制性碳市場** | All mandatory regimes in one bucket: CBAM (EU + UK, incl. sectoral scope — steel, aluminium, cement, fertiliser, hydrogen, plastics), EU ETS, UK ETS, Japan GX-ETS, Korea K-ETS, India/Turkey ETS |
+| **Taiwan 台灣碳市場與綠色金融** | 碳費, TCX/台灣碳權交易所, 環境部 action, 碳盤查, plus Taiwan-anchored green finance and ESG disclosure (綠色金融行動方案, 永續分類標準, 永續報告書, 範疇三) |
+| **Voluntary Carbon Market (VCM) 自願性碳市場** | VCM developments, carbon credits/offsets, registries (Verra, Gold Standard), ICVCM/CCP labels |
+| **Article 6 & CORSIA 第六條與航空** | Paris Agreement Article 6.2/6.4, ITMOs, corresponding adjustments; CORSIA, aviation offsets, SAF |
+| **Carbon Removal & Nature 碳移除與自然碳匯** | CDR, DAC, biochar, enhanced weathering; forest/blue/soil carbon, REDD+, nature-based solutions |
+| **Industry & Trade Response 產業與貿易回應** | Carbon leakage, WTO compatibility, third-country retaliation (India, China, Turkey), equivalence/exemptions; plus hard-to-abate industry — green steel, blast furnace/EAF/DRI, EUROFER, steel & aluminium tariffs, named producers (台泥, 亞泥, Norsk Hydro) |
+| **Analysis & Research 分析與研究** | ERCST, E3G, Bruegel, Carbon Brief deep dives; academic papers; think tank assessments |
+| **Other 其他** | Anything matching keywords not fitting above categories |
+
+> The former standalone "Cement, Steel & Hard-to-Abate" bucket was retired:
+> CBAM-tagged sectoral terms (`cbam steel`, `aluminium cbam`, 鋁業碳關稅…) moved
+> into Compliance so they stay with CBAM; the rest (decarbonisation tech,
+> tariffs, named producers) moved into Industry & Trade Response.
 
 ---
 
 ## Keywords
 
-### English (matched case-insensitively)
+`KEYWORDS_EN` and `KEYWORDS_ZH` in `fetch_feeds.py` are the full lists — an
+article is kept if any keyword appears in its title, description, content or
+tags (English case-insensitive, Chinese matched as-is). Broad coverage by
+theme:
 
-**Core**: CBAM, carbon border adjustment, carbon border mechanism, border carbon
-adjustment, carbon border tax
+- **CBAM** — CBAM and its variants, carbon border adjustment/mechanism/tax,
+  embedded emissions, certificates, declarants, registry, scope, equivalence,
+  exemptions, free allocation, MRV, suspension clause, downstream extension,
+  sectoral variants (plastic/aluminium/fertiliser/urea/hydrogen)
+- **Compliance markets** — EU ETS, UK ETS, Taiwan 碳費, Japan GX-ETS/GX League,
+  Korea K-ETS, India ETS, Turkey ETS, allowances, EUA price, cap and trade
+- **VCM** — voluntary carbon market, credits, offsets, registries, ICVCM,
+  Core Carbon Principles/CCP label, Verra, Gold Standard
+- **Article 6 & CORSIA** — Article 6.2/6.4, ITMOs, corresponding adjustment,
+  CORSIA, aviation carbon, SAF, ICAO
+- **Removal & nature** — carbon removal, CDR, DAC, biochar, enhanced
+  weathering, REDD+, forest/blue/soil carbon, nature-based solutions
+- **Industry & trade** — carbon leakage, WTO, green steel, blast furnace, EAF,
+  DRI, EUROFER, steel/aluminium tariffs, named producers
+- **Taiwan green finance** — 綠色金融行動方案, 永續分類標準, 永續報告書,
+  氣候相關財務揭露, 範疇三
 
-**Technical**: embedded emissions, CBAM certificate, CBAM declarant, CBAM
-transitional, CBAM definitive, CBAM reporting, CBAM registry, CBAM scope,
-CBAM equivalence, CBAM exemption, CBAM expansion, CBAM compliance, CBAM importer
-
-**UK-specific**: UK carbon border, UK CBAM
-
-**Trade/legal**: CBAM WTO, carbon pricing equivalence, CBAM third country, CBAM
-retaliation, CBAM challenge, CBAM India, CBAM China
-
-**Policy rationale**: carbon leakage
-
-### Chinese (matched as-is)
-
-碳邊境調整機制, 碳邊境調整, 碳關稅, 歐盟碳邊境, 碳洩漏, 英國碳邊境,
-碳邊境 出口, 碳邊境 鋼鐵, 碳邊境 鋁業, CBAM
+Note `carbon leakage` / 碳洩漏 is intentionally broad — it catches ETS reform
+articles that matter for policy context.
 
 ---
 
-## Delivery Format
+## Delivery
 
-Output format, subject lines, and stream tiering (Stream A/B, TOP/HIGH/MED)
-are defined in `radar/scripts/radar_process.py` and `radar/scripts/render_email.py`
-— see `cowork/carbon-news-collector.SKILL.md` for the current architecture.
+One weekly email, Monday morning Taipei (primary 09:23, backup 11:07), sent by
+`weekly-digest.yml` to the `CBAM_RECIPIENTS` secret. Subject:
+`Carbon News 碳市場每週彙整 — <date> (N items)`. Body is grouped by topic
+bucket, newest first within each bucket.
+
+Everything runs in `/tmp` on the runner — the workflow has
+`permissions: contents: read` and writes nothing to the repo. Two pieces of
+state persist in the Actions cache: `last_emailed.txt` (a date marker that
+stops a backup slot double-sending) and `seen_urls.json` (the rolling ledger,
+below).
+
+**Scheduling.** cron-job.org is the primary trigger, Mondays at 09:00 Taipei.
+It POSTs to the **workflow_dispatch** endpoint:
+
+```
+POST https://api.github.com/repos/alamarisco/carbon-news/actions/workflows/weekly-digest.yml/dispatches
+Authorization: Bearer <PAT with actions:write>
+body: {"ref":"main"}
+```
+
+Note this is `/actions/workflows/<file>/dispatches`, which takes the **workflow
+file name** — so renaming the workflow file breaks the trigger and must be
+mirrored in cron-job.org. (`repository_dispatch` with type `run-weekly` or
+`run-daily` is also accepted, but is not what cron-job.org uses.)
+
+The `schedule:` slots (10:07 and 11:07 Taipei) are backups, since GitHub's own
+cron queues at peak minutes and can be dropped. Whichever trigger fires first
+wins; the rest hit the guard and no-op.
+
+**The guard applies to every trigger**, including the cron-job.org dispatch —
+so a retry cannot double-send. To re-send on a day that already went out, run
+the workflow manually with `force: true`.
+
+**Rolling URL ledger.** `.state/seen_urls.json` maps each delivered URL to the
+date it was sent, so a story lingering in a slow feed can't reappear in a later
+digest. Entries age out after `LEDGER_KEEP_DAYS` (90) in `radar_process.py`,
+keeping the file bounded. Crucially, `radar_process.py` does **not** write the
+ledger in place — it proposes the next state in `ledger_next.json`, and the
+workflow promotes that over the real ledger only after the email actually
+sends. Otherwise a failed send would mark stories as seen that no one ever
+received. A missing, corrupt, or old list-shaped ledger degrades to "nothing
+seen yet" rather than failing the run.
+
+`monitor.yml` checks the last successful `weekly-digest` run via the API each
+Tuesday and opens a repo issue if it is more than 8 days old.
 
 ---
 
 ## Customization
 
 - **Add/remove keywords**: Edit `KEYWORDS_EN` / `KEYWORDS_ZH` in `fetch_feeds.py`
-- **Add sources**: Add a new entry to `RSS_FEEDS` dict in `fetch_feeds.py`
-- **Add/rename topics**: Edit `TOPIC_PATTERNS` and `TOPIC_ORDER` in `fetch_feeds.py`
-  (and `HIGH_KEYWORDS`/stream logic in `radar/scripts/radar_process.py` if the
-  change should affect Stream A/B classification)
-- **Change schedule**: `daily-data.yml` is triggered externally by cron-job.org
-  (see workflow file comments); `weekly-vcm.yml` still uses a native GitHub
-  `schedule:` block — edit the cron expression in the workflow file
-- **Change recipients**: Update the `CBAM_RECIPIENTS` (daily) or `VCM_RECIPIENTS`
-  (weekly) secret in GitHub repo settings
+- **Add sources**: Add an entry to `RSS_FEEDS` (has a feed) or
+  `LINK_PATTERN_SOURCES` (needs scraping) in `fetch_feeds.py`, then verify with
+  `python scripts/check_feeds.py "<name>"`
+- **Add/rename topics**: Edit `TOPIC_PATTERNS` and `TOPIC_ORDER` in
+  `fetch_feeds.py` — then mirror the new `TOPIC_ORDER` into
+  `scripts/radar_process.py` and `scripts/render_email.py`, which each keep
+  their own copy for ordering
+- **Change schedule**: edit the cron expressions in `weekly-digest.yml`
+- **Change recipients**: update the `CBAM_RECIPIENTS` secret in GitHub repo
+  settings (`VCM_RECIPIENTS` is unused since the July 2026 merge and can be
+  deleted)
+- **Change lookback**: default is 168h (7 days). Run the workflow manually with
+  the `hours` input (e.g. `336`) for two-week coverage after a holiday. Keep
+  `--maxage` in the workflow at least as large as the lookback in days,
+  or `radar_process.py` will drop what `fetch_feeds.py` just collected.
 
 ---
 
 ## Important Notes
 
-- **Paid source treatment**: FT, Nikkei, Reuters — headline and link only. Do
-  not summarize. Mark clearly as "behind paywall."
-- **Euractiv is free**: Full summaries available. It will likely be the
-  highest-volume source for EU CBAM policy coverage.
-- **Clear Blue Markets**: Domain is `clearbluemarkets.com` (not `clearblue.markets`).
-  RSS feed includes `<category>CBAM</category>` tags — confirmed working May 2026.
-- **Sylvera / BeZero**: Scraped via link-pattern from public blog/insights pages.
-  Both confirmed SSR — no JavaScript rendering needed. Max 15 article fetches per
-  source per run; 0.3s polite delay between requests.
-- **Carbon leakage keyword**: Intentionally broad — catches ETS reform articles
-  that are directly relevant to CBAM policy context.
-- **Taiwan-language sourcing**: CNA and Economic Daily match on Chinese keywords
-  only. Ensure 碳邊境調整機制 and 碳關稅 are in the keyword list at all times.
-- **Weekly cadence**: CBAM moves slowly enough that 7-day lookback is appropriate.
-  After holidays or major events, use `--hours 336` for two-week coverage.
+- **Paid source treatment**: FT, Nikkei, Bloomberg, CommonWealth — headline and
+  link only, no summary (`make_article()` blanks the summary for `type: paid`).
+- **Euractiv is free**: full summaries available; likely the highest-volume
+  source for EU policy coverage.
+- **Clear Blue Markets**: domain is `clearbluemarkets.com` (not
+  `clearblue.markets`).
+- **Taiwan-language sourcing**: CNA and Economic Daily match on Chinese
+  keywords only. Keep 碳邊境調整機制, 碳關稅 and 碳費 in the keyword list.
+- **No official-portal scrapers**: DG TAXUD CBAM and the gov.uk UK CBAM Portal
+  were retired July 2026. EU Council and European Commission remain as *RSS*
+  feeds (not page scrapes) and carry Council/EC press releases; everything else
+  official arrives via third-party reporting.
+- **`format_html` / `format_markdown` in `fetch_feeds.py`** are leftovers from
+  the retired standalone monitor. The pipeline only uses `--format json`.

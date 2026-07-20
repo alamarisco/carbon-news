@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Feed health checker for cbam-monitor.
+"""Feed health checker for carbon-news.
 
 Probes every source configured in fetch_feeds.py (RSS_FEEDS + LINK_PATTERN_SOURCES) and
 reports HTTP status, entry count, and freshness. Run from the GitHub Actions runner (or any
@@ -10,7 +10,7 @@ host with outbound HTTP) to confirm feeds before relying on them.
 
 Flags: FAIL (4xx/5xx/error), EMPTY (0 entries), STALE (newest item > 30 days old).
 Note: some outlets block datacenter or residential IPs differently — a FAIL here may still
-work from the runner (and vice-versa). The authoritative check is a live daily-data run.
+work from the runner (and vice-versa). The authoritative check is a live weekly-digest run.
 """
 import sys, time, concurrent.futures as cf, importlib.util, os
 from datetime import datetime, timezone

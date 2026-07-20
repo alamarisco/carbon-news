@@ -1,11 +1,12 @@
 name: Carbon News — Staleness Alarm
 
-# Email-only pipeline has no committed heartbeat, so check the last successful daily-data
-# run via the API and open an issue if the digest hasn't run in >26h.
+# Email-only pipeline has no committed heartbeat, so check the last successful weekly-digest
+# run via the API and open an issue if the digest hasn't run in >8 days. The digest sends
+# Monday mornings, so a healthy run is at most ~7 days old when this check fires.
 
 on:
   schedule:
-    - cron: "23 12 * * 1-5"   # 20:23 Taipei weekday — after the morning digest window
+    - cron: "23 12 * * 2"   # Tuesday 20:23 Taipei — a day after the Monday digest window
   workflow_dispatch:
 
 permissions:
@@ -17,21 +18,21 @@ jobs:
   check-freshness:
     runs-on: ubuntu-latest
     steps:
-      - name: Alarm if no recent daily-data run
+      - name: Alarm if no recent weekly-digest run
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          LAST=$(gh run list --repo "${{ github.repository }}" --workflow=daily-data.yml \
+          LAST=$(gh run list --repo "${{ github.repository }}" --workflow=weekly-digest.yml \
                    --status success -L 1 --json updatedAt --jq '.[0].updatedAt // empty')
           if [ -z "$LAST" ]; then echo "No successful runs found yet"; exit 0; fi
-          AGE_H=$(( ( $(date +%s) - $(date -d "$LAST" +%s) ) / 3600 ))
-          echo "Last successful daily-data run: ${AGE_H}h ago"
-          if [ "$AGE_H" -gt 26 ]; then
-            TITLE="⚠️ Carbon News daily digest appears stale (${AGE_H}h)"
+          AGE_D=$(( ( $(date +%s) - $(date -d "$LAST" +%s) ) / 86400 ))
+          echo "Last successful weekly-digest run: ${AGE_D}d ago"
+          if [ "$AGE_D" -gt 8 ]; then
+            TITLE="⚠️ Carbon News weekly digest appears stale (${AGE_D}d)"
             EXISTING=$(gh issue list --repo "${{ github.repository }}" --state open \
                          --search "$TITLE in:title" --json number --jq 'length')
             if [ "$EXISTING" = "0" ]; then
               gh issue create --repo "${{ github.repository }}" --title "$TITLE" \
-                --body "No successful daily-data run in ${AGE_H}h — GitHub cron likely skipped it. Re-run: gh workflow run daily-data.yml"
+                --body "No successful weekly-digest run in ${AGE_D}d — GitHub cron likely skipped it. Re-run: gh workflow run weekly-digest.yml"
             fi
           fi
