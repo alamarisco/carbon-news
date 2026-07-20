@@ -58,10 +58,7 @@ Run `python scripts/check_feeds.py` to probe them all for health.
 | **Clear Blue Markets** | knowledge-base + news `rss.xml` | Full articles, `<category>` tags |
 | **EU Council** | press releases + `THMENV` register | Council CBAM/ETS milestones |
 | **European Commission** | press corner RapidPress API (text-filtered) | EC announcements land here first |
-| **EUROMETAL** | `eurometal.net/feed/` | European metals association |
 | **GMK Center** | `gmk.center/en/feed/` | Ukrainian steel analytics; strong CBAM coverage |
-| **The Hindu Business** | Economy feed | India trade/carbon |
-| **NDTV Profit India** | FeedBurner | India business wire |
 | **中央社 CNA** | FeedBurner ×5 (財經/國際/兩岸/科技/政治) | Taiwan; Chinese-keyword match |
 | **經濟日報 Economic Daily** | UDN money ×4 (國際/兩岸/產業/商情) | Taiwan export industry |
 | **聯合新聞網 UDN** | 要聞 feed `6638` | Other UDN category feeds return empty titles |
@@ -76,7 +73,6 @@ Max 15 article fetches per source per run, 0.3s polite delay.
 | Source | Listing page |
 |--------|-------------|
 | **ICAP** | `icapcarbonaction.com/en/news` |
-| **SteelOrbis** | `steelorbis.com/steel-news/` (RSS retired June 2026) |
 | **Sylvera** | `sylvera.com/blog` |
 | **BeZero Carbon** | `bezerocarbon.com/sitemap.xml` (listing page is JS-rendered) |
 | **Ember Energy** | `ember-energy.org/latest-insights/` (RSS Cloudflare-blocked) |
@@ -97,8 +93,11 @@ Max 15 article fetches per source per run, 0.3s polite delay.
 Credits (July 2026 — stock-promotion pieces flooding the VCM bucket), ESG遠見
 (July 2026 — non-carbon ESG/lifestyle items), DG TAXUD CBAM + UK CBAM Portal
 (portal scrapers retired July 2026), Reuters (all RSS shut down May 2026),
-S&P Global (Akamai 403s), CTEE / Cnyes / CSRone / CNA Net Zero (403 or
-JS-rendered), Parliament Magazine / PIK Potsdam (no RSS).
+EUROMETAL + SteelOrbis (July 2026 — mill-economics trade press, not carbon
+policy), The Hindu Business + NDTV Profit India (July 2026 — dedicated India
+business wires dropped; India CBAM coverage still arrives via general
+sources), S&P Global (Akamai 403s), CTEE / Cnyes / CSRone / CNA Net Zero
+(403 or JS-rendered), Parliament Magazine / PIK Potsdam (no RSS).
 
 ---
 
