@@ -13,13 +13,12 @@ still a heavily-weighted keyword set, but no longer the exclusive focus.
 Data sources:
   Free (RSS)     — Euractiv, Carbon Brief, Carbon Market Watch,
                    Climate Home News, E3G, Sandbag (CBAM category), Clear Blue Markets,
-                   Politico Europe, EUROMETAL, GMK Center, EU Council,
-                   European Commission (press corner, text-filtered), The Hindu Business,
-                   NDTV Profit India, 中央社 CNA, 聯合新聞網 UDN,
+                   Politico Europe, GMK Center, EU Council,
+                   European Commission (press corner, text-filtered), 中央社 CNA, 聯合新聞網 UDN,
                    經濟日報 Economic Daily (incl. 商情/ESG), 環境資訊中心 e-info
   Free (scraped) — Sylvera (sylvera.com/blog), BeZero Carbon (bezerocarbon.com/insights),
                    今週刊 ESG (esg.businesstoday.com.tw), Ember Energy (ember-energy.org),
-                   經貿透視 Trademag, SteelOrbis (steel-news listing),
+                   經貿透視 Trademag,
                    ICAP (icapcarbonaction.com/en/news), Reccessary (reccessary.com/zh-tw)
   Paid (scraped) — 天下雜誌 CommonWealth (cw.com.tw — 永續發展 section; preview only)
                    All confirmed SSR; link-pattern scraper, no JS needed.
@@ -277,17 +276,9 @@ RSS_FEEDS: dict[str, dict] = {
 
     # ── STEEL & METALS TRADE ─────────────────────────────────────────────
 
-    "EUROMETAL": {
-        "type": "free",
-        "method": "rss",
-        # European metals association news (CBAM steel/aluminium coverage)
-        "feeds": [
-            "https://www.eurometal.net/feed/",
-        ],
-    },
-
-    # SteelOrbis RSS retired June 2026 — every feed path (/steel-news/rss/, /rss.xml) now 404s.
-    # Moved to LINK_PATTERN_SOURCES below as a scraped listing source (page is SSR, dated articles).
+    # EUROMETAL and SteelOrbis removed July 2026 — trade-press coverage of mill economics
+    # (scrap costs, quarterly losses, logistics) rather than carbon policy. GMK Center below
+    # stays: its steel coverage is explicitly CBAM/decarbonisation-angled.
 
     "GMK Center": {
         "type": "free",
@@ -338,24 +329,10 @@ RSS_FEEDS: dict[str, dict] = {
     # ── INDIA ────────────────────────────────────────────────────────────
 
     # CNBC TV18 India: both RSS feeds geo-blocked from GitHub Actions — replaced by Business Standard.
-
-    "The Hindu Business": {
-        "type": "free",
-        "method": "rss",
-        # Replaced Business Standard India (Akamai WAF blocks datacenter IPs — 403 from Actions).
-        # The Hindu Economy feed: 60 items, confirmed fresh June 2026, covers India trade/carbon.
-        "feeds": [
-            "https://www.thehindu.com/business/Economy/feeder/default.rss",
-        ],
-    },
-
-    "NDTV Profit India": {
-        "type": "free",
-        "method": "rss",
-        "feeds": [
-            "https://feeds.feedburner.com/ndtvprofit-latest",
-        ],
-    },
+    # The Hindu Business and NDTV Profit India removed July 2026 (dedicated India business wires
+    # dropped from the source list). India CBAM/carbon coverage still arrives via the general
+    # sources (Euractiv, FT, Carbon Brief, etc.) and the India keywords in KEYWORDS_EN/ZH and
+    # the Compliance/Industry & Trade topic buckets are unchanged.
 
     # ── TAIWAN (additional) ──────────────────────────────────────────────
 
@@ -394,17 +371,7 @@ LINK_PATTERN_SOURCES: dict[str, dict] = {
             r"(?:https://icapcarbonaction\.com)?/en/news/[a-z0-9][a-z0-9-]+$"
         ),
     },
-    "SteelOrbis": {
-        "type": "free",
-        "listing_url": "https://www.steelorbis.com/steel-news/",
-        "base_url": "https://www.steelorbis.com",
-        # RSS retired (404). Listing page is SSR; article hrefs are relative
-        # /steel-news/latest-news/<slug>-<id>.htm. Date from JSON-LD datePublished,
-        # title from og:title — both confirmed present (June 2026).
-        "link_pattern": re.compile(
-            r"(?:https://www\.steelorbis\.com)?/steel-news/latest-news/[a-z0-9-]+-\d+\.htm$"
-        ),
-    },
+    # SteelOrbis removed July 2026 — see the note in RSS_FEEDS above.
     "Sylvera": {
         "type": "free",
         "listing_url": "https://www.sylvera.com/blog",
@@ -1592,8 +1559,7 @@ def format_html(articles: list[dict], run_time: str) -> str:
     Carbon Markets Global Monitor &middot; Weekly Edition<br/>
     Sources: Euractiv · Carbon Brief · Carbon Market Watch ·
     Climate Home News · Politico Europe · E3G · Sandbag · Clear Blue Markets ·
-    EU Council · EUROMETAL · SteelOrbis · GMK Center ·
-    Business Standard India · NDTV Profit India ·
+    EU Council · GMK Center ·
     Ember Energy · Sylvera · BeZero Carbon · DG TAXUD CBAM · 今週刊 ESG · 天下雜誌 ·
     經貿透視 Trademag · CNA · UDN · Economic Daily · 環境資訊中心 ·
     FT · Nikkei Asia · Bloomberg Green · S&P Commodity Insights
